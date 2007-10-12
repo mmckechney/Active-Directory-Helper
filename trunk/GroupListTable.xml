@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<TypedTable>
+	<namespace>ActiveDirectoryHelper.Tables</namespace>
+	<typed_table_name>GroupListTable</typed_table_name>
+	<source_table_name>GroupListTable</source_table_name>
+	<typed_row_name>GroupListTableRow</typed_row_name>
+	<columns>
+		<column>
+			<typed_column_name>GroupName</typed_column_name>
+			<source_column_name>GroupName</source_column_name>
+			<data_type>String</data_type>
+			<null_value>String.Empty</null_value>
+		</column>
+  </columns>
+</TypedTable>
