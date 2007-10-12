@@ -1,0 +1,295 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2F445E11-FCE9-4512-9894-2EAB5F24B2C3}</ProjectGuid>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon>App.ico</ApplicationIcon>
+    <AssemblyKeyContainerName>
+    </AssemblyKeyContainerName>
+    <AssemblyName>ActiveDirectoryHelper</AssemblyName>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>ActiveDirectoryHelper</RootNamespace>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>false</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>none</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.DirectoryServices">
+      <Name>System.DirectoryServices</Name>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Name>System.Drawing</Name>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <Name>System.Windows.Forms</Name>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ADGroupMembersTable.xml">
+      <Generator>TypedTableBuilder</Generator>
+      <LastGenOutput>ADGroupMembersTable.cs</LastGenOutput>
+    </Content>
+    <Content Include="App.ico" />
+    <Content Include="App2.ico" />
+    <Content Include="GroupListTable.xml">
+      <Generator>TypedTableBuilder</Generator>
+      <LastGenOutput>GroupListTable.cs</LastGenOutput>
+    </Content>
+    <Compile Include="AddDomainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddDomainForm.Designer.cs">
+      <DependentUpon>AddDomainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ADGroup.cs" />
+    <Compile Include="ADGroupMembersTable.cs">
+      <DependentUpon>ADGroupMembersTable.xml</DependentUpon>
+      <SubType>Component</SubType>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="ADHelper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AdsUserFlags.cs" />
+    <Compile Include="Collections\GroupCompareInstructions.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ColumnSorter.cs" />
+    <Compile Include="UserPropertiesCtrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserGroupCtrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FindMultipleForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FindMultipleForm.Designer.cs">
+      <DependentUpon>FindMultipleForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GroupListTable.cs">
+      <DependentUpon>GroupListTable.xml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <SubType>Component</SubType>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Collections\HighlightSetting.cs">
+    </Compile>
+    <Compile Include="OrgUnitHighlightForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OrgUnitHighlightForm.Designer.cs">
+      <DependentUpon>OrgUnitHighlightForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="PropertyChangePopUp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PropertyChangePopUp.Designer.cs">
+      <DependentUpon>PropertyChangePopUp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PropertyMonitorHelper.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Settings.cs" />
+    <Compile Include="Settings.Custom.cs" />
+    <Compile Include="PropertyMonitorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PropertyMonitorForm.Designer.cs">
+      <DependentUpon>PropertyMonitorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Collections\PropertyMonitorSetting.cs" />
+    <Compile Include="UserGroups.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserListCtrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserManagers.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserProperties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Collections\VersionData.cs" />
+    <Compile Include="VersionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VersionForm.Designer.cs">
+      <DependentUpon>VersionForm.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="AddDomainForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>AddDomainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ADGroupMembersTable.resx">
+      <DependentUpon>ADGroupMembersTable.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserPropertiesCtrl.resx">
+      <DependentUpon>UserPropertiesCtrl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FindMultipleForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FindMultipleForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GroupListTable.resx">
+      <DependentUpon>GroupListTable.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OrgUnitHighlightForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>OrgUnitHighlightForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PropertyChangePopUp.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>PropertyChangePopUp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PropertyMonitorForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>PropertyMonitorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserGroupCtrl.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>UserGroupCtrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserGroups.resx">
+      <DependentUpon>UserGroups.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserListCtrl.resx">
+      <DependentUpon>UserListCtrl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserManagers.resx">
+      <DependentUpon>UserManagers.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserProperties.resx">
+      <DependentUpon>UserProperties.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VersionForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>VersionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="ActiveDirectoryHelper.exe.manifest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="app.config" />
+    <None Include="Properties\DataSources\ActiveDirectoryHelper.Tables.ADGroupMembersTable.datasource" />
+    <None Include="Properties\DataSources\ADHelper.datasource" />
+    <None Include="Properties\DataSources\UserGroups.datasource" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Schema in Active Directory.mht" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>

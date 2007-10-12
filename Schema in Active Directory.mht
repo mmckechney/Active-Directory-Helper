@@ -1,0 +1,952 @@
+From: <Saved by Microsoft Internet Explorer 5>
+Subject: Schema in Active Directory
+Date: Thu, 18 Aug 2005 13:24:52 -0400
+MIME-Version: 1.0
+Content-Type: text/html;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: http://www.unav.es/cti/ldap-smb/AD-gluser.html
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.2180
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML><HEAD><TITLE>Schema in Active Directory</TITLE>
+<META http-equiv=3DContent-Type content=3D"text/html; =
+charset=3Diso-8859-1">
+<META content=3D"MSHTML 6.00.2900.2722" name=3DGENERATOR>
+<META content=3D"Mozilla/4.7 [en] (WinNT; I) [Netscape]" =
+name=3DGENERATOR></HEAD>
+<BODY link=3D#0000ff><B><FONT face=3D"Arial Narrow"><FONT=20
+size=3D+2>Source:</FONT></FONT></B>=20
+<P><B><FONT face=3D"Arial Narrow"><FONT size=3D+2><A=20
+href=3D"http://msdn.microsoft.com/developer/windows2000/adsi/actdirguide_=
+all.zip">http://msdn.microsoft.com/developer/windows2000/adsi/actdirguide=
+_all.zip</A></FONT></FONT></B>=20
+
+<P><FONT face=3D"Arial Narrow"><FONT size=3D+2>gluser.doc =
+(extract)</FONT></FONT>=20
+<P><B><FONT face=3D"Arial Narrow"><FONT size=3D+2>User Object=20
+Properties</FONT></FONT></B>=20
+<P><FONT color=3D#ff0000><FONT size=3D-1>[This is preliminary =
+documentation and=20
+subject to change.]</FONT></FONT>=20
+<P><FONT size=3D-1>A user object has a number of properties. This =
+section=20
+documents the key properties that are used by the Windows</FONT><FONT=20
+size=3D-2>=AE</FONT><FONT size=3D-1> 2000 operating system, =
+administrative tools, and=20
+the Windows Address Book (WAB). It does not describe <I>all</I> =
+properties (many=20
+are not used) on the user object.</FONT>=20
+<P><FONT size=3D-1>Some properties are stored in the directory (such as =
+<B>cn</B>,=20
+<B>nTSecurityDescriptor</B>, <B>objectGUID</B>, and so on) and =
+replicated to all=20
+domain controllers within a domain. A subset of these properties is also =
+
+replicated to the global catalog.</FONT>=20
+<P><FONT size=3D-1>Non-replicated properties are stored on each domain =
+controller=20
+but are not replicated elsewhere (such as <B>badPwdCount</B>, =
+<B>lastLogon</B>,=20
+<B>lastLogoff</B>, and so on). The non-replicated properties are =
+properties that=20
+pertain to a particular domain controller. For example, <B>lastLogon</B> =
+is the=20
+last date and time that the user's network logon was validated by the =
+particular=20
+domain controller that is returning the property.</FONT>=20
+<P><FONT size=3D-1>A user object also has constructed properties that =
+are not=20
+stored in the directory but are calculated by the domain controller =
+(such as=20
+<B>canonicalName</B>, <B>distinguishedName</B>, =
+<B>allowedAttributes</B>,=20
+<B>ADsPath</B>, and so on). Note that <B>distinguishedName</B> and=20
+<B>ADsPath</B> are not defined in the schema.</FONT>=20
+<P><FONT size=3D-1>Properties for user objects fall into the following=20
+categories:</FONT>=20
+<DIR><FONT size=3D-1><FONT face=3DSymbol>=B7</FONT><FONT =
+face=3DArial><I>Base=20
+object</I>. This category covers properties required on all directory =
+objects,=20
+such as <B>objectClass</B>, <B>nTSecurityDescriptor</B>, and so=20
+on.</FONT></FONT>=20
+<P><FONT size=3D-1><FONT face=3DSymbol>=B7</FONT><FONT=20
+face=3DArial><I><U>Naming/Identity</U></I>. This category covers =
+properties that=20
+are referring to or identifying the object, such as =
+<B>distinguishedName</B>,=20
+<B>objectGUID</B>, <B>objectSid</B>, and so on.</FONT></FONT>=20
+<P><FONT size=3D-1><FONT face=3DSymbol>=B7</FONT><FONT=20
+face=3DArial><I><U>Security</U></I>. This category covers properties for =
+logon and=20
+access control purposes.</FONT></FONT>=20
+<P><FONT size=3D-1><FONT face=3DSymbol>=B7</FONT><FONT =
+face=3DArial><I><U>Address=20
+book</U></I>. This category covers properties for e-mail and general =
+information=20
+about the user.</FONT></FONT>=20
+<P><FONT size=3D-1><FONT face=3DSymbol>=B7</FONT><FONT=20
+face=3DArial><I>Application-specific information</I>. This category =
+covers=20
+user-specific configuration information for specific applications such =
+as=20
+dial-up networking.</FONT></FONT></P></DIR><FONT size=3D-1>For more =
+information=20
+about the User class, including a complete list of the <B>mayContain</B> =
+and=20
+<B>mustContain</B> properties of the class, see <U>User</U>.</FONT>=20
+<P><B><FONT face=3D"Arial Narrow">Naming Properties</FONT></B>=20
+<P><FONT color=3D#ff0000><FONT size=3D-1>[This is preliminary =
+documentation and=20
+subject to change.]</FONT></FONT>=20
+<P><FONT size=3D-1>As with other directory objects, a user object has =
+names in the=20
+form of <B>cn</B>, <B>name</B>, <B>distinguishedName</B>, and =
+<B>objectGUID</B>=20
+properties. Note that a user's relative distinguished name (RDN) is the =
+value of=20
+the <B>cn</B> property. These properties can be viewed and managed by =
+the Active=20
+Directory</FONT><FONT size=3D-2>&amp;trade;</FONT><FONT size=3D-1> User =
+and=20
+Computers snap-in.</FONT>=20
+<P><FONT size=3D-1>Since a user object is a security principal, it has =
+the=20
+following additional naming properties:</FONT>=20
+<P><B><FONT face=3DArial><FONT size=3D-1>userPrincipalName=20
+(User-Principal-Name)</FONT></FONT></B>=20
+<DIR><B>The userPrincipalName is a single-valued and indexed property =
+that is a=20
+string that specifies the user principal name (UPN) of the user. The UPN =
+is an=20
+Internet-style login name for the user based on the Internet standard =
+RFC 822.=20
+The UPN is shorter than the distinguished name and easier to remember. =
+By=20
+convention, this should map to the user's e-mail name. The point of the =
+UPN is=20
+to consolidate the e-mail and logon namespaces so that the user need =
+only=20
+remember a single name.</B>=20
+<P><B>The UPN is the preferred logon name for Windows 2000 users. Users =
+should=20
+be using their UPNs to log on to the domain. At logon time, a UPN is =
+validated=20
+first by searching the local domain, then the global catalog. Failure to =
+find=20
+the UPN in the local domain or the GC results in rejection of the =
+UPN.</B>=20
+<P><B>The UPN can be assigned, but is not required, when the user =
+account is=20
+created. Once assigned, the UPN is unaffected by changes to other =
+properties of=20
+the user object (for example, if the user is renamed or moved) or =
+changes to the=20
+domains in the tree (for example, if a parent domain was renamed or a =
+domain was=20
+moved).Thus, a user can keep the same login name, although the directory =
+may be=20
+radically restructured. Note that the UPN can be administratively =
+changed at any=20
+time.</B>=20
+<P><B>Note that the UPN is a string property that the can contain any =
+string=20
+value. However, the following scheme is recommended:</B>=20
+<P><B>The user principal name has two parts: the UPN prefix (the user =
+account=20
+name) and the UPN suffix (a DNS domain name). The parts are joined =
+together by=20
+the @ (at sign) symbol to make the complete UPN. For example, the user =
+Someone=20
+who has an account in the Arcadiabay domain would have a UPN of=20
+someone@arcadiabay.com.</B>=20
+<P><B>The UPN must be unique among all security principal objects within =
+the=20
+directory forest. By default (that is, for the built-in user accounts =
+and user=20
+accounts created using the Active Directory Users and Computers =
+snap-in), the=20
+UPN can consist of any name for the user (such as the sAMAccountName =
+property of=20
+the user) and the domain tree name to which the user belongs in the =
+following=20
+form:</B>=20
+<P><B><I>Name</I>@<I>treeName</I></B>=20
+<P><B>The <I>treeName</I> is the domain name system (DNS) name of a =
+domain, but=20
+is not required to be the name of the domain containing the user. =
+However, the=20
+<I>treeName</I> portion of the UPN must be the name of a domain in the =
+current=20
+forest or an alternate name listed in the upnSuffixes property of the =
+Partitions=20
+container within the Configuration container. You can add or remove UPN =
+suffixes=20
+by modifying the upnSuffixes property (or by choosing Properties for the =
+root=20
+node of the Active Directory Domains and Trusts and modifying the UPN =
+suffixes=20
+on the UPN Suffixes tab). Usually, the <I>treeName</I> is the name of =
+the first=20
+domain in the first tree of the forest. In most cases, this domain name =
+is the=20
+domain name registered as the enterprise domain on the Internet. The =
+tree name=20
+is stored in a property ("treeName") stored on the domainDNS object.</B> =
+
+<P><B>When creating a new user object, you should check the local domain =
+and the=20
+global catalog for the proposed name to ensure it does not already=20
+exist.</B></P></DIR><B>objectGUID (Object-GUID)</B>=20
+<DIR><B>The objectGUID property is a single-valued property that is the =
+unique=20
+identifier for the object. This property is a Globally Unique Identifier =
+(GUID).=20
+When an object is created in the directory, Active Directory generates a =
+GUID=20
+and assigns it to the object's objectGUID property. The GUID is unique =
+across=20
+the enterprise and anywhere else.</B>=20
+<P><B>The objectGUID is a 128-bit GUID structure stored as an =
+OctetString.</B>=20
+<P><B>Because an object's distinguished name changes if the object is =
+renamed or=20
+moved, the domain name is not a reliable identifier for an object. In =
+Active=20
+Directory, an object=92s objectGUID property is never changed, even if =
+the object=20
+is renamed or moved to different places. Note that you can retrieve the =
+string=20
+form of the objectGUID using the IADs::get_GUID=20
+method.</B></P></DIR><B>sAMAccountName (SAM-Account-Name)</B>=20
+<DIR><B>The sAMAccountName property is a single-valued property that is =
+the=20
+logon name used to support clients and servers from a previous version =
+of=20
+Windows (such as Windows NT</B><FONT face=3DArial><FONT =
+size=3D-2>=AE</FONT><FONT=20
+size=3D-1> 4.0 and earlier, Windows 95, Windows 98, and LAN Manager). =
+Note that=20
+the <B>sAMAccountName</B> should be less than 20 characters to support =
+these=20
+clients and servers.</FONT></FONT>=20
+<P><FONT face=3DArial><FONT size=3D-1>The <B>sAMAccountName</B> must be =
+unique among=20
+all security principal objects within the domain.</FONT></FONT>=20
+<P><FONT face=3DArial><FONT size=3D-1>You should query for the new name =
+against the=20
+domain to verify that the <B>sAMAccountName</B> is unique in the=20
+domain.</FONT></FONT>=20
+<P><FONT face=3DArial><FONT size=3D-1>The <B>sAMAccountName</B> must be =
+unique among=20
+all security principal objects within a domain=20
+container.</FONT></FONT></P></DIR><B><FONT face=3DArial><FONT =
+size=3D-1>objectSid=20
+(Object-Sid)</FONT></FONT></B>=20
+<DIR><FONT face=3DArial><FONT size=3D-1>The <B>objectSid</B> property is =
+a=20
+single-valued property that specifies the security identifier (SID) of =
+the user.=20
+The SID is a unique value used to identify the user as a security =
+principal. It=20
+is a binary value that is set by the system when the user is=20
+created.</FONT></FONT>=20
+<P><FONT face=3DArial><FONT size=3D-1>Each user has a unique SID issued =
+by a Windows=20
+2000 domain and stored in <B>objectSid</B> property of the user object =
+in the=20
+directory. Each time a user logs on, the system retrieves the user's SID =
+from=20
+the directory and places it in the user's access token. The user's SID =
+is also=20
+used to retrieve the SIDs for the groups of which the user is a member =
+and=20
+places them in the user's access token. The system uses the SIDs in the =
+user's=20
+access token to identify the user and his/her group memberships in all=20
+subsequent interactions with Windows NT security.</FONT></FONT>=20
+<P><FONT face=3DArial><FONT size=3D-1>When a SID has been used as the =
+unique=20
+identifier for a user or group, it cannot ever be used again to identify =
+another=20
+user or group.</FONT></FONT></P></DIR><B><FONT face=3DArial><FONT=20
+size=3D-1>sIDHistory (SIDHistory)</FONT></FONT></B>=20
+<DIR><FONT face=3DArial><FONT size=3D-1>The <B>sIDHistory</B> property =
+is a=20
+multi-valued property that contains previous SIDs used for the user =
+object if=20
+the user was moved from another domain. Whenever a user is moved from =
+one domain=20
+to another, a new SID is created and that new SID becomes the =
+<B>objectSID</B>.=20
+The previous SID is added to the <B>sIDHistory</B> property which =
+contains the=20
+SIDs from the user's previous domain moves.</FONT></FONT></DIR><B><FONT=20
+face=3D"Arial Narrow">Security Properties</FONT></B>=20
+<P><FONT color=3D#ff0000><FONT size=3D-1>[This is preliminary =
+documentation and=20
+subject to change.]</FONT></FONT>=20
+<P><FONT size=3D-1>In addition to naming properties for user objects=20
+(<B>objectGUID</B>, <B>objectSid</B>, <B>cn</B>, =
+<B>distinguishedName</B>, and=20
+so on), there are other security properties that are used for logon, =
+network=20
+access, and access control. These properties are used by the Windows =
+2000=20
+security system. These properties can be viewed and managed by the =
+Active=20
+Directory User and Computers snap-in.</FONT>=20
+<P><B><FONT face=3DArial><FONT =
+size=3D-1>accountExpires</FONT></FONT></B>=20
+<DIR><B>The accountExpires property specifies when the account will =
+expire. This=20
+value is stored as a large integer that represents the number of seconds =
+elapsed=20
+since 00:00:00, January 1, 1970. A value of TIMEQ_FOREVER indicates that =
+the=20
+account never expires.</B>=20
+<P><B>This value is defined in=20
+LMACCESS.H.</B></P></DIR><B>altSecurityIdentities</B>=20
+<DIR><B>The altSecurityIdentities property is a multi-valued property =
+that=20
+contains mappings for X.509 certificates or external Kerberos user =
+accounts to=20
+this user for the purpose of authentication. Various security packages=20
+(including Public Key authentication package and Kerberos) will use this =
+
+information to authenticate users when they present the alternative form =
+of=20
+identification (such as certificate, Unix Kerberos ticket, and so on.) =
+and build=20
+an Windows 2000 token based on the corresponding user account such that =
+they can=20
+access system resources.</B>=20
+<P><B>For X.509 certificates, the values should be the Issuer and =
+Subject names=20
+in 509v3 certificates (issued by an external public Certificate =
+Authority) that=20
+map to the user account. that can be used to find an account for =
+authentication.=20
+The SSL (schannel) package uses the following syntax:=20
+X509:&lt;<I>somecertinfotype</I>&gt;<I>somecertinfo</I>. For example, =
+the=20
+following value specifies the issuer DN "&lt;I&gt;" with the DN=20
+C=3DUS,O=3DInternetCA,CN=3DAPublicCertificateAuthority and the subject =
+DN "&lt;S&gt;"=20
+with the DN C=3DUS,O=3DArcadiaBay,OU=3DFOO,CN=3DJohn Smith:</B>=20
+<P><FONT face=3D"Lucida Sans Typewriter"><FONT=20
+size=3D-2>X509:&lt;I&gt;C=3DUS,O=3DInternetCA,CN=3DAPublicCertificateAuth=
+ority&lt;S&gt;C=3DUS,O=3DArcadiaBay,OU=3DFOO,CN=3DJohn=20
+Smith</FONT></FONT>=20
+<P><FONT face=3DArial><FONT size=3D-1>Note that &lt;I&gt; or &lt;I&gt; =
+and &lt;S&gt;=20
+are supported. Having only &lt;S&gt; is not supported. Applications =
+should not=20
+modify the values within &lt;I&gt; or &lt;S&gt; because partial DN =
+matching is=20
+not supported.</FONT></FONT>=20
+<P><FONT face=3DArial><FONT size=3D-1>For external Kerberos accounts, =
+the values=20
+should be the Kerberos account name. The Kerberos package uses the =
+following=20
+syntax: Kerberos:MITaccountname. For example, the following is the value =
+for an=20
+account at arcadiabay.com:</FONT></FONT>=20
+<P><FONT face=3D"Lucida Sans Typewriter"><FONT=20
+size=3D-2>Kerberos:John.Doe@arcadiabay.com</FONT></FONT></P></DIR><B><FON=
+T=20
+face=3DArial><FONT size=3D-1>badPasswordTime</FONT></FONT> =
+(Non-replicated)</B>=20
+<DIR><B>The badPasswordTime property specifies when the last time the =
+user tried=20
+to log onto the account using an incorrect password. This value is =
+stored as a=20
+large integer that represents the number of seconds elapsed since =
+00:00:00,=20
+January 1, 1970. This property is maintained separately on each domain=20
+controller in the domain. A value of zero means that the last bad =
+password time=20
+is unknown. To get an accurate value for the user's last bad password =
+time in=20
+the domain, each domain controller in the domain must be queried and the =
+largest=20
+value should be used.</B></DIR><B>badPwdCount (Non-replicated)</B>=20
+<DIR><B>The badPwdCount property specifies the number of times the user =
+tried to=20
+log on to the account using an incorrect password. This property is =
+maintained=20
+separately on each domain controller in the domain. A value of 0 =
+indicates that=20
+the value is unknown. To get an accurate value for the user's total bad =
+password=20
+attempts in the domain, each domain controller in the domain must be =
+queried and=20
+the sum of the values should be used.</B></DIR><B>codePage</B>=20
+<DIR><B>The codePage property specifies the code page for the user's =
+language of=20
+choice. This value is not used by Windows =
+2000.</B></DIR><B>countryCode</B>=20
+<DIR><B>The countryCode property specifies the country code for the =
+user's=20
+language of choice. This value is not used by Windows=20
+2000.</B></DIR><B>homeDirectory</B>=20
+<DIR><B>The homeDirectory property specifies the path of the home =
+directory for=20
+the user. The string can be null.</B>=20
+<P><B>If homeDrive is set and specifies a drive letter, homeDirectory =
+should be=20
+a UNC path. The path must be a network UNC path of the form=20
+\\<I>server</I>\<I>share</I>\<I>directory</I>. This value can be a null=20
+string.</B>=20
+<P><B>If homeDrive is not set, homeDirectory should be a local path =
+(such as=20
+C:\mylocaldir).</B></P></DIR><B>homeDrive</B>=20
+<DIR><B>The homeDrive property specifies the drive letter to which to =
+map the=20
+UNC path specified by homeDirectory. The drive letter must be specified =
+in the=20
+following form:</B>=20
+<P><B><I>driveletter</I>:</B>=20
+<P><B>where <I>driveletter</I> is the letter of the drive to map. For=20
+example:</B>=20
+<P><B>Z:</B>=20
+<P><B>If this property is not set, the homeDirectory should be a local =
+path=20
+(such as C:\mylocaldir).</B></P></DIR><B>lastLogoff (Non-replicated)</B> =
+
+<DIR><B>The lastLogoff property specifies when the last logoff occurred. =
+This=20
+value is stored as a large integer that represents the number of seconds =
+elapsed=20
+since 00:00:00, January 1, 1970. This property is maintained separately =
+on each=20
+domain controller in the domain. A value of zero means that the last =
+logoff time=20
+is unknown. To get an accurate value for the user's last logoff in the =
+domain,=20
+each domain controller in the domain must be queried and the largest =
+value=20
+should be used.</B></DIR><B>lastLogon (Non-replicated)</B>=20
+<DIR><B>The lastLogon property specifies when the last logon occurred. =
+This=20
+value is stored as a large integer that represents the number of seconds =
+elapsed=20
+since 00:00:00, January 1, 1970. This property is maintained separately =
+on each=20
+domain controller in the domain. A value of zero means that the last =
+logon time=20
+is unknown. To get an accurate value for the user's last logon in the =
+domain,=20
+each domain controller in the domain must be queried and the largest =
+value=20
+should be used.</B></DIR><B>lmPwdHistory</B>=20
+<DIR><B>The lmPwdHistory property is the password history of the user in =
+LAN=20
+Manager (LM) one-way format (OWF). The LM OWF is used for compatibility =
+with LAN=20
+Manager 2.x clients, Windows 95, and Windows 98. This property is used =
+only by=20
+operating system. Note that you cannot derive the clear password back =
+from the=20
+OWF form of the password.</B></DIR><B>logonCount (Non-replicated)</B>=20
+<DIR><B>The logonCount property counts the number of successful times =
+the user=20
+tried to log on to this account. This property is maintained separately =
+on each=20
+domain controller in the domain. A value of 0 indicates that the value =
+is=20
+unknown. To get an accurate value for the user's total number of =
+successful=20
+logon attempts in the domain, each domain controller in the domain must =
+be=20
+queried and the sum of the values should be used.</B></DIR><B>mail=20
+(E-mail-Addresses)</B>=20
+<DIR><B>The mail property is a single-valued property that contains the =
+SMTP=20
+address for the user (such as =
+john@arcadiabay.com).</B></DIR><B>memberOf</B>=20
+<DIR><B>The memberOf property is a multi-valued property that contains =
+groups of=20
+which the user is a direct member, depending on the domain controller =
+(DC) from=20
+which this property is retrieved:</B>=20
+<DIR><B><FONT face=3DSymbol>=B7</FONT> At a DC for the domain containing =
+the user,=20
+memberOf for the user is complete with respect to membership for groups =
+in that=20
+domain; however, memberOf does not contain the user's membership in =
+domain local=20
+and global groups in other domains.</B>=20
+<P><B><FONT face=3DSymbol>=B7</FONT> At a GC server, memberOf for the =
+user is=20
+complete with respect to all universal group =
+memberships.</B></P></DIR><B>If=20
+both conditions are true about the DC, both sets of information are =
+contained in=20
+memberOf.</B>=20
+<P><B>Note that this property lists the groups that contain the user in =
+their=20
+member property=97it does not contain the recursive list of nested =
+predecessors.=20
+For example, if user O is a member of group C and group B and group B =
+were=20
+nested in group A, the membersOf property of user O would list group C =
+and group=20
+B but not group A.</B>=20
+<P><B>This property is not stored=97it is a computed back-link=20
+attribute.</B></P></DIR><B>ntPwdHistory</B>=20
+<DIR><B>The ntPwdHistory property is the password history of the user in =
+Windows=20
+NT (NT) one-way format (OWF). Windows</B><FONT face=3DArial><FONT=20
+size=3D-2>=AE</FONT><FONT size=3D-1> 2000 uses the NT OWF. This property =
+is used only=20
+by operating system. Note that you cannot derive the clear password back =
+from=20
+the OWF form of the password.</FONT></FONT></DIR><B><FONT =
+face=3DArial><FONT=20
+size=3D-1>otherMailbox</FONT></FONT></B>=20
+<DIR><FONT face=3DArial><FONT size=3D-1>The <B>otherMailbox</B> property =
+is a=20
+multi-valued property containing other additional mail addresses in a =
+form such=20
+as CCMAIL: JohnDoe.</FONT></FONT></DIR><B><FONT face=3DArial><FONT=20
+size=3D-1>PasswordExpirationDate</FONT></FONT></B>=20
+<DIR><FONT face=3DArial><FONT size=3D-1>The password expiration date is =
+not a=20
+property on the user object. It is a calculated value based on the sum =
+of=20
+<B>pwdLastSet</B> for the user and <B>maxPwdAge</B> of the user's =
+domain. To get=20
+the password expiration date, call the=20
+<B>IADsUser::get_PasswordExpirationDate</B> method. You cannot modify =
+this=20
+property for a user; instead, call <B>IADsDomain::put_MaxPasswordAge</B> =
+method=20
+to change the setting for the domain.</FONT></FONT></DIR><B><FONT=20
+face=3DArial><FONT size=3D-1>primaryGroupID</FONT></FONT></B>=20
+<DIR><FONT face=3DArial><FONT size=3D-1>The <B>primaryGroupID</B> =
+property is a=20
+single-valued property containing the relative identifier (RID) for the =
+primary=20
+group of the user. By default, this is the RID for the Domain Users =
+group. This=20
+property is not used in the context of the Active=20
+Directory.</FONT></FONT></DIR><B><FONT face=3DArial><FONT=20
+size=3D-1>profilePath</FONT></FONT></B>=20
+<DIR><FONT face=3DArial><FONT size=3D-1>The <B>profilePath</B> property =
+specifies a=20
+path to the user's profile. This value can be a null string, a local =
+absolute=20
+path, or a UNC path.</FONT></FONT></DIR><B><FONT face=3DArial><FONT=20
+size=3D-1>pwdLastSet</FONT></FONT></B>=20
+<DIR><FONT face=3DArial><FONT size=3D-1>The <B>pwdLastSet</B> property =
+specifies=20
+when the user last set the password. This value is stored as a large =
+integer=20
+that represents the number of seconds elapsed since 00:00:00, January 1, =
+
+1970.</FONT></FONT>=20
+<P><FONT face=3DArial><FONT size=3D-1>The system uses the value of this =
+property and=20
+the <B>maxPwdAge</B> property of the domain containing the user object =
+to=20
+calculate the password expiration date (sum of <B>pwdLastSet</B> for the =
+user=20
+and <B>maxPwdAge</B> of the user's domain).</FONT></FONT>=20
+<P><FONT face=3DArial><FONT size=3D-1>controls whether the user must =
+change the=20
+password the next time the user logs on.</FONT></FONT>=20
+<P><FONT face=3DArial><FONT size=3D-1>Default is 0. Zero(0) means the =
+user must=20
+change the password at next logon. The value -1 means the user does not =
+need to=20
+change the password at next logon. The system sets this value to -1 =
+after user=20
+has set the password.</FONT></FONT></P></DIR><B><FONT face=3DArial><FONT =
+
+size=3D-1>sAMAccountType</FONT></FONT></B>=20
+<DIR><FONT face=3DArial><FONT size=3D-1>The <B>sAMAccountType</B> =
+property specifies=20
+an integer that represents the account type. This is set by the =
+operating system=20
+when the object is created.</FONT></FONT></DIR><B><FONT =
+face=3DArial><FONT=20
+size=3D-1>scriptPath</FONT></FONT></B>=20
+<DIR><FONT face=3DArial><FONT size=3D-1>The <B>scriptPath</B> property =
+specifies the=20
+path of the user's logon script, .CMD, .EXE, or .BAT file. The string =
+can be=20
+null.</FONT></FONT></DIR><B><FONT face=3DArial><FONT=20
+size=3D-1>unicodePwd</FONT></FONT></B>=20
+<DIR><FONT face=3DArial><FONT size=3D-1>The <B>unicodePwd</B> property =
+is the=20
+password for the user.</FONT></FONT>=20
+<P><FONT face=3DArial><FONT size=3D-1>For setting the password of the =
+user, you=20
+should use the <B>IADsUser::ChangePassword</B> method (if your script or =
+
+application is allowing the user to change his/her own password) or=20
+<B>IADsUser::SetPassword</B> method (if your script or application is =
+allowing=20
+an administrator to reset a password).</FONT></FONT>=20
+<P><FONT face=3DArial><FONT size=3D-1>The password of the user in =
+Windows NT (NT)=20
+one-way format (OWF). Windows</FONT><FONT size=3D-2>=AE</FONT><FONT =
+size=3D-1> 2000=20
+uses the NT OWF. This property is used only by operating system. Note =
+that you=20
+cannot derive the clear password back from the OWF form of the=20
+password.</FONT></FONT></P></DIR><B><FONT face=3DArial><FONT=20
+size=3D-1>userAccountControl</FONT></FONT></B>=20
+<DIR><FONT face=3DArial><FONT size=3D-1>The <B>userAccountControl</B> =
+property=20
+specifies flags that control password, lockout, disable/enable, script, =
+and home=20
+directory behavior for the user. This property also contains a flag that =
+
+indicates the account type of the object. The user object usually has =
+the=20
+UF_NORMAL_ACCOUNT set.</FONT></FONT>=20
+<P><FONT face=3DArial><FONT size=3D-1>The flags are defined in=20
+LMACCESS.H.</FONT></FONT></P></DIR>
+<TABLE cellSpacing=3D0 width=3D445 border=3D0>
+  <TBODY>
+  <TR>
+    <TD vAlign=3Dtop width=3D"57%"><B><FONT face=3DArial><FONT=20
+      size=3D-1>Value</FONT></FONT></B></TD>
+    <TD vAlign=3Dtop width=3D"43%"><B><FONT face=3DArial><FONT=20
+      size=3D-1>Meaning</FONT></FONT></B></TD></TR>
+  <TR>
+    <TD vAlign=3Dtop colSpan=3D2>&nbsp;</TD></TR>
+  <TR>
+    <TD vAlign=3Dtop width=3D"57%"><FONT face=3DArial><FONT=20
+      size=3D-1>UF_SCRIPT</FONT></FONT></TD>
+    <TD vAlign=3Dtop width=3D"43%"><FONT face=3DArial><FONT =
+size=3D-1>The logon script=20
+      executed. This value must be set for LAN Manager 2.0 or Windows=20
+      NT.</FONT></FONT></TD></TR>
+  <TR>
+    <TD vAlign=3Dtop width=3D"57%"><FONT face=3DArial><FONT=20
+      size=3D-1>UF_ACCOUNTDISABLE</FONT></FONT></TD>
+    <TD vAlign=3Dtop width=3D"43%"><FONT face=3DArial><FONT =
+size=3D-1>The user's=20
+      account is disabled.</FONT></FONT></TD></TR>
+  <TR>
+    <TD vAlign=3Dtop width=3D"57%"><FONT face=3DArial><FONT=20
+      size=3D-1>UF_HOMEDIR_REQUIRED</FONT></FONT></TD>
+    <TD vAlign=3Dtop width=3D"43%"><FONT face=3DArial><FONT =
+size=3D-1>The home=20
+      directory is required. This value is ignored in Windows NT and =
+Windows=20
+      2000.</FONT></FONT></TD></TR>
+  <TR>
+    <TD vAlign=3Dtop width=3D"57%"><FONT face=3DArial><FONT=20
+      size=3D-1>UF_PASSWD_NOTREQD</FONT></FONT></TD>
+    <TD vAlign=3Dtop width=3D"43%"><FONT face=3DArial><FONT size=3D-1>No =
+password is=20
+      required.</FONT></FONT></TD></TR>
+  <TR>
+    <TD vAlign=3Dtop width=3D"57%"><FONT face=3DArial><FONT=20
+      size=3D-1>UF_PASSWD_CANT_CHANGE&nbsp;</FONT></FONT></TD>
+    <TD vAlign=3Dtop width=3D"43%"><FONT face=3DArial><FONT =
+size=3D-1>The user cannot=20
+      change the password.</FONT></FONT></TD></TR>
+  <TR>
+    <TD vAlign=3Dtop width=3D"57%"><FONT face=3DArial><FONT=20
+      size=3D-1>UF_LOCKOUT</FONT></FONT></TD>
+    <TD vAlign=3Dtop width=3D"43%"><FONT face=3DArial><FONT =
+size=3D-1>The account is=20
+      currently locked out. This value can be cleared to unlock a =
+previously=20
+      locked account. This value cannot be used to lock a previously =
+locked=20
+      account.</FONT></FONT></TD></TR>
+  <TR>
+    <TD vAlign=3Dtop width=3D"57%"><FONT face=3DArial><FONT=20
+      size=3D-1>UF_DONT_EXPIRE_PASSWD</FONT></FONT></TD>
+    <TD vAlign=3Dtop width=3D"43%"><FONT face=3DArial><FONT =
+size=3D-1>Represents the=20
+      password, which should never expire on the=20
+  account.&nbsp;</FONT></FONT></TD></TR></TBODY></TABLE>
+<DIR><FONT face=3DArial><FONT size=3D-1>The following values describe =
+the account=20
+type. Only one value can be set. You cannot change the account=20
+type.</FONT></FONT></DIR>
+<TABLE cellSpacing=3D0 width=3D445 border=3D0>
+  <TBODY>
+  <TR>
+    <TD vAlign=3Dtop width=3D"57%"><B><FONT face=3DArial><FONT=20
+      size=3D-1>Value</FONT></FONT></B></TD>
+    <TD vAlign=3Dtop width=3D"43%"><B><FONT face=3DArial><FONT=20
+      size=3D-1>Meaning</FONT></FONT></B></TD></TR>
+  <TR>
+    <TD vAlign=3Dtop colSpan=3D2>&nbsp;</TD></TR>
+  <TR>
+    <TD vAlign=3Dtop width=3D"57%"><FONT face=3DArial><FONT=20
+      size=3D-1>UF_NORMAL_ACCOUNT</FONT></FONT></TD>
+    <TD vAlign=3Dtop width=3D"43%"><FONT face=3DArial><FONT =
+size=3D-1>This is a=20
+      default account type that represents a typical =
+user</FONT></FONT></TD></TR>
+  <TR>
+    <TD vAlign=3Dtop width=3D"57%"><FONT face=3DArial><FONT=20
+      size=3D-1>UF_TEMP_DUPLICATE_ACCOUNT</FONT></FONT></TD>
+    <TD vAlign=3Dtop width=3D"43%"><FONT face=3DArial><FONT =
+size=3D-1>This is an=20
+      account for users whose primary account is in another domain. This =
+account=20
+      provides user access to this domain, but not to any domain that =
+trusts=20
+      this domain. The User Manager refers to this account type as a=20
+      <I>local</I> user account.</FONT></FONT></TD></TR>
+  <TR>
+    <TD vAlign=3Dtop width=3D"57%"><FONT face=3DArial><FONT=20
+      size=3D-1>UF_WORKSTATION_TRUST_ACCOUNT</FONT></FONT></TD>
+    <TD vAlign=3Dtop width=3D"43%"><FONT face=3DArial><FONT =
+size=3D-1>This is a=20
+      computer account for a Windows NT Workstation/Windows 2000 =
+Professional or=20
+      Windows NT Server/Windows 2000 Server that is a member of this=20
+      domain.</FONT></FONT></TD></TR>
+  <TR>
+    <TD vAlign=3Dtop width=3D"57%"><FONT face=3DArial><FONT=20
+      size=3D-1>UF_SERVER_TRUST_ACCOUNT</FONT></FONT></TD>
+    <TD vAlign=3Dtop width=3D"43%"><FONT face=3DArial><FONT =
+size=3D-1>This is a=20
+      computer account for a Windows NT Backup Domain Controller that is =
+a=20
+      member of this domain.</FONT></FONT></TD></TR>
+  <TR>
+    <TD vAlign=3Dtop width=3D"57%"><FONT face=3DArial><FONT=20
+      size=3D-1>UF_INTERDOMAIN_TRUST_ACCOUNT</FONT></FONT></TD>
+    <TD vAlign=3Dtop width=3D"43%"><FONT face=3DArial><FONT =
+size=3D-1>This is a=20
+      <I>permit to trust</I> account for a Windows NT domain that =
+<I>trusts</I>=20
+      other domains.</FONT></FONT></TD></TR></TBODY></TABLE>
+<P><B><FONT face=3DArial><FONT size=3D-1>userCertificate=20
+(X509-Cert)</FONT></FONT></B>=20
+<DIR><B>The userCertificate property is a multi-valued property that =
+contains=20
+the DER-encoded X509v3 certificates issued to the user. Note that this =
+property=20
+contains the public key certificates issued to this user by =
+Microsoft</B><FONT=20
+face=3DArial><FONT size=3D-2>=AE</FONT><FONT size=3D-1> Certificate=20
+Service.</FONT></FONT></DIR><B><FONT face=3DArial><FONT=20
+size=3D-1>userSharedFolder</FONT></FONT></B>=20
+<DIR><FONT face=3DArial><FONT size=3D-1>The <B>userSharedFolder</B> =
+property=20
+specifies a UNC path to the user's shared documents folder. The path =
+must be a=20
+network UNC path of the form =
+\\<I>server</I>\<I>share</I>\<I>directory</I>. This=20
+value can be a null string.</FONT></FONT></DIR><B><FONT =
+face=3DArial><FONT=20
+size=3D-1>userWorkstations</FONT></FONT></B>=20
+<DIR><FONT face=3DArial><FONT size=3D-1>The <B>userWorkstations</B> =
+property is a=20
+single-valued property containing the NetBIOS names of the computers =
+running=20
+Windows NT Workstation/Windows 2000 Professional from which the user can =
+log on.=20
+Each NetBIOS name is separated by a comma. The NetBIOS name of a =
+computer is the=20
+<B>sAMAccountName</B> property of a computer object.</FONT></FONT>=20
+<P><FONT face=3DArial><FONT size=3D-1>If there are no values set, it =
+indicates that=20
+there is no restriction. To disable logons from all computers running =
+Windows NT=20
+Workstation/Windows 2000 Professional to this account, set the =
+UF_ACCOUNTDISABLE=20
+value in <B>userAccountControl</B> property.</FONT></FONT>=20
+<P><FONT face=3DArial><FONT size=3D-1>This value is defined in=20
+LMACCESS.H.</FONT></FONT></P></DIR><B><FONT face=3DArial><FONT=20
+size=3D-1>maxStorage</FONT></FONT></B>=20
+<DIR><FONT face=3DArial><FONT size=3D-1>The <B>maxStorage</B> property =
+specifies the=20
+maximum amount of disk space the user can use. Use the value specified =
+in=20
+USER_MAXSTORAGE_UNLIMITED to use all available disk space.</FONT></FONT> =
+
+<P><FONT face=3DArial><FONT size=3D-1>This value is defined in=20
+LMACCESS.H.</FONT></FONT></P></DIR><B><FONT face=3D"Arial =
+Narrow">Address Book=20
+Properties</FONT></B>=20
+<P><FONT color=3D#ff0000><FONT size=3D-1>[This is preliminary =
+documentation and=20
+subject to change.]</FONT></FONT>=20
+<P><FONT size=3D-1>The address book properties are used to provide =
+supplementary=20
+identification and information for a user. Their content is defined by =
+the user=20
+and the user's organization. These properties can be viewed and managed =
+by the=20
+Active Directory User and Computers snap-in or the Windows Address Book=20
+(WAB).</FONT>=20
+<P><B><FONT face=3DArial><FONT size=3D-1>c =
+(Country-Name)</FONT></FONT></B>=20
+<DIR><B>The Country-Name property is the country in the user's =
+address.</B>=20
+<P><B>The country is represented as the 2-character country code based =
+on=20
+ISO-3166. For the country codes, see <U>Values for=20
+countryCode</U>.</B></P></DIR><B>co (Text-Country)</B>=20
+<DIR><B>The co property is the country the user is located =
+in.</B></DIR><B>notes=20
+(Comment)</B>=20
+<DIR><B>The notes property is a comment. This string can be a null=20
+string.</B></DIR><B>department (Department)</B>=20
+<DIR><B>The department property is a single-valued property that =
+contains the=20
+name for the department in which the user works.</B></DIR><B>description =
+
+(Description)</B>=20
+<DIR><B>The description property is a single-valued property that =
+contains the=20
+description to display for the user.</B></DIR><B>displayName =
+(Display-Name)</B>=20
+<DIR><B>The displayName property is the name displayed in the address =
+book for a=20
+particular user. This is usually the combination of the users first =
+name, middle=20
+initial, and last name.</B></DIR><B>directReports (Reports)</B>=20
+<DIR><B>The directReports property is a multi-valued property that =
+contains the=20
+list of users that directly report to the user. The users listed as =
+reports are=20
+those that have the property manager property set to this user. Each =
+item in the=20
+list is a linked reference to the object that represents the user; =
+therefore,=20
+Active Directory automatically updates the directReports property when a =
+user's=20
+manager property adds or removes this user as a manager. The items are=20
+represented as distinguished names.</B></DIR><B>facsimileTelephoneNumber =
+
+(Facsimile-Telephone-Number)</B>=20
+<DIR><B>The facsimileTelephoneNumber property is a single-valued =
+property that=20
+contains telephone number of the user's business fax=20
+machine.</B></DIR><B>givenName (Given-Name)</B>=20
+<DIR><B>The givenName property is a single-valued property that contains =
+the=20
+given name (first name) of the user.</B></DIR><B>homePhone=20
+(Phone-Home-Primary)</B>=20
+<DIR><B>The homePhone property is a single-valued property containing =
+the=20
+primary home telephone number for the user.</B></DIR><B>initials =
+(Initials)</B>=20
+<DIR><B>The initials property is single-valued property containing the =
+initials=20
+for parts of the user's full name. This may be used as the middle =
+initial in the=20
+Windows Address Book.</B></DIR><B>ipPhone (Phone-Ip-Primary)</B>=20
+<DIR><B>The ipPhone property is used by Telephony.</B></DIR><B>l=20
+(Locality-Name)</B>=20
+<DIR><B>The l property is a single-valued property containing the =
+locality, such=20
+as the town or city, in the user's address.</B></DIR><B>managedObjects=20
+(Managed-Objects)</B>=20
+<DIR><B>The managedObjects property is a multi-valued property that =
+contains the=20
+list of objects that are managed by the user. The objects listed are =
+those that=20
+have the property managedBy property set to this user. Each item in the =
+list is=20
+a linked reference to the managed object; therefore, Active Directory=20
+automatically updates the managedObjects property when an object's =
+managedBy=20
+property adds or removes this user as its manager. The items are =
+represented as=20
+distinguished names.</B></DIR><B>manager (Manager)</B>=20
+<DIR><B>The manager property is a single-valued property that contains =
+the user=20
+who is the user's manager. The manager's user object contains a =
+directReports=20
+property that contains references to all user objects that have their =
+manager=20
+properties set to the manager's user object. See=20
+<U>directReports</U>.</B></DIR><B>mobile (Phone-Mobile-Primary)</B>=20
+<DIR><B>The mobile property is a single-valued property containing the =
+primary=20
+cellular telephone number for the=20
+user.</B></DIR><B>otherFacsimileTelephoneNumber (Phone-Fax-Other)</B>=20
+<DIR><B>The otherFacsimileTelephoneNumber property is a multi-valued =
+property=20
+that contains telephone numbers of alternate fax machines for the=20
+user.</B></DIR><B>otherIpPhone (Phone-Ip-Other)</B>=20
+<DIR><B>The otherIpPhone property is used by =
+Telephony.</B></DIR><B>otherMobile=20
+(Phone-Mobile-Other)</B>=20
+<DIR><B>The otherMobile property is a multi-valued property that =
+contains=20
+alternate cellular telephone numbers for the =
+user.</B></DIR><B>otherPager=20
+(Phone-Pager-Other)</B>=20
+<DIR><B>The otherPager property is a multi-valued property that contains =
+
+alternate pager telephone numbers for the =
+user.</B></DIR><B>otherTelephone=20
+(Phone-Office-Other)</B>=20
+<DIR><B>The otherTelephone property is a multi-valued property that =
+contains=20
+alternate business telephone numbers for the user.</B></DIR><B>pager=20
+(Phone-Pager-Primary)</B>=20
+<DIR><B>The pager property is a single-valued property containing the =
+primary=20
+pager telephone number for the =
+user.</B></DIR><B>physicalDeliveryOfficeName=20
+(Physical-Delivery-Office-Name)</B>=20
+<DIR><B>The physicalDeliveryOfficeName property is a single-valued =
+property that=20
+contains the office location in the user's place of=20
+business.</B></DIR><B>postalAddress (Postal-Address)</B>=20
+<DIR><B>The postalAddress property is a single-valued property =
+containing the=20
+user's postal address.</B></DIR><B>postalCode (Postal-Code)</B>=20
+<DIR><B>The postalCode property is a single-valued property containing =
+postal=20
+code for the user's postal address. The postal code is specific to the =
+user's=20
+country. In the United States of America, this property contains the ZIP =
+
+code.</B></DIR><B>postOfficeBox (Post-Office-Box)</B>=20
+<DIR><B>The postOfficeBox property is a single-valued property =
+containing the=20
+number or identifier of the user's post office box.</B></DIR><B>sn =
+(Surname)</B>=20
+
+<DIR><B>The sn property is a single-valued property that specifies the =
+user's=20
+surname (family name or last name).</B></DIR><B>st =
+(State-Or-Province-Name)</B>=20
+<DIR><B>The st property is the state or province in the user's=20
+address.</B></DIR><B>street (Street-Address)</B>=20
+<DIR><B>The street property is a single-valued property that contains =
+the street=20
+address of the user's place of business.</B></DIR><B>telephoneNumber=20
+(Telephone-Number)</B>=20
+<DIR><B>The telephoneNumber property is a single-valued property that =
+contains=20
+the primary telephone number of the user's place of =
+business.</B></DIR><B>title=20
+(Title)</B>=20
+<DIR><B>The title property is a single-valued property that contains the =
+user's=20
+job title. This property is commonly used to indicate the formal job =
+title, such=20
+as Senior Programmer, rather than occupational class, such as =
+programmer. It is=20
+not typically used for "suffix" titles such as Esq. or DDS.</B>=20
+<P><B>Examples: Managing Director, Programmer II, Associate Professor, =
+and=20
+Development Lead.</B></P></DIR><B>url (WWW-Page-Other)</B>=20
+<DIR><B>The url property is a multi-valued property that contains the =
+URLs for=20
+the user's alternate web pages.</B></DIR><B>wWWHomePage =
+(WWW-Home-Page)</B>=20
+<DIR><B>The wWWHomePage property is a single-valued property that =
+contains the=20
+URL for the user's primary web page.</B></DIR></BODY></HTML>
