@@ -130,19 +130,19 @@ namespace ActiveDirectoryHelper.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Current Version.txt")]
-        public string ProgramVersionCheckPath {
+        [global::System.Configuration.DefaultSettingValueAttribute("http://adhelper.sourceforge.net/current_version.txt")]
+        public string ProgramVersionCheckURL {
             get {
-                return ((string)(this["ProgramVersionCheckPath"]));
+                return ((string)(this["ProgramVersionCheckURL"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\\Developer Utilities\\Active Directory Helper\\")]
-        public string ProgramUpdateFolder {
+        [global::System.Configuration.DefaultSettingValueAttribute("https://sourceforge.net/project/showfiles.php?group_id=207498")]
+        public string ProgramUpdateURL {
             get {
-                return ((string)(this["ProgramUpdateFolder"]));
+                return ((string)(this["ProgramUpdateURL"]));
             }
         }
         
