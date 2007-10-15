@@ -39,10 +39,11 @@ namespace ActiveDirectoryHelper
 
         private void lnkUpdatePath_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process prc = new System.Diagnostics.Process();
-            prc.StartInfo.FileName = "explorer.exe";
-            prc.StartInfo.Arguments = lnkUpdatePath.Text;
-            prc.Start();
+            System.Diagnostics.Process.Start(lnkUpdatePath.Text);
+            //System.Diagnostics.Process prc = new System.Diagnostics.Process();
+            //prc.StartInfo.FileName = "explorer.exe";
+            //prc.StartInfo.Arguments = lnkUpdatePath.Text;
+            //prc.Start();
         }
 
         private void lnkContactEMail_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

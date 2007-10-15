@@ -1677,13 +1677,13 @@ namespace ActiveDirectoryHelper
         {
 
             VersionData verData = new VersionData();
-            string filePath;
+            string filePath = string.Empty;
             try
             {
                 verData.ManualCheck = ((KeyValuePair<bool, int>)e.Argument).Key;
                 //Get the path to the update text file
-                filePath = Properties.Settings.Default.ProgramVersionCheckPath;
-                verData.UpdateFolder = Properties.Settings.Default.ProgramUpdateFolder;
+                filePath = Properties.Settings.Default.ProgramVersionCheckURL;
+                verData.UpdateFolder = Properties.Settings.Default.ProgramUpdateURL;
                 verData.Contact = Properties.Settings.Default.ProgramUpdateContact;
                 verData.ContactEMail = Properties.Settings.Default.ProgramUpdateContactEmail;
                 verData.YourVersion = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
@@ -1691,14 +1691,6 @@ namespace ActiveDirectoryHelper
             catch
             {
             }
-            finally
-            {
-                /* Taking out the actual check for updates until it can be worked out on the SourceForge.net site */
-                //TODO: Link in version checking against SourceForge.net
-                e.Result = verData;
-            }
-            return;
-
             try
             {
 
@@ -1707,7 +1699,14 @@ namespace ActiveDirectoryHelper
                     verData.CheckIntervalElapsed = true;
                     try
                     {
-                        string[] versions = File.ReadAllLines(filePath);
+                        System.Net.WebRequest req = System.Net.WebRequest.Create(filePath);
+                        System.Net.WebResponse resp = req.GetResponse();
+                        System.IO.StreamReader sr = new System.IO.StreamReader(resp.GetResponseStream());
+
+                        string versionFile = sr.ReadToEnd();
+                        sr.Close();
+
+                        string[] versions = versionFile.Split(new char[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
                         verData.LatestVersion = new Version(versions[0]);
                         if (versions.Length > 1)
                             verData.ReleaseNotes = String.Join("\r\n", versions, 1, versions.Length - 1);
