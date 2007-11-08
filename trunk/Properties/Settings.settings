@@ -30,7 +30,7 @@
       <Value Profile="(Default)">Michael McKechney</Value>
     </Setting>
     <Setting Name="LastProgramUpdateCheck" Type="System.DateTime" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">2007-01-01</Value>
     </Setting>
     <Setting Name="DisplayDisabledAccounts" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
