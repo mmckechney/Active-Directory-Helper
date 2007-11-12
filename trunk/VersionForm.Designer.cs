@@ -183,6 +183,7 @@ namespace ActiveDirectoryHelper
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "VersionForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.WindowsDefaultBounds;
             this.Text = "About:  Active Directory Helper";
             this.Load += new System.EventHandler(this.VersionForm_Load);
             this.ResumeLayout(false);

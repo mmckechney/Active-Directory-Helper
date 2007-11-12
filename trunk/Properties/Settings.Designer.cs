@@ -155,5 +155,41 @@ namespace ActiveDirectoryHelper.Properties {
                 return ((string)(this["ProgramUpdateContactEmail"]));
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ProxyUserName {
+            get {
+                return ((string)(this["ProxyUserName"]));
+            }
+            set {
+                this["ProxyUserName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ProxyPassword {
+            get {
+                return ((string)(this["ProxyPassword"]));
+            }
+            set {
+                this["ProxyPassword"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ProxyUseProxy {
+            get {
+                return ((bool)(this["ProxyUseProxy"]));
+            }
+            set {
+                this["ProxyUseProxy"] = value;
+            }
+        }
     }
 }

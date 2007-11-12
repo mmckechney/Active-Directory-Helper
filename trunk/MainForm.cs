@@ -13,6 +13,7 @@ using System.Collections.Specialized;
 using System.IO;
 using System.Diagnostics;
 using ActiveDirectoryHelper.Collections;
+using System.Net;
 namespace ActiveDirectoryHelper
 {
     /// <summary>
@@ -92,6 +93,9 @@ namespace ActiveDirectoryHelper
         private BackgroundWorker bgFindGroupComparison;
         private BackgroundWorker bgFindMultiple;
         private PropertyMonitorHelper propHelper;
+        private bool startQuiet = false;
+        private ToolStripMenuItem proxyCredentialsToolStripMenuItem;
+        private bool proxyAuthAcknowledged = false;
         public MainForm()
         {
             //
@@ -100,6 +104,15 @@ namespace ActiveDirectoryHelper
             InitializeComponent();
 
             Microsoft.Win32.SystemEvents.SessionEnded += new Microsoft.Win32.SessionEndedEventHandler(SystemEvents_SessionEnded);
+        }
+        public MainForm(string[] args) : this()
+        {
+            if (args.Length > 0)
+            {
+                string quiet = args[0].Trim().ToLower();
+                if (quiet == "/q" || quiet == "/quiet" || quiet == "/quietstart")
+                    this.startQuiet = true;
+            }
         }
 
         void SystemEvents_SessionEnded(object sender, Microsoft.Win32.SessionEndedEventArgs e)
@@ -163,7 +176,7 @@ namespace ActiveDirectoryHelper
             this.txtLastName = new System.Windows.Forms.TextBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
-            this.contextMenu1 = new System.Windows.Forms.ContextMenuStrip();
+            this.contextMenu1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mnuOpen = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuExit = new System.Windows.Forms.ToolStripMenuItem();
             this.bgGetGroupList = new System.ComponentModel.BackgroundWorker();
@@ -186,25 +199,27 @@ namespace ActiveDirectoryHelper
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.monitorUserPropertiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.configureOrganizationalUnitHighlightingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.proxyCredentialsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlUserList = new System.Windows.Forms.Panel();
+            this.userList = new ActiveDirectoryHelper.UserListCtrl();
             this.bgFindAccount = new System.ComponentModel.BackgroundWorker();
             this.bgCheckDomain = new System.ComponentModel.BackgroundWorker();
             this.bgCheckForUpdates = new System.ComponentModel.BackgroundWorker();
             this.pnlGroupList = new System.Windows.Forms.Panel();
             this.label6 = new System.Windows.Forms.Label();
+            this.userPropertiesCtrl1 = new ActiveDirectoryHelper.UserPropertiesCtrl();
             this.label5 = new System.Windows.Forms.Label();
+            this.userGroupsCtrl1 = new ActiveDirectoryHelper.UserGroupsCtrl();
             this.bgFindGroupMembers = new System.ComponentModel.BackgroundWorker();
             this.bgFindGroupComparison = new System.ComponentModel.BackgroundWorker();
             this.bgFindMultiple = new System.ComponentModel.BackgroundWorker();
-            this.userList = new ActiveDirectoryHelper.UserListCtrl();
-            this.userPropertiesCtrl1 = new ActiveDirectoryHelper.UserPropertiesCtrl();
-            this.userGroupsCtrl1 = new ActiveDirectoryHelper.UserGroupsCtrl();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgGroup2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupListTable2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgGroups1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupListTable1)).BeginInit();
             this.grpAccounts.SuspendLayout();
+            this.contextMenu1.SuspendLayout();
             this.pnlSearchCriteria.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.statusStrip2.SuspendLayout();
@@ -534,14 +549,20 @@ namespace ActiveDirectoryHelper
             this.contextMenu1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuOpen,
             this.mnuExit});
+            this.contextMenu1.Name = "contextMenu1";
+            this.contextMenu1.Size = new System.Drawing.Size(112, 48);
             // 
             // mnuOpen
             // 
+            this.mnuOpen.Name = "mnuOpen";
+            this.mnuOpen.Size = new System.Drawing.Size(111, 22);
             this.mnuOpen.Text = "Open";
             this.mnuOpen.Click += new System.EventHandler(this.mnuOpen_Click);
             // 
             // mnuExit
             // 
+            this.mnuExit.Name = "mnuExit";
+            this.mnuExit.Size = new System.Drawing.Size(111, 22);
             this.mnuExit.Text = "Exit";
             this.mnuExit.Click += new System.EventHandler(this.mnuExit_Click);
             // 
@@ -719,7 +740,8 @@ namespace ActiveDirectoryHelper
             this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.aboutToolStripMenuItem,
             this.monitorUserPropertiesToolStripMenuItem,
-            this.configureOrganizationalUnitHighlightingToolStripMenuItem});
+            this.configureOrganizationalUnitHighlightingToolStripMenuItem,
+            this.proxyCredentialsToolStripMenuItem});
             this.toolStripDropDownButton1.Font = new System.Drawing.Font("Tahoma", 8.25F);
             this.toolStripDropDownButton1.ForeColor = System.Drawing.Color.Blue;
             this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
@@ -749,6 +771,13 @@ namespace ActiveDirectoryHelper
             this.configureOrganizationalUnitHighlightingToolStripMenuItem.Text = "Configure Organizational Unit Highlighting";
             this.configureOrganizationalUnitHighlightingToolStripMenuItem.Click += new System.EventHandler(this.configureOrganizationalUnitHighlightingToolStripMenuItem_Click);
             // 
+            // proxyCredentialsToolStripMenuItem
+            // 
+            this.proxyCredentialsToolStripMenuItem.Name = "proxyCredentialsToolStripMenuItem";
+            this.proxyCredentialsToolStripMenuItem.Size = new System.Drawing.Size(284, 22);
+            this.proxyCredentialsToolStripMenuItem.Text = "Proxy Credentials";
+            this.proxyCredentialsToolStripMenuItem.Click += new System.EventHandler(this.proxyCredentialsToolStripMenuItem_Click);
+            // 
             // pnlUserList
             // 
             this.pnlUserList.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
@@ -759,6 +788,18 @@ namespace ActiveDirectoryHelper
             this.pnlUserList.Name = "pnlUserList";
             this.pnlUserList.Size = new System.Drawing.Size(1082, 73);
             this.pnlUserList.TabIndex = 6;
+            // 
+            // userList
+            // 
+            this.userList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.userList.Location = new System.Drawing.Point(3, 3);
+            this.userList.Name = "userList";
+            this.userList.Padding = new System.Windows.Forms.Padding(3, 3, 3, 0);
+            this.userList.Size = new System.Drawing.Size(1079, 67);
+            this.userList.TabIndex = 3;
+            this.userList.StatusEvent += new ActiveDirectoryHelper.StatusEventHandler(this.userList_StatusEvent);
             // 
             // bgFindAccount
             // 
@@ -801,6 +842,16 @@ namespace ActiveDirectoryHelper
             this.label6.TabIndex = 3;
             this.label6.Text = "User Properties:";
             // 
+            // userPropertiesCtrl1
+            // 
+            this.userPropertiesCtrl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.userPropertiesCtrl1.Location = new System.Drawing.Point(331, 24);
+            this.userPropertiesCtrl1.Name = "userPropertiesCtrl1";
+            this.userPropertiesCtrl1.Size = new System.Drawing.Size(748, 300);
+            this.userPropertiesCtrl1.TabIndex = 2;
+            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -809,6 +860,15 @@ namespace ActiveDirectoryHelper
             this.label5.Size = new System.Drawing.Size(126, 13);
             this.label5.TabIndex = 1;
             this.label5.Text = "Group Memberships:";
+            // 
+            // userGroupsCtrl1
+            // 
+            this.userGroupsCtrl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)));
+            this.userGroupsCtrl1.Location = new System.Drawing.Point(3, 24);
+            this.userGroupsCtrl1.Name = "userGroupsCtrl1";
+            this.userGroupsCtrl1.Size = new System.Drawing.Size(328, 303);
+            this.userGroupsCtrl1.TabIndex = 0;
             // 
             // bgFindGroupMembers
             // 
@@ -831,37 +891,6 @@ namespace ActiveDirectoryHelper
             this.bgFindMultiple.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgFindMultiple_RunWorkerCompleted);
             this.bgFindMultiple.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.Searchers_ProgressChanged);
             // 
-            // userList
-            // 
-            this.userList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.userList.Location = new System.Drawing.Point(3, 3);
-            this.userList.Name = "userList";
-            this.userList.Padding = new System.Windows.Forms.Padding(3, 3, 3, 0);
-            this.userList.Size = new System.Drawing.Size(1079, 67);
-            this.userList.TabIndex = 3;
-            this.userList.StatusEvent += new ActiveDirectoryHelper.StatusEventHandler(this.userList_StatusEvent);
-            // 
-            // userPropertiesCtrl1
-            // 
-            this.userPropertiesCtrl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.userPropertiesCtrl1.Location = new System.Drawing.Point(331, 24);
-            this.userPropertiesCtrl1.Name = "userPropertiesCtrl1";
-            this.userPropertiesCtrl1.Size = new System.Drawing.Size(748, 300);
-            this.userPropertiesCtrl1.TabIndex = 2;
-            // 
-            // userGroupsCtrl1
-            // 
-            this.userGroupsCtrl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)));
-            this.userGroupsCtrl1.Location = new System.Drawing.Point(3, 24);
-            this.userGroupsCtrl1.Name = "userGroupsCtrl1";
-            this.userGroupsCtrl1.Size = new System.Drawing.Size(328, 303);
-            this.userGroupsCtrl1.TabIndex = 0;
-            // 
             // MainForm
             // 
             this.AutoScaleBaseSize = new System.Drawing.Size(6, 14);
@@ -875,7 +904,7 @@ namespace ActiveDirectoryHelper
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Active Directory Group and Membership Helper";
             this.Closing += new System.ComponentModel.CancelEventHandler(this.Form1_Closing);
-            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgGroup2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupListTable2)).EndInit();
@@ -883,6 +912,7 @@ namespace ActiveDirectoryHelper
             ((System.ComponentModel.ISupportInitialize)(this.groupListTable1)).EndInit();
             this.grpAccounts.ResumeLayout(false);
             this.grpAccounts.PerformLayout();
+            this.contextMenu1.ResumeLayout(false);
             this.pnlSearchCriteria.ResumeLayout(false);
             this.pnlSearchCriteria.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -904,7 +934,7 @@ namespace ActiveDirectoryHelper
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
             string mutexName = "{F0A29702-15E6-4d56-B9A2-D50382248BC9}";
             bool grantedOwnership;
@@ -919,7 +949,7 @@ namespace ActiveDirectoryHelper
 
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(new MainForm());
+                Application.Run(new MainForm(args));
             }
             finally
             {
@@ -938,9 +968,14 @@ namespace ActiveDirectoryHelper
             this.statRecordCount.Text = "Record Count: " + numRecords.ToString();
         }
 
-        private void Form1_Load(object sender, System.EventArgs e)
+        private void MainForm_Load(object sender, System.EventArgs e)
         {
 
+            if (this.startQuiet)
+            {
+                this.Visible = false;
+                this.ShowInTaskbar = false;
+            }
             pnlGroupList.Height = 0;
             this.Cursor = Cursors.AppStarting;
             this.cmbGroupList1.SelectedIndex = 0;
@@ -1007,8 +1042,14 @@ namespace ActiveDirectoryHelper
 
             bgCheckDomain.RunWorkerAsync();
 
-            KeyValuePair<bool, int> checkVals = new KeyValuePair<bool, int>(false, -10);
-            bgCheckForUpdates.RunWorkerAsync(checkVals);
+            try
+            {
+                KeyValuePair<bool, int> checkVals = new KeyValuePair<bool, int>(false, -10);
+                bgCheckForUpdates.RunWorkerAsync(checkVals);
+            }
+            catch { }
+
+           
         }
         private void StartPropertyMonitoring()
         {
@@ -1120,8 +1161,12 @@ namespace ActiveDirectoryHelper
         }
         private void CheckForUpdatesViaSearch()
         {
-            KeyValuePair<bool, int> checkVals = new KeyValuePair<bool, int>(false, -60);
-            bgCheckForUpdates.RunWorkerAsync(checkVals);
+            try
+            {
+                KeyValuePair<bool, int> checkVals = new KeyValuePair<bool, int>(false, -60);
+                bgCheckForUpdates.RunWorkerAsync(checkVals);
+            }
+            catch { }
         }
         private void btnGetGroup_Click(object sender, EventArgs e)
         {
@@ -1145,8 +1190,9 @@ namespace ActiveDirectoryHelper
 
             string joinType = ddGroup1Join.SelectedItem.ToString().ToLower();
             bgFindGroupMembers.RunWorkerAsync(new KeyValuePair<List<string>, string>(groups, joinType));
-            
-        }
+
+        }    
+        
 
         private void btnGroupComparison_Click(object sender, EventArgs e)
         {
@@ -1380,8 +1426,18 @@ namespace ActiveDirectoryHelper
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            KeyValuePair<bool, int> checkVals = new KeyValuePair<bool, int>(true, 1);
-            bgCheckForUpdates.RunWorkerAsync(checkVals);
+            try
+            {
+                KeyValuePair<bool, int> checkVals = new KeyValuePair<bool, int>(true, 1);
+                statGeneral.Text = "Accessing release notes and update data...";
+                this.Cursor = Cursors.AppStarting;
+                bgCheckForUpdates.RunWorkerAsync(checkVals);
+            }
+            catch {
+                MessageBox.Show("Unable to access release notes. Please try again.", "Unexpected error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                statGeneral.Text = "Ready.";
+                this.Cursor = Cursors.Default;
+            }
         }
 
         private void monitorUserPropertiesToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1700,16 +1756,45 @@ namespace ActiveDirectoryHelper
                     try
                     {
                         System.Net.WebRequest req = System.Net.WebRequest.Create(filePath);
+                        string pw = string.Empty;
+                        string un = string.Empty;
+                        if (Properties.Settings.Default.ProxyUseProxy)
+                        {
+                            if (Properties.Settings.Default.ProxyPassword.Length > 0)
+                                pw = Encryption.Crypter.Decrypt(Properties.Settings.Default.ProxyPassword);
+
+                            if (Properties.Settings.Default.ProxyUserName.Length > 0)
+                                un = Encryption.Crypter.Decrypt(Properties.Settings.Default.ProxyUserName);
+
+
+                            NetworkCredential cred = new NetworkCredential(un, pw);
+                            req.Proxy = WebRequest.DefaultWebProxy;
+                            req.Proxy.Credentials = cred;
+                        }
+                        req.Timeout = 5000;
                         System.Net.WebResponse resp = req.GetResponse();
                         System.IO.StreamReader sr = new System.IO.StreamReader(resp.GetResponseStream());
 
                         string versionFile = sr.ReadToEnd();
                         sr.Close();
 
-                        string[] versions = versionFile.Split(new char[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
+                        string[] versions = versionFile.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
                         verData.LatestVersion = new Version(versions[0]);
                         if (versions.Length > 1)
                             verData.ReleaseNotes = String.Join("\r\n", versions, 1, versions.Length - 1);
+                    }
+                    catch (WebException we)
+                    {
+                        if (we.Message.ToLower().IndexOf("proxy authentication required") > -1)
+                        {
+                            verData.ProxyFailure = true;
+                            verData.UpdateFileReadError = true;
+                        }
+                        else if (we.Message.ToLower().IndexOf("The operation has timed out") > -1)
+                        {
+                            verData.ProxyFailure = false;
+                            verData.UpdateFileReadError = true;
+                        }
                     }
                     catch (Exception exe)
                     {
@@ -1739,6 +1824,7 @@ namespace ActiveDirectoryHelper
             {
                 e.Result = verData;
             }
+
         }
 
         private void bgCheckForUpdates_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -1747,20 +1833,43 @@ namespace ActiveDirectoryHelper
             {
                 try
                 {
-                    VersionData verData = (VersionData)e.Result;
-                    if (verData.CheckIntervalElapsed || verData.ManualCheck)
+                    if (e.Result is VersionData)
                     {
-                        if (verData.LatestVersion == null || verData.LatestVersion > verData.YourVersion || verData.ManualCheck)
+
+                        VersionData verData = (VersionData)e.Result;
+
+                        if (verData.ManualCheck)
                         {
-                            VersionForm frmVersion = new VersionForm(verData);
-                            frmVersion.ShowDialog();
+                            this.statGeneral.Text = "Ready.";
+                            this.Cursor = Cursors.Default;
                         }
+
+                        if (verData.CheckIntervalElapsed || verData.ManualCheck)
+                        {
+                            if (verData.ProxyFailure || !this.proxyAuthAcknowledged)
+                            {
+                                MessageBox.Show("A proxy error was detected. In order to check for updates, you will need to provide your web proxy credentials.\r\nPlease enter your " +
+                                    "proxy user name and password under \"Settings > Proxy Credentials\"", "Proxy Credentials Needed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                this.proxyAuthAcknowledged = true;
+
+                            }
+
+                            if (verData.LatestVersion == null || verData.LatestVersion > verData.YourVersion || verData.ManualCheck)
+                            {
+                                VersionForm frmVersion = new VersionForm(verData);
+                                frmVersion.ShowDialog();
+                            }
+                        }
+                      
                     }
                 }
                 catch (Exception exe)
                 {
-                    System.Diagnostics.EventLog.WriteEntry("SqlSync", "Unable to display New Version alert windoe.\r\n" + exe.ToString(), EventLogEntryType.Error, 901);
+                    System.Diagnostics.EventLog.WriteEntry("ActiveDirectoryHelper", "Unable to display New Version alert window.\r\n" + exe.ToString(), EventLogEntryType.Error, 901);
 
+                }
+                finally
+                {
                 }
             }
         }
@@ -1919,6 +2028,12 @@ namespace ActiveDirectoryHelper
             }
         }
         #endregion
+
+        private void proxyCredentialsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ProxyForm frmProx = new ProxyForm();
+            frmProx.ShowDialog();
+        }
 
     }
 }
