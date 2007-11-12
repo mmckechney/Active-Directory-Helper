@@ -80,6 +80,13 @@ namespace ActiveDirectoryHelper.Collections
             get { return checkIntervalElapsed; }
             set { checkIntervalElapsed = value; }
         }
+        private bool proxyFailure = false;
+
+        public bool ProxyFailure
+        {
+            get { return proxyFailure; }
+            set { proxyFailure = value; }
+        }
 
     }
 }
