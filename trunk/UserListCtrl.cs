@@ -62,6 +62,8 @@ namespace ActiveDirectoryHelper
         private DataGridViewTextBoxColumn business2PhoneDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn AccountStatus;
         private DataGridViewTextBoxColumn SearchedDomain;
+        private ToolStripSeparator toolStripSeparator2;
+        private ToolStripMenuItem viewOnLineDirectoryToolStripMenuItem;
         private IContainer components;
 
         public UserListCtrl()
@@ -117,6 +119,16 @@ namespace ActiveDirectoryHelper
             this.mnuCopyforSql = new System.Windows.Forms.MenuItem();
             this.mnuSpreadSheet = new System.Windows.Forms.MenuItem();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.lastNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.firstNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.userIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.titleDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.countryDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.eMailDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.phoneDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.business2PhoneDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.AccountStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SearchedDomain = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ctxActions = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.getUsersGroupsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.getUsersManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -128,16 +140,8 @@ namespace ActiveDirectoryHelper
             this.copyIDsWithDomainPrefixToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyIDsAsUserdomainToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aDGroupMembersTableBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.lastNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.firstNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.userIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.titleDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.countryDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.eMailDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.phoneDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.business2PhoneDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.AccountStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SearchedDomain = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.viewOnLineDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             mnuCopyHighlightGroups = new System.Windows.Forms.MenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.ctxActions.SuspendLayout();
@@ -293,86 +297,6 @@ namespace ActiveDirectoryHelper
             this.dataGridView1.TabIndex = 2;
             this.dataGridView1.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_CellMouseDown);
             // 
-            // ctxActions
-            // 
-            this.ctxActions.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.getUsersGroupsToolStripMenuItem,
-            this.getUsersManagerToolStripMenuItem,
-            this.getUsersDirectReportsToolStripMenuItem,
-            this.listUsersPropertiesToolStripMenuItem,
-            this.toolStripSeparator1,
-            this.copyValueToolStripMenuItem,
-            this.copyIDAndGroupsToolStripMenuItem,
-            this.copyIDsWithDomainPrefixToolStripMenuItem,
-            this.copyIDsAsUserdomainToolStripMenuItem});
-            this.ctxActions.Name = "ctxActions";
-            this.ctxActions.Size = new System.Drawing.Size(222, 186);
-            // 
-            // getUsersGroupsToolStripMenuItem
-            // 
-            this.getUsersGroupsToolStripMenuItem.Name = "getUsersGroupsToolStripMenuItem";
-            this.getUsersGroupsToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
-            this.getUsersGroupsToolStripMenuItem.Text = "Get User\'s Groups";
-            this.getUsersGroupsToolStripMenuItem.Click += new System.EventHandler(this.getUsersGroupsToolStripMenuItem_Click);
-            // 
-            // getUsersManagerToolStripMenuItem
-            // 
-            this.getUsersManagerToolStripMenuItem.Name = "getUsersManagerToolStripMenuItem";
-            this.getUsersManagerToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
-            this.getUsersManagerToolStripMenuItem.Text = "Get User\'s Management";
-            this.getUsersManagerToolStripMenuItem.Click += new System.EventHandler(this.getUsersManagerToolStripMenuItem_Click);
-            // 
-            // getUsersDirectReportsToolStripMenuItem
-            // 
-            this.getUsersDirectReportsToolStripMenuItem.Name = "getUsersDirectReportsToolStripMenuItem";
-            this.getUsersDirectReportsToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
-            this.getUsersDirectReportsToolStripMenuItem.Text = "Get User\'s Direct Reports";
-            this.getUsersDirectReportsToolStripMenuItem.Click += new System.EventHandler(this.getUsersDirectReportsToolStripMenuItem_Click);
-            // 
-            // listUsersPropertiesToolStripMenuItem
-            // 
-            this.listUsersPropertiesToolStripMenuItem.Name = "listUsersPropertiesToolStripMenuItem";
-            this.listUsersPropertiesToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
-            this.listUsersPropertiesToolStripMenuItem.Text = "List User\'s Properties";
-            this.listUsersPropertiesToolStripMenuItem.Click += new System.EventHandler(this.listUsersPropertiesToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(218, 6);
-            // 
-            // copyValueToolStripMenuItem
-            // 
-            this.copyValueToolStripMenuItem.Name = "copyValueToolStripMenuItem";
-            this.copyValueToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
-            this.copyValueToolStripMenuItem.Text = "Copy Value";
-            this.copyValueToolStripMenuItem.Click += new System.EventHandler(this.copyValueToolStripMenuItem_Click);
-            // 
-            // copyIDAndGroupsToolStripMenuItem
-            // 
-            this.copyIDAndGroupsToolStripMenuItem.Name = "copyIDAndGroupsToolStripMenuItem";
-            this.copyIDAndGroupsToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
-            this.copyIDAndGroupsToolStripMenuItem.Text = "Copy IDs and Groups";
-            this.copyIDAndGroupsToolStripMenuItem.Click += new System.EventHandler(this.copyIDAndGroupsToolStripMenuItem_Click);
-            // 
-            // copyIDsWithDomainPrefixToolStripMenuItem
-            // 
-            this.copyIDsWithDomainPrefixToolStripMenuItem.Name = "copyIDsWithDomainPrefixToolStripMenuItem";
-            this.copyIDsWithDomainPrefixToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
-            this.copyIDsWithDomainPrefixToolStripMenuItem.Text = "Copy IDs with Domain Prefix";
-            this.copyIDsWithDomainPrefixToolStripMenuItem.Click += new System.EventHandler(this.copyIDsWithDomainPrefixToolStripMenuItem_Click);
-            // 
-            // copyIDsAsUserdomainToolStripMenuItem
-            // 
-            this.copyIDsAsUserdomainToolStripMenuItem.Name = "copyIDsAsUserdomainToolStripMenuItem";
-            this.copyIDsAsUserdomainToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
-            this.copyIDsAsUserdomainToolStripMenuItem.Text = "Copy IDs as user@domain";
-            this.copyIDsAsUserdomainToolStripMenuItem.Click += new System.EventHandler(this.copyIDsAsUserdomainToolStripMenuItem_Click);
-            // 
-            // aDGroupMembersTableBindingSource
-            // 
-            this.aDGroupMembersTableBindingSource.DataSource = typeof(ActiveDirectoryHelper.Tables.ADGroupMembersTable);
-            // 
             // lastNameDataGridViewTextBoxColumn
             // 
             this.lastNameDataGridViewTextBoxColumn.DataPropertyName = "LastName";
@@ -449,6 +373,102 @@ namespace ActiveDirectoryHelper
             this.SearchedDomain.HeaderText = "Domain";
             this.SearchedDomain.Name = "SearchedDomain";
             this.SearchedDomain.ReadOnly = true;
+            // 
+            // ctxActions
+            // 
+            this.ctxActions.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.getUsersGroupsToolStripMenuItem,
+            this.getUsersManagerToolStripMenuItem,
+            this.getUsersDirectReportsToolStripMenuItem,
+            this.listUsersPropertiesToolStripMenuItem,
+            this.toolStripSeparator2,
+            this.viewOnLineDirectoryToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.copyValueToolStripMenuItem,
+            this.copyIDAndGroupsToolStripMenuItem,
+            this.copyIDsWithDomainPrefixToolStripMenuItem,
+            this.copyIDsAsUserdomainToolStripMenuItem});
+            this.ctxActions.Name = "ctxActions";
+            this.ctxActions.Size = new System.Drawing.Size(222, 236);
+            this.ctxActions.Opening += new System.ComponentModel.CancelEventHandler(this.ctxActions_Opening);
+            // 
+            // getUsersGroupsToolStripMenuItem
+            // 
+            this.getUsersGroupsToolStripMenuItem.Name = "getUsersGroupsToolStripMenuItem";
+            this.getUsersGroupsToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.getUsersGroupsToolStripMenuItem.Text = "Get User\'s Groups";
+            this.getUsersGroupsToolStripMenuItem.Click += new System.EventHandler(this.getUsersGroupsToolStripMenuItem_Click);
+            // 
+            // getUsersManagerToolStripMenuItem
+            // 
+            this.getUsersManagerToolStripMenuItem.Name = "getUsersManagerToolStripMenuItem";
+            this.getUsersManagerToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.getUsersManagerToolStripMenuItem.Text = "Get User\'s Management";
+            this.getUsersManagerToolStripMenuItem.Click += new System.EventHandler(this.getUsersManagerToolStripMenuItem_Click);
+            // 
+            // getUsersDirectReportsToolStripMenuItem
+            // 
+            this.getUsersDirectReportsToolStripMenuItem.Name = "getUsersDirectReportsToolStripMenuItem";
+            this.getUsersDirectReportsToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.getUsersDirectReportsToolStripMenuItem.Text = "Get User\'s Direct Reports";
+            this.getUsersDirectReportsToolStripMenuItem.Click += new System.EventHandler(this.getUsersDirectReportsToolStripMenuItem_Click);
+            // 
+            // listUsersPropertiesToolStripMenuItem
+            // 
+            this.listUsersPropertiesToolStripMenuItem.Name = "listUsersPropertiesToolStripMenuItem";
+            this.listUsersPropertiesToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.listUsersPropertiesToolStripMenuItem.Text = "List User\'s Properties";
+            this.listUsersPropertiesToolStripMenuItem.Click += new System.EventHandler(this.listUsersPropertiesToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(218, 6);
+            // 
+            // copyValueToolStripMenuItem
+            // 
+            this.copyValueToolStripMenuItem.Name = "copyValueToolStripMenuItem";
+            this.copyValueToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.copyValueToolStripMenuItem.Text = "Copy Value";
+            this.copyValueToolStripMenuItem.Click += new System.EventHandler(this.copyValueToolStripMenuItem_Click);
+            // 
+            // copyIDAndGroupsToolStripMenuItem
+            // 
+            this.copyIDAndGroupsToolStripMenuItem.Name = "copyIDAndGroupsToolStripMenuItem";
+            this.copyIDAndGroupsToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.copyIDAndGroupsToolStripMenuItem.Text = "Copy IDs and Groups";
+            this.copyIDAndGroupsToolStripMenuItem.Click += new System.EventHandler(this.copyIDAndGroupsToolStripMenuItem_Click);
+            // 
+            // copyIDsWithDomainPrefixToolStripMenuItem
+            // 
+            this.copyIDsWithDomainPrefixToolStripMenuItem.Name = "copyIDsWithDomainPrefixToolStripMenuItem";
+            this.copyIDsWithDomainPrefixToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.copyIDsWithDomainPrefixToolStripMenuItem.Text = "Copy IDs with Domain Prefix";
+            this.copyIDsWithDomainPrefixToolStripMenuItem.Click += new System.EventHandler(this.copyIDsWithDomainPrefixToolStripMenuItem_Click);
+            // 
+            // copyIDsAsUserdomainToolStripMenuItem
+            // 
+            this.copyIDsAsUserdomainToolStripMenuItem.Name = "copyIDsAsUserdomainToolStripMenuItem";
+            this.copyIDsAsUserdomainToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.copyIDsAsUserdomainToolStripMenuItem.Text = "Copy IDs as user@domain";
+            this.copyIDsAsUserdomainToolStripMenuItem.Click += new System.EventHandler(this.copyIDsAsUserdomainToolStripMenuItem_Click);
+            // 
+            // aDGroupMembersTableBindingSource
+            // 
+            this.aDGroupMembersTableBindingSource.DataSource = typeof(ActiveDirectoryHelper.Tables.ADGroupMembersTable);
+            // 
+            // viewOnLineDirectoryToolStripMenuItem
+            // 
+            this.viewOnLineDirectoryToolStripMenuItem.Enabled = false;
+            this.viewOnLineDirectoryToolStripMenuItem.Name = "viewOnLineDirectoryToolStripMenuItem";
+            this.viewOnLineDirectoryToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.viewOnLineDirectoryToolStripMenuItem.Text = "View On-Line Directory";
+            this.viewOnLineDirectoryToolStripMenuItem.Click += new System.EventHandler(this.viewOnLineDirectoryToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(218, 6);
             // 
             // UserListCtrl
             // 
@@ -729,6 +749,39 @@ namespace ActiveDirectoryHelper
                 }
             }
             return domain.Substring(0, domain.Length - 1);
+        }
+
+        private void ctxActions_Opening(object sender, CancelEventArgs e)
+        {
+            try
+            {
+                if (Properties.Settings.Default.OnLineDirectoryFormat.Length > 0)
+                    viewOnLineDirectoryToolStripMenuItem.Enabled = true;
+                else
+                    viewOnLineDirectoryToolStripMenuItem.Enabled = false;
+            }
+            catch { }
+        }
+
+        private void viewOnLineDirectoryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (this.dataGridView1.SelectedCells.Count == 0)
+                return;
+
+            try
+            {
+                string url = Properties.Settings.Default.OnLineDirectoryFormat;
+                ADGroupMembersTableRow row = (ADGroupMembersTableRow)((DataRowView)this.dataGridView1.SelectedCells[0].OwningRow.DataBoundItem).Row;
+                ADGroupMembersTable tmp = (ADGroupMembersTable)row.Table;
+                foreach (System.Data.DataColumn col in tmp.Columns)
+                {
+                    url = url.Replace("{" + col.ColumnName + "}", row[col.ColumnName].ToString());
+                }
+                System.Diagnostics.Process.Start(url);
+            }
+            catch
+            {
+            }
         }
 
     }

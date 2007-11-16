@@ -14,10 +14,9 @@ namespace ActiveDirectoryHelper
 	public class UserGroups : System.Windows.Forms.Form
     {
         private List<ADGroup> groupList;
-        private List<HighlightSetting> highlightSettings;
         private string name;
         private UserGroupsCtrl userGroupsCtrl1;
-        private IContainer components;
+        private IContainer components = null;
 
         public UserGroups(string name, List<ADGroup> groupList)
         {

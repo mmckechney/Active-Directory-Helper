@@ -130,6 +130,12 @@
     <Compile Include="AdsUserFlags.cs" />
     <Compile Include="Collections\GroupCompareInstructions.cs" />
     <Compile Include="Crypter.cs" />
+    <Compile Include="OnlineDirectoryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OnlineDirectoryForm.Designer.cs">
+      <DependentUpon>OnlineDirectoryForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ColumnSorter.cs" />
     <Compile Include="ProxyForm.cs">
@@ -221,6 +227,10 @@
     <EmbeddedResource Include="ADGroupMembersTable.resx">
       <DependentUpon>ADGroupMembersTable.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OnlineDirectoryForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>OnlineDirectoryForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ProxyForm.resx">
       <SubType>Designer</SubType>
