@@ -81,7 +81,6 @@ namespace ActiveDirectoryHelper
         private ToolStripMenuItem monitorUserPropertiesToolStripMenuItem;
         private ToolStripMenuItem aboutToolStripMenuItem;
         private System.ComponentModel.IContainer components;
-        private System.Threading.Thread THRMonitor;
         private ToolStripMenuItem configureOrganizationalUnitHighlightingToolStripMenuItem;
         private Panel pnlGroupList;
         private UserGroupsCtrl userGroupsCtrl1;
@@ -95,6 +94,7 @@ namespace ActiveDirectoryHelper
         private PropertyMonitorHelper propHelper;
         private bool startQuiet = false;
         private ToolStripMenuItem proxyCredentialsToolStripMenuItem;
+        private ToolStripMenuItem configureOnLineDirectoryLinkFormatToolStripMenuItem;
         private bool proxyAuthAcknowledged = false;
         public MainForm()
         {
@@ -196,10 +196,11 @@ namespace ActiveDirectoryHelper
             this.statRecordCount = new System.Windows.Forms.ToolStripStatusLabel();
             this.statExecuteTime = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
-            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.monitorUserPropertiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.configureOnLineDirectoryLinkFormatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.configureOrganizationalUnitHighlightingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.proxyCredentialsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlUserList = new System.Windows.Forms.Panel();
             this.userList = new ActiveDirectoryHelper.UserListCtrl();
             this.bgFindAccount = new System.ComponentModel.BackgroundWorker();
@@ -738,10 +739,11 @@ namespace ActiveDirectoryHelper
             // 
             this.toolStripDropDownButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.aboutToolStripMenuItem,
             this.monitorUserPropertiesToolStripMenuItem,
+            this.configureOnLineDirectoryLinkFormatToolStripMenuItem,
             this.configureOrganizationalUnitHighlightingToolStripMenuItem,
-            this.proxyCredentialsToolStripMenuItem});
+            this.proxyCredentialsToolStripMenuItem,
+            this.aboutToolStripMenuItem});
             this.toolStripDropDownButton1.Font = new System.Drawing.Font("Tahoma", 8.25F);
             this.toolStripDropDownButton1.ForeColor = System.Drawing.Color.Blue;
             this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
@@ -750,19 +752,19 @@ namespace ActiveDirectoryHelper
             this.toolStripDropDownButton1.Size = new System.Drawing.Size(59, 20);
             this.toolStripDropDownButton1.Text = "Settings";
             // 
-            // aboutToolStripMenuItem
-            // 
-            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(284, 22);
-            this.aboutToolStripMenuItem.Text = "About...";
-            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
-            // 
             // monitorUserPropertiesToolStripMenuItem
             // 
             this.monitorUserPropertiesToolStripMenuItem.Name = "monitorUserPropertiesToolStripMenuItem";
             this.monitorUserPropertiesToolStripMenuItem.Size = new System.Drawing.Size(284, 22);
             this.monitorUserPropertiesToolStripMenuItem.Text = "Monitor User Properties";
             this.monitorUserPropertiesToolStripMenuItem.Click += new System.EventHandler(this.monitorUserPropertiesToolStripMenuItem_Click);
+            // 
+            // configureOnLineDirectoryLinkFormatToolStripMenuItem
+            // 
+            this.configureOnLineDirectoryLinkFormatToolStripMenuItem.Name = "configureOnLineDirectoryLinkFormatToolStripMenuItem";
+            this.configureOnLineDirectoryLinkFormatToolStripMenuItem.Size = new System.Drawing.Size(284, 22);
+            this.configureOnLineDirectoryLinkFormatToolStripMenuItem.Text = "Configure On-Line Directory Link Format";
+            this.configureOnLineDirectoryLinkFormatToolStripMenuItem.Click += new System.EventHandler(this.configureOnLineDirectoryLinkFormatToolStripMenuItem_Click);
             // 
             // configureOrganizationalUnitHighlightingToolStripMenuItem
             // 
@@ -777,6 +779,13 @@ namespace ActiveDirectoryHelper
             this.proxyCredentialsToolStripMenuItem.Size = new System.Drawing.Size(284, 22);
             this.proxyCredentialsToolStripMenuItem.Text = "Proxy Credentials";
             this.proxyCredentialsToolStripMenuItem.Click += new System.EventHandler(this.proxyCredentialsToolStripMenuItem_Click);
+            // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(284, 22);
+            this.aboutToolStripMenuItem.Text = "About...";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // pnlUserList
             // 
@@ -1020,9 +1029,8 @@ namespace ActiveDirectoryHelper
             {
                 
                 List<HighlightSetting> highlight = new List<HighlightSetting>();
-                highlight.Add(new HighlightSetting("Front Office",Color.Red));
-                highlight.Add(new HighlightSetting("Back Office",Color.Blue));
-                highlight.Add(new HighlightSetting("Distribution Groups", Color.Gray));
+                highlight.Add(new HighlightSetting("Groups", Color.Blue));
+                highlight.Add(new HighlightSetting("DistributionGroups", Color.Gray));
                 Properties.Settings.Default.OUHighlightSetting = highlight;
                 Properties.Settings.Default.Save();
             }
@@ -2033,6 +2041,12 @@ namespace ActiveDirectoryHelper
         {
             ProxyForm frmProx = new ProxyForm();
             frmProx.ShowDialog();
+        }
+
+        private void configureOnLineDirectoryLinkFormatToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OnlineDirectoryForm frmOL = new OnlineDirectoryForm();
+            frmOL.ShowDialog();
         }
 
     }

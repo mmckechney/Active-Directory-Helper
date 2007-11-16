@@ -191,5 +191,17 @@ namespace ActiveDirectoryHelper.Properties {
                 this["ProxyUseProxy"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string OnLineDirectoryFormat {
+            get {
+                return ((string)(this["OnLineDirectoryFormat"]));
+            }
+            set {
+                this["OnLineDirectoryFormat"] = value;
+            }
+        }
     }
 }

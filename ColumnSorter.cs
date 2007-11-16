@@ -8,7 +8,6 @@ namespace ActiveDirectoryHelper
     {
         private int currentColumn = 0;
         private int lastColumn = -1;
-        private Type expectedType = null;
         private int clickCount = 0;
         public int CurrentColumn
         {
@@ -16,7 +15,6 @@ namespace ActiveDirectoryHelper
             {
                 if (currentColumn != lastColumn)
                 {
-                    expectedType = null;
                     sort = SortOrder.Ascending;
                 }
                 else if (sort == SortOrder.Ascending)

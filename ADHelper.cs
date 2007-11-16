@@ -657,7 +657,7 @@ namespace ActiveDirectoryHelper
                     {
                         collection = searcher1.FindAll();
                     }
-                    catch (Exception e)
+                    catch (Exception)
                     {
                         continue;
                     }
