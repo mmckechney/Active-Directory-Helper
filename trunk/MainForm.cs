@@ -1980,7 +1980,7 @@ namespace ActiveDirectoryHelper
                 ((BackgroundWorker)sender).ReportProgress(0);
                 List<string> users = (List<string>)e.Argument;
                
-                ADGroupMembersTable tblTmp;
+                ADGroupMembersTable tblTmp = new ADGroupMembersTable();
                 this.searchStartTime = DateTime.Now;
 
                     for (int i = 0; i < users.Count; i++)
@@ -1996,18 +1996,43 @@ namespace ActiveDirectoryHelper
                                 string[] name = users[i].Split(new char[] { ',' }, 2, StringSplitOptions.None);
                                 tblTmp = ADHelper.GetAccount(name[0], name[1], "");
                             }
-                            else if (users[i].Trim().IndexOf(' ') > -1)  //First Last
+                            else if (users[i].Trim().IndexOf(' ') > -1)  //First Last or odd combinations there-of
                             {
-                                string[] name = users[i].Trim().Split(new char[] { ' ' }, 2, StringSplitOptions.None);
-                                tblTmp = ADHelper.GetAccount(name[1], name[0], "");
+                                string[] name = users[i].Trim().Split(new char[] { ' ' },StringSplitOptions.RemoveEmptyEntries);
+                                if (name.Length > 2) //Assume that there must be a middle name or inital
+                                {
+                                    tblTmp = ADHelper.GetAccount(name[2], name[0], "");
+                                }
+
+                                //If nothing is returned, need to account for multi-part last names "Van Dekamp" for instance, try joining that.
+                                // this will also catch plain "First Last" entries as well.
+                                if (tblTmp.Count == 0)
+                                {
+                                    tblTmp = ADHelper.GetAccount(String.Join(" ",name,1,name.Length-1),name[0],"");
+                                }
+
+                                //If there's still nothing, try to account for multipart first names "Mary Ellen" for instance.
+                                 if (tblTmp.Count == 0)
+                                 {
+                                     tblTmp = ADHelper.GetAccount(name[name.Length-1], String.Join(" ", name, 0, name.Length - 1),"");
+                                 }
+
+                                 //If there's still nothing, last ditch effor to account for both multipart first and last names "Mary Ellen Van Dekamp" for instance.
+                                 if (tblTmp.Count == 0 && name.Length == 4 )
+                                 {
+                                     tblTmp = ADHelper.GetAccount(String.Join(" ", name, 2, 2), String.Join(" ", name, 0, 2),"");
+                                 }
+
                             }
-                            else
+                            else //user id
                             {
                                 tblTmp = ADHelper.GetAccount("", "", users[i].Trim());
                             }
 
                             foreach (ADGroupMembersTableRow row in tblTmp)
                                 tblConsolidated.ImportRow(row);
+
+                            tblTmp.Rows.Clear();
                         }
 
                     
