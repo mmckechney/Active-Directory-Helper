@@ -1,0 +1,53 @@
+3.2.9.0
+Version 3.2.9
+ADD: More advanced multi-user searching. Handles inclusion middle name/initials as well as multi part names
+ADD: Saving of the last 5 multi-user searches in a "Recent Searches..." menu item
+ADD: Count of users that will be submitted in multi-user search (this can be used to compare # of results)
+
+Version 3.2.8
+ADD: New feature to create link to open an on-line directory listing for a selected user
+FIX: Cleaned up compiler warnings
+
+Version 3.2.7
+ADD: Added ability to specify proxy settings to enable update checking
+FIX: Adding default LastProgramUpdateCheck value to fix version checking problem
+ADD: Including .manifest file to give program Windows XP styling (include in same directory as .exe)
+
+Version 3.2.6
+ADD: Compatability with SourceForge.net hosting.
+Version 3.2.5
+ADD: Ability to search multiple users via name: "Last,First" and "First Last"
+ADD: Display of user details when only one users is listed for all search types (group search, multiple user search and group comparison search).
+ADD: Domain column to user list for sorting
+ADD: Microsoft.Win32.SystemEvents.SessionEnded event handler to handle windows shutdown
+ADD: Make it a single instance application - only 1 open at a time
+ADD:  ID copy to include domain prefix and in the format userID@domain -- Needed for maintenance of DL
+ADD: Recursive checking for inherited group memberships
+ADD: Italics display of an inherited membership
+ADD: Sorting of group list both alphabetical and by highlight color
+
+Version 3.2.1
+FIX: Docking issue when switching between single result display and multi result display. Multi result display was behind search criteria!
+
+Version 3.2.0
+ADD: Auto display of user groups and properties if only one user is returned in a search.
+
+Version 3.1.2
+ADD: Ability to monitor change in user properties (via new "Settings" menu)
+ADD: Moved Configure Highlighting link to "Settings" menu
+FIX: Sorting on group list pop-up.
+
+Version 3.1.1
+ADD: Toggling Distinguished Name in groups List
+ADD: Default highlighting for Distribution Lists
+
+Version 3.1.0
+ADD: Configurable Organizational Unit highlighting 
+FIX: Exception when pulling groups from Impsat domain
+
+Version 3.0.5
+ADD: Ability to search user ID list
+
+Version 3.0.4
+ADD: Ability to search multiple domains
+ADD: Automatic checking for updates

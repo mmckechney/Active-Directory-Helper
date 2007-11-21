@@ -203,5 +203,16 @@ namespace ActiveDirectoryHelper.Properties {
                 this["OnLineDirectoryFormat"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Specialized.StringCollection MultipleSearchRecent {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["MultipleSearchRecent"]));
+            }
+            set {
+                this["MultipleSearchRecent"] = value;
+            }
+        }
     }
 }
