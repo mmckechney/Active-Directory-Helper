@@ -53,6 +53,10 @@ namespace ActiveDirectoryHelper.Tables
 		private DataColumn columnAccountLastModified;
 		private DataColumn columnSearchedDomain;
 		private DataColumn columnAccountStatus;
+		private DataColumn columnOffice;
+		private DataColumn columnDescription;
+		private DataColumn columnDepartment;
+		private DataColumn columnHomePhone;
 		private DataColumn columnRank;
 		private DataColumn columnManager;
 		public  ADGroupMembersTable(): base("AD_GroupMembers_Table")
@@ -287,6 +291,38 @@ namespace ActiveDirectoryHelper.Tables
 			}
 
 		}
+		public DataColumn OfficeColumn
+		{
+			get
+			{
+				return this.columnOffice;
+			}
+
+		}
+		public DataColumn DescriptionColumn
+		{
+			get
+			{
+				return this.columnDescription;
+			}
+
+		}
+		public DataColumn DepartmentColumn
+		{
+			get
+			{
+				return this.columnDepartment;
+			}
+
+		}
+		public DataColumn HomePhoneColumn
+		{
+			get
+			{
+				return this.columnHomePhone;
+			}
+
+		}
 		public DataColumn RankColumn
 		{
 			get
@@ -321,7 +357,7 @@ namespace ActiveDirectoryHelper.Tables
 		{
 			this.Rows.Add(row);
 		}
-		public bool AddADGroupMembersTableRow(String LastName,String FirstName,String AccountId,String Title,String EMail,String Phone,String DistinguishedName,String Country,String StateProv,String City,String StreetAddress,String PostalCode,String Business2Phone,String ManagerDN,int UserAccountControl,string AccountFlags,int AccountControlComputed,string AccountFlagsComputed,string ObjectSID,string ObjectGUID,DateTime AccountCreated,DateTime AccountLastModified,string SearchedDomain,string AccountStatus,int Rank,ADGroupMembersTableRow Manager)
+		public bool AddADGroupMembersTableRow(String LastName,String FirstName,String AccountId,String Title,String EMail,String Phone,String DistinguishedName,String Country,String StateProv,String City,String StreetAddress,String PostalCode,String Business2Phone,String ManagerDN,int UserAccountControl,string AccountFlags,int AccountControlComputed,string AccountFlagsComputed,string ObjectSID,string ObjectGUID,DateTime AccountCreated,DateTime AccountLastModified,string SearchedDomain,string AccountStatus,string Office,string Description,string Department,string HomePhone,int Rank,ADGroupMembersTableRow Manager)
 		{
 			ADGroupMembersTableRow newRow = (ADGroupMembersTableRow)this.NewRow();
 			try
@@ -350,12 +386,16 @@ namespace ActiveDirectoryHelper.Tables
 				newRow.AccountLastModified = AccountLastModified;
 				newRow.SearchedDomain = SearchedDomain;
 				newRow.AccountStatus = AccountStatus;
+				newRow.Office = Office;
+				newRow.Description = Description;
+				newRow.Department = Department;
+				newRow.HomePhone = HomePhone;
 				newRow.Rank = Rank;
 				newRow.Manager = Manager;
 				this.Rows.Add(newRow);
 			}catch(Exception e)
 			{
-				throw new System.ApplicationException("Error in Auto-Generated: ADGroupMembersTable.AddADGroupMembersTableRow(String,String,String,String,String,String,String,String,String,String,String,String,String,String,int,string,int,string,string,string,DateTime,DateTime,string,string,int,ADGroupMembersTableRow) Method",e);
+				throw new System.ApplicationException("Error in Auto-Generated: ADGroupMembersTable.AddADGroupMembersTableRow(String,String,String,String,String,String,String,String,String,String,String,String,String,String,int,string,int,string,string,string,DateTime,DateTime,string,string,string,string,string,string,int,ADGroupMembersTableRow) Method",e);
 			}
 			return true;
 			
@@ -437,6 +477,14 @@ namespace ActiveDirectoryHelper.Tables
 			
 			this.columnAccountStatus=this.Columns["AccountStatus"];
 			
+			this.columnOffice=this.Columns["Office"];
+			
+			this.columnDescription=this.Columns["Description"];
+			
+			this.columnDepartment=this.Columns["Department"];
+			
+			this.columnHomePhone=this.Columns["HomePhone"];
+			
 			this.columnRank=this.Columns["Rank"];
 			
 			this.columnManager=this.Columns["Manager"];
@@ -516,6 +564,18 @@ namespace ActiveDirectoryHelper.Tables
 		
 			this.columnAccountStatus = new DataColumn("AccountStatus", typeof(string), null, System.Data.MappingType.Element);
 			this.Columns.Add(this.columnAccountStatus);
+		
+			this.columnOffice = new DataColumn("Office", typeof(string), null, System.Data.MappingType.Element);
+			this.Columns.Add(this.columnOffice);
+		
+			this.columnDescription = new DataColumn("Description", typeof(string), null, System.Data.MappingType.Element);
+			this.Columns.Add(this.columnDescription);
+		
+			this.columnDepartment = new DataColumn("Department", typeof(string), null, System.Data.MappingType.Element);
+			this.Columns.Add(this.columnDepartment);
+		
+			this.columnHomePhone = new DataColumn("HomePhone", typeof(string), null, System.Data.MappingType.Element);
+			this.Columns.Add(this.columnHomePhone);
 		
 			this.columnRank = new DataColumn("Rank", typeof(int), null, System.Data.MappingType.Element);
 			this.Columns.Add(this.columnRank);
@@ -1183,6 +1243,82 @@ namespace ActiveDirectoryHelper.Tables
 			}
 		}
 		
+		public string Office
+		{
+			get
+			{
+				try
+				{
+					return ((string)(this[this.tableADGroupMembersTable.OfficeColumn]));
+				}
+				catch(InvalidCastException e)
+				{
+					throw new System.ApplicationException("Error in Auto-Generated: ADGroupMembersTableRow.Office property. Underlying value is System.DbNull",e);
+				}
+			}
+			set
+			{
+				this[this.tableADGroupMembersTable.OfficeColumn] = value;
+			}
+		}
+		
+		public string Description
+		{
+			get
+			{
+				try
+				{
+					return ((string)(this[this.tableADGroupMembersTable.DescriptionColumn]));
+				}
+				catch(InvalidCastException e)
+				{
+					throw new System.ApplicationException("Error in Auto-Generated: ADGroupMembersTableRow.Description property. Underlying value is System.DbNull",e);
+				}
+			}
+			set
+			{
+				this[this.tableADGroupMembersTable.DescriptionColumn] = value;
+			}
+		}
+		
+		public string Department
+		{
+			get
+			{
+				try
+				{
+					return ((string)(this[this.tableADGroupMembersTable.DepartmentColumn]));
+				}
+				catch(InvalidCastException e)
+				{
+					throw new System.ApplicationException("Error in Auto-Generated: ADGroupMembersTableRow.Department property. Underlying value is System.DbNull",e);
+				}
+			}
+			set
+			{
+				this[this.tableADGroupMembersTable.DepartmentColumn] = value;
+			}
+		}
+		
+		public string HomePhone
+		{
+			get
+			{
+				try
+				{
+					return ((string)(this[this.tableADGroupMembersTable.HomePhoneColumn]));
+				}
+				catch(InvalidCastException e)
+				{
+					throw new System.ApplicationException("Error in Auto-Generated: ADGroupMembersTableRow.HomePhone property. Underlying value is System.DbNull",e);
+				}
+			}
+			set
+			{
+				this[this.tableADGroupMembersTable.HomePhoneColumn] = value;
+			}
+		}
+		
 		public int Rank
 		{
 			get
@@ -1458,6 +1594,46 @@ namespace ActiveDirectoryHelper.Tables
 			try
 			{
 				this[this.tableADGroupMembersTable.AccountStatusColumn] = SourceRow["AccountStatus"];
+			}
+			catch(Exception e)
+			{
+				syncErrors = true;
+				throw new System.ApplicationException("Error in Auto-Generated: SyncRowValues(DataRow) Method",e);
+			}
+			
+			try
+			{
+				this[this.tableADGroupMembersTable.OfficeColumn] = SourceRow["Office"];
+			}
+			catch(Exception e)
+			{
+				syncErrors = true;
+				throw new System.ApplicationException("Error in Auto-Generated: SyncRowValues(DataRow) Method",e);
+			}
+			
+			try
+			{
+				this[this.tableADGroupMembersTable.DescriptionColumn] = SourceRow["Description"];
+			}
+			catch(Exception e)
+			{
+				syncErrors = true;
+				throw new System.ApplicationException("Error in Auto-Generated: SyncRowValues(DataRow) Method",e);
+			}
+			
+			try
+			{
+				this[this.tableADGroupMembersTable.DepartmentColumn] = SourceRow["Department"];
+			}
+			catch(Exception e)
+			{
+				syncErrors = true;
+				throw new System.ApplicationException("Error in Auto-Generated: SyncRowValues(DataRow) Method",e);
+			}
+			
+			try
+			{
+				this[this.tableADGroupMembersTable.HomePhoneColumn] = SourceRow["HomePhone"];
 			}
 			catch(Exception e)
 			{

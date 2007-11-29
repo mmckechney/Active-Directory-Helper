@@ -156,9 +156,27 @@
 			<source_column_name>AccountStatus</source_column_name>
 			<data_type>string</data_type>
 		</column>
-		
-		
-		<column>
+    <column>
+      <typed_column_name>Office</typed_column_name>
+      <source_column_name>Office</source_column_name>
+      <data_type>string</data_type>
+    </column>
+    <column>
+      <typed_column_name>Description</typed_column_name>
+      <source_column_name>Description</source_column_name>
+      <data_type>string</data_type>
+    </column>
+    <column>
+      <typed_column_name>Department</typed_column_name>
+      <source_column_name>Department</source_column_name>
+      <data_type>string</data_type>
+    </column>
+    <column>
+      <typed_column_name>HomePhone</typed_column_name>
+      <source_column_name>HomePhone</source_column_name>
+      <data_type>string</data_type>
+    </column>
+    <column>
 			<typed_column_name>Rank</typed_column_name>
 			<source_column_name>Rank</source_column_name>
 			<data_type>int</data_type>

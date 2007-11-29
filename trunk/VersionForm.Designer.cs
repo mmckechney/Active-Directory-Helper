@@ -51,7 +51,7 @@ namespace ActiveDirectoryHelper
             this.rtbReleaseNotes.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.rtbReleaseNotes.Location = new System.Drawing.Point(12, 205);
             this.rtbReleaseNotes.Name = "rtbReleaseNotes";
-            this.rtbReleaseNotes.Size = new System.Drawing.Size(536, 243);
+            this.rtbReleaseNotes.Size = new System.Drawing.Size(788, 165);
             this.rtbReleaseNotes.TabIndex = 18;
             this.rtbReleaseNotes.Text = "";
             // 
@@ -168,7 +168,7 @@ namespace ActiveDirectoryHelper
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(560, 460);
+            this.ClientSize = new System.Drawing.Size(812, 382);
             this.Controls.Add(this.lnlYourNum);
             this.Controls.Add(this.lblLatestNum);
             this.Controls.Add(this.lnkContactEMail);
@@ -183,7 +183,7 @@ namespace ActiveDirectoryHelper
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "VersionForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.WindowsDefaultBounds;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "About:  Active Directory Helper";
             this.Load += new System.EventHandler(this.VersionForm_Load);
             this.ResumeLayout(false);

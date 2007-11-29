@@ -1,4 +1,13 @@
-3.2.9.0
+3.2.10.0
+Version 3.2.10.0
+ADD: Additional user data properties to display
+ADD: Ability to customize user display columns
+ADD: Maintaining of user configuration settings across updates
+FIX: Hitting "Enter" key on add domain form now accepts domain and closes form
+FIX: Newly added domain is now added to list as checked
+FIX: About box was huge! Changing to a more reasonable size
+FIX: Proxy configuration message was appearing even when not valid
+
 Version 3.2.9
 ADD: More advanced multi-user searching. Handles inclusion middle name/initials as well as multi part names
 ADD: Saving of the last 5 multi-user searches in a "Recent Searches..." menu item
@@ -15,6 +24,7 @@ ADD: Including .manifest file to give program Windows XP styling (include in sam
 
 Version 3.2.6
 ADD: Compatability with SourceForge.net hosting.
+
 Version 3.2.5
 ADD: Ability to search multiple users via name: "Last,First" and "First Last"
 ADD: Display of user details when only one users is listed for all search types (group search, multiple user search and group comparison search).

@@ -14,6 +14,7 @@ using System.IO;
 using System.Diagnostics;
 using ActiveDirectoryHelper.Collections;
 using System.Net;
+using System.Configuration;
 namespace ActiveDirectoryHelper
 {
     /// <summary>
@@ -956,6 +957,35 @@ namespace ActiveDirectoryHelper
                     return;
                 }
 
+
+                /*
+                 * If this is an version upgrade, grab the user.config from the last version for a smoother upgrade!
+                 */
+                Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal);
+                string appConfigFile = config.FilePath;
+                string appConfigPath = Path.GetDirectoryName(appConfigFile);
+                if (!File.Exists(appConfigFile))
+                {
+                    if (Directory.Exists(appConfigPath.Substring(0, appConfigPath.LastIndexOf(@"\"))))
+                    {
+                        List<string> appDirs = new List<string>();
+                        appDirs.AddRange(Directory.GetDirectories(appConfigPath.Substring(0, appConfigPath.LastIndexOf(@"\"))));
+                        appDirs.Reverse();
+                        for (int i = 0; i < appDirs.Count; i++) //skip the latest version, we already know it's not there
+                        {
+                            if (File.Exists(appDirs[i] + @"\user.config"))
+                            {
+                                if (!Directory.Exists(appConfigPath))
+                                    Directory.CreateDirectory(appConfigPath);
+
+                                File.Copy(appDirs[i] + @"\user.config", appConfigFile);
+                                break;
+                            }
+                        }
+                    }
+                }
+
+
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 Application.Run(new MainForm(args));
@@ -1343,7 +1373,9 @@ namespace ActiveDirectoryHelper
                 {
                     Properties.Settings.Default.DomainList.Add(frmAdd.DomainName);
                     Properties.Settings.Default.Save();
-                    lstDomains.Items.Add(frmAdd.DomainName);
+                    ListViewItem item = new ListViewItem(frmAdd.DomainName);
+                    item.Checked = true;
+                    lstDomains.Items.Add(item);
                     lstDomains.Sort();
 
                     bgCheckDomain.RunWorkerAsync();
@@ -1386,7 +1418,10 @@ namespace ActiveDirectoryHelper
         private void ctxDomainList_Opening(object sender, CancelEventArgs e)
         {
             if (lstDomains.SelectedItems.Count == 0)
+            {
                 ctxDomainList.Close();
+                return;
+            }
 
             removeDomainToolStripMenuItem.Text = "Remove domain \"" + lstDomains.SelectedItems[0].Text + "\"";
         }
@@ -1786,7 +1821,7 @@ namespace ActiveDirectoryHelper
                         string versionFile = sr.ReadToEnd();
                         sr.Close();
 
-                        string[] versions = versionFile.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+                        string[] versions = versionFile.Split(new string[] { "\r\n" }, StringSplitOptions.None);
                         verData.LatestVersion = new Version(versions[0]);
                         if (versions.Length > 1)
                             verData.ReleaseNotes = String.Join("\r\n", versions, 1, versions.Length - 1);
@@ -1854,7 +1889,7 @@ namespace ActiveDirectoryHelper
 
                         if (verData.CheckIntervalElapsed || verData.ManualCheck)
                         {
-                            if (verData.ProxyFailure || !this.proxyAuthAcknowledged)
+                            if (verData.ProxyFailure && !this.proxyAuthAcknowledged)
                             {
                                 MessageBox.Show("A proxy error was detected. In order to check for updates, you will need to provide your web proxy credentials.\r\nPlease enter your " +
                                     "proxy user name and password under \"Settings > Proxy Credentials\"", "Proxy Credentials Needed", MessageBoxButtons.OK, MessageBoxIcon.Warning);

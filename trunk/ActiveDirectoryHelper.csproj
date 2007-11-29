@@ -84,6 +84,7 @@
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
+    <Reference Include="System.configuration" />
     <Reference Include="System.Data">
       <Name>System.Data</Name>
     </Reference>
@@ -111,6 +112,8 @@
       <Generator>TypedTableBuilder</Generator>
       <LastGenOutput>GroupListTable.cs</LastGenOutput>
     </Content>
+    <None Include="move-down.JPG" />
+    <None Include="move-up.JPG" />
     <Compile Include="AddDomainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -129,6 +132,7 @@
     </Compile>
     <Compile Include="AdsUserFlags.cs" />
     <Compile Include="Collections\GroupCompareInstructions.cs" />
+    <Compile Include="ColumnConfig.cs" />
     <Compile Include="Crypter.cs" />
     <Compile Include="OnlineDirectoryForm.cs">
       <SubType>Form</SubType>
@@ -143,6 +147,12 @@
     </Compile>
     <Compile Include="ProxyForm.Designer.cs">
       <DependentUpon>ProxyForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserListCustomizeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserListCustomizeForm.Designer.cs">
+      <DependentUpon>UserListCustomizeForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UserPropertiesCtrl.cs">
       <SubType>UserControl</SubType>
@@ -235,6 +245,10 @@
     <EmbeddedResource Include="ProxyForm.resx">
       <SubType>Designer</SubType>
       <DependentUpon>ProxyForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserListCustomizeForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>UserListCustomizeForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserPropertiesCtrl.resx">
       <DependentUpon>UserPropertiesCtrl.cs</DependentUpon>

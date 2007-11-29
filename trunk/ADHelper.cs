@@ -772,6 +772,7 @@ namespace ActiveDirectoryHelper
             DirectorySearcher searcher1 = new DirectorySearcher(entry1);
             searcher1.Filter = "(&(objectClass=user)(objectGuid=506FA7DB-EF07-4ca1-9634-F080ED120212))";
             searcher1.PropertiesToLoad.Add("distinguishedname");
+            searcher1.ClientTimeout = new TimeSpan(0, 0, 5);
             try
             {
                 SearchResultCollection collection = searcher1.FindAll();
@@ -828,7 +829,10 @@ namespace ActiveDirectoryHelper
             searcher.PropertiesToLoad.Add("l");
             searcher.PropertiesToLoad.Add("whenCreated");
             searcher.PropertiesToLoad.Add("whenChanged");
-
+            searcher.PropertiesToLoad.Add("physicalDeliveryOfficeName");
+            searcher.PropertiesToLoad.Add("description");
+            searcher.PropertiesToLoad.Add("department");
+            searcher.PropertiesToLoad.Add("homephone");
         }
         private static void AddMemberTableRow(ref ADGroupMembersTable memTable, ref SearchResult result, string owningDomain)
         {
@@ -931,6 +935,10 @@ namespace ActiveDirectoryHelper
                 modified,
                 owningDomain,
                 status,
+                (string)(result.Properties.Contains("physicalDeliveryOfficeName") ? result.Properties["physicalDeliveryOfficeName"][0] : ""),
+                (string)(result.Properties.Contains("description") ? result.Properties["description"][0] : ""),
+                (string)(result.Properties.Contains("department") ? result.Properties["department"][0] : ""),
+                (string)(result.Properties.Contains("homephone") ? result.Properties["homephone"][0] : ""),
                 0,
                 memTable.NewADGroupMembersTableRow());
 
