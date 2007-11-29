@@ -34,6 +34,20 @@ namespace ActiveDirectoryHelper.Properties
                     PropertyMonitorChanged(null, System.EventArgs.Empty);
             }
         }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public List<ColumnConfig> CustomizedColumnsList
+        {
+            get
+            {
+                return ((List<ColumnConfig>)(this["CustomizedColumnsList"]));
+            }
+            set
+            {
+                this["CustomizedColumnsList"] = value;
+            }
+        }
         public event System.EventHandler PropertyMonitorChanged;
     }
     

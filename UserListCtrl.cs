@@ -6,6 +6,7 @@ using System.Data;
 using System.Windows.Forms;
 using System.Text;
 using ActiveDirectoryHelper.Tables;
+using System.Collections.Generic;
 namespace ActiveDirectoryHelper
 {
     /// <summary>
@@ -52,18 +53,31 @@ namespace ActiveDirectoryHelper
         private ToolStripMenuItem copyValueToolStripMenuItem;
         private ToolStripMenuItem copyIDsWithDomainPrefixToolStripMenuItem;
         private ToolStripMenuItem copyIDsAsUserdomainToolStripMenuItem;
+        private ToolStripSeparator toolStripSeparator2;
+        private ToolStripMenuItem viewOnLineDirectoryToolStripMenuItem;
+        private ToolStripSeparator toolStripSeparator3;
+        private ToolStripMenuItem customizeColumnsToolStripMenuItem;
         private DataGridViewTextBoxColumn lastNameDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn firstNameDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn userIdDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn titleDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn countryDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn eMailDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn phoneDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn business2PhoneDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn countryDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn AccountStatus;
         private DataGridViewTextBoxColumn SearchedDomain;
-        private ToolStripSeparator toolStripSeparator2;
-        private ToolStripMenuItem viewOnLineDirectoryToolStripMenuItem;
+        private DataGridViewTextBoxColumn StreetAddress;
+        private DataGridViewTextBoxColumn PostalCode;
+        private DataGridViewTextBoxColumn AccountCreated;
+        private DataGridViewTextBoxColumn AccountLastModified;
+        private DataGridViewTextBoxColumn Office;
+        private DataGridViewTextBoxColumn Description;
+        private DataGridViewTextBoxColumn Department;
+        private DataGridViewTextBoxColumn HomePhone;
+        private DataGridViewTextBoxColumn business2PhoneDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn DistinguishedName;
+        private DataGridViewTextBoxColumn StateProv;
+        private DataGridViewTextBoxColumn City;
         private IContainer components;
 
         public UserListCtrl()
@@ -123,25 +137,38 @@ namespace ActiveDirectoryHelper
             this.firstNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.userIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.titleDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.countryDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.eMailDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.phoneDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.business2PhoneDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.countryDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.AccountStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SearchedDomain = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.StreetAddress = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PostalCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.AccountCreated = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.AccountLastModified = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Office = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Department = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.HomePhone = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.business2PhoneDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DistinguishedName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.StateProv = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.City = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ctxActions = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.getUsersGroupsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.getUsersManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.getUsersDirectReportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.listUsersPropertiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.viewOnLineDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.copyValueToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyIDAndGroupsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyIDsWithDomainPrefixToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyIDsAsUserdomainToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.customizeColumnsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aDGroupMembersTableBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.viewOnLineDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             mnuCopyHighlightGroups = new System.Windows.Forms.MenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.ctxActions.SuspendLayout();
@@ -272,12 +299,23 @@ namespace ActiveDirectoryHelper
             this.firstNameDataGridViewTextBoxColumn,
             this.userIdDataGridViewTextBoxColumn,
             this.titleDataGridViewTextBoxColumn,
-            this.countryDataGridViewTextBoxColumn,
             this.eMailDataGridViewTextBoxColumn,
             this.phoneDataGridViewTextBoxColumn,
-            this.business2PhoneDataGridViewTextBoxColumn,
+            this.countryDataGridViewTextBoxColumn,
             this.AccountStatus,
-            this.SearchedDomain});
+            this.SearchedDomain,
+            this.StreetAddress,
+            this.PostalCode,
+            this.AccountCreated,
+            this.AccountLastModified,
+            this.Office,
+            this.Description,
+            this.Department,
+            this.HomePhone,
+            this.business2PhoneDataGridViewTextBoxColumn,
+            this.DistinguishedName,
+            this.StateProv,
+            this.City});
             this.dataGridView1.ContextMenuStrip = this.ctxActions;
             this.dataGridView1.DataSource = this.aDGroupMembersTableBindingSource;
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -296,6 +334,7 @@ namespace ActiveDirectoryHelper
             this.dataGridView1.Size = new System.Drawing.Size(1075, 336);
             this.dataGridView1.TabIndex = 2;
             this.dataGridView1.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_CellMouseDown);
+            this.dataGridView1.ColumnDisplayIndexChanged += new System.Windows.Forms.DataGridViewColumnEventHandler(this.dataGridView1_ColumnDisplayIndexChanged);
             // 
             // lastNameDataGridViewTextBoxColumn
             // 
@@ -316,7 +355,7 @@ namespace ActiveDirectoryHelper
             // userIdDataGridViewTextBoxColumn
             // 
             this.userIdDataGridViewTextBoxColumn.DataPropertyName = "AccountId";
-            this.userIdDataGridViewTextBoxColumn.HeaderText = "Account Id";
+            this.userIdDataGridViewTextBoxColumn.HeaderText = "Acct Id";
             this.userIdDataGridViewTextBoxColumn.Name = "userIdDataGridViewTextBoxColumn";
             this.userIdDataGridViewTextBoxColumn.ReadOnly = true;
             this.userIdDataGridViewTextBoxColumn.Width = 85;
@@ -328,13 +367,6 @@ namespace ActiveDirectoryHelper
             this.titleDataGridViewTextBoxColumn.Name = "titleDataGridViewTextBoxColumn";
             this.titleDataGridViewTextBoxColumn.ReadOnly = true;
             this.titleDataGridViewTextBoxColumn.Width = 160;
-            // 
-            // countryDataGridViewTextBoxColumn
-            // 
-            this.countryDataGridViewTextBoxColumn.DataPropertyName = "Country";
-            this.countryDataGridViewTextBoxColumn.HeaderText = "Country";
-            this.countryDataGridViewTextBoxColumn.Name = "countryDataGridViewTextBoxColumn";
-            this.countryDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // eMailDataGridViewTextBoxColumn
             // 
@@ -351,13 +383,12 @@ namespace ActiveDirectoryHelper
             this.phoneDataGridViewTextBoxColumn.Name = "phoneDataGridViewTextBoxColumn";
             this.phoneDataGridViewTextBoxColumn.ReadOnly = true;
             // 
-            // business2PhoneDataGridViewTextBoxColumn
+            // countryDataGridViewTextBoxColumn
             // 
-            this.business2PhoneDataGridViewTextBoxColumn.DataPropertyName = "Business2Phone";
-            this.business2PhoneDataGridViewTextBoxColumn.HeaderText = "OnNet";
-            this.business2PhoneDataGridViewTextBoxColumn.Name = "business2PhoneDataGridViewTextBoxColumn";
-            this.business2PhoneDataGridViewTextBoxColumn.ReadOnly = true;
-            this.business2PhoneDataGridViewTextBoxColumn.Width = 60;
+            this.countryDataGridViewTextBoxColumn.DataPropertyName = "Country";
+            this.countryDataGridViewTextBoxColumn.HeaderText = "Country";
+            this.countryDataGridViewTextBoxColumn.Name = "countryDataGridViewTextBoxColumn";
+            this.countryDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // AccountStatus
             // 
@@ -374,6 +405,103 @@ namespace ActiveDirectoryHelper
             this.SearchedDomain.Name = "SearchedDomain";
             this.SearchedDomain.ReadOnly = true;
             // 
+            // StreetAddress
+            // 
+            this.StreetAddress.DataPropertyName = "StreetAddress";
+            this.StreetAddress.HeaderText = "Street";
+            this.StreetAddress.Name = "StreetAddress";
+            this.StreetAddress.ReadOnly = true;
+            this.StreetAddress.Visible = false;
+            // 
+            // PostalCode
+            // 
+            this.PostalCode.DataPropertyName = "PostalCode";
+            this.PostalCode.HeaderText = "Postal";
+            this.PostalCode.Name = "PostalCode";
+            this.PostalCode.ReadOnly = true;
+            this.PostalCode.Visible = false;
+            // 
+            // AccountCreated
+            // 
+            this.AccountCreated.DataPropertyName = "AccountCreated";
+            this.AccountCreated.HeaderText = "Acct Created";
+            this.AccountCreated.Name = "AccountCreated";
+            this.AccountCreated.ReadOnly = true;
+            this.AccountCreated.Visible = false;
+            // 
+            // AccountLastModified
+            // 
+            this.AccountLastModified.DataPropertyName = "AccountLastModified";
+            this.AccountLastModified.HeaderText = "Acct Last Mod";
+            this.AccountLastModified.Name = "AccountLastModified";
+            this.AccountLastModified.ReadOnly = true;
+            this.AccountLastModified.Visible = false;
+            // 
+            // Office
+            // 
+            this.Office.DataPropertyName = "Office";
+            this.Office.HeaderText = "Office";
+            this.Office.Name = "Office";
+            this.Office.ReadOnly = true;
+            this.Office.Visible = false;
+            // 
+            // Description
+            // 
+            this.Description.DataPropertyName = "Description";
+            this.Description.HeaderText = "Description";
+            this.Description.Name = "Description";
+            this.Description.ReadOnly = true;
+            this.Description.Visible = false;
+            // 
+            // Department
+            // 
+            this.Department.DataPropertyName = "Department";
+            this.Department.HeaderText = "Department";
+            this.Department.Name = "Department";
+            this.Department.ReadOnly = true;
+            this.Department.Visible = false;
+            // 
+            // HomePhone
+            // 
+            this.HomePhone.DataPropertyName = "HomePhone";
+            this.HomePhone.HeaderText = "Home Phone";
+            this.HomePhone.Name = "HomePhone";
+            this.HomePhone.ReadOnly = true;
+            this.HomePhone.Visible = false;
+            // 
+            // business2PhoneDataGridViewTextBoxColumn
+            // 
+            this.business2PhoneDataGridViewTextBoxColumn.DataPropertyName = "Business2Phone";
+            this.business2PhoneDataGridViewTextBoxColumn.HeaderText = "Phone 2";
+            this.business2PhoneDataGridViewTextBoxColumn.Name = "business2PhoneDataGridViewTextBoxColumn";
+            this.business2PhoneDataGridViewTextBoxColumn.ReadOnly = true;
+            this.business2PhoneDataGridViewTextBoxColumn.Visible = false;
+            this.business2PhoneDataGridViewTextBoxColumn.Width = 60;
+            // 
+            // DistinguishedName
+            // 
+            this.DistinguishedName.DataPropertyName = "DistinguishedName";
+            this.DistinguishedName.HeaderText = "DN";
+            this.DistinguishedName.Name = "DistinguishedName";
+            this.DistinguishedName.ReadOnly = true;
+            this.DistinguishedName.Visible = false;
+            // 
+            // StateProv
+            // 
+            this.StateProv.DataPropertyName = "StateProv";
+            this.StateProv.HeaderText = "State/Prov";
+            this.StateProv.Name = "StateProv";
+            this.StateProv.ReadOnly = true;
+            this.StateProv.Visible = false;
+            // 
+            // City
+            // 
+            this.City.DataPropertyName = "City";
+            this.City.HeaderText = "City";
+            this.City.Name = "City";
+            this.City.ReadOnly = true;
+            this.City.Visible = false;
+            // 
             // ctxActions
             // 
             this.ctxActions.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -387,9 +515,11 @@ namespace ActiveDirectoryHelper
             this.copyValueToolStripMenuItem,
             this.copyIDAndGroupsToolStripMenuItem,
             this.copyIDsWithDomainPrefixToolStripMenuItem,
-            this.copyIDsAsUserdomainToolStripMenuItem});
+            this.copyIDsAsUserdomainToolStripMenuItem,
+            this.toolStripSeparator3,
+            this.customizeColumnsToolStripMenuItem});
             this.ctxActions.Name = "ctxActions";
-            this.ctxActions.Size = new System.Drawing.Size(222, 236);
+            this.ctxActions.Size = new System.Drawing.Size(222, 242);
             this.ctxActions.Opening += new System.ComponentModel.CancelEventHandler(this.ctxActions_Opening);
             // 
             // getUsersGroupsToolStripMenuItem
@@ -419,6 +549,19 @@ namespace ActiveDirectoryHelper
             this.listUsersPropertiesToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
             this.listUsersPropertiesToolStripMenuItem.Text = "List User\'s Properties";
             this.listUsersPropertiesToolStripMenuItem.Click += new System.EventHandler(this.listUsersPropertiesToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(218, 6);
+            // 
+            // viewOnLineDirectoryToolStripMenuItem
+            // 
+            this.viewOnLineDirectoryToolStripMenuItem.Enabled = false;
+            this.viewOnLineDirectoryToolStripMenuItem.Name = "viewOnLineDirectoryToolStripMenuItem";
+            this.viewOnLineDirectoryToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.viewOnLineDirectoryToolStripMenuItem.Text = "View On-Line Directory";
+            this.viewOnLineDirectoryToolStripMenuItem.Click += new System.EventHandler(this.viewOnLineDirectoryToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
@@ -453,28 +596,28 @@ namespace ActiveDirectoryHelper
             this.copyIDsAsUserdomainToolStripMenuItem.Text = "Copy IDs as user@domain";
             this.copyIDsAsUserdomainToolStripMenuItem.Click += new System.EventHandler(this.copyIDsAsUserdomainToolStripMenuItem_Click);
             // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(218, 6);
+            // 
+            // customizeColumnsToolStripMenuItem
+            // 
+            this.customizeColumnsToolStripMenuItem.Name = "customizeColumnsToolStripMenuItem";
+            this.customizeColumnsToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.customizeColumnsToolStripMenuItem.Text = "Customize Columns";
+            this.customizeColumnsToolStripMenuItem.Click += new System.EventHandler(this.customizeColumnsToolStripMenuItem_Click);
+            // 
             // aDGroupMembersTableBindingSource
             // 
             this.aDGroupMembersTableBindingSource.DataSource = typeof(ActiveDirectoryHelper.Tables.ADGroupMembersTable);
-            // 
-            // viewOnLineDirectoryToolStripMenuItem
-            // 
-            this.viewOnLineDirectoryToolStripMenuItem.Enabled = false;
-            this.viewOnLineDirectoryToolStripMenuItem.Name = "viewOnLineDirectoryToolStripMenuItem";
-            this.viewOnLineDirectoryToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
-            this.viewOnLineDirectoryToolStripMenuItem.Text = "View On-Line Directory";
-            this.viewOnLineDirectoryToolStripMenuItem.Click += new System.EventHandler(this.viewOnLineDirectoryToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(218, 6);
             // 
             // UserListCtrl
             // 
             this.Controls.Add(this.dataGridView1);
             this.Name = "UserListCtrl";
             this.Size = new System.Drawing.Size(1075, 336);
+            this.Load += new System.EventHandler(this.UserListCtrl_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ctxActions.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.aDGroupMembersTableBindingSource)).EndInit();
@@ -487,7 +630,7 @@ namespace ActiveDirectoryHelper
 
 
 
-
+        
         internal void PopulateMemberList(DataView view)
         {
             if (!Properties.Settings.Default.DisplayDisabledAccounts)
@@ -782,6 +925,71 @@ namespace ActiveDirectoryHelper
             catch
             {
             }
+        }
+
+        private void customizeColumnsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DataGridViewColumnCollection coll = this.dataGridView1.Columns;
+            UserListCustomizeForm frmCustom = new UserListCustomizeForm(ref coll);
+            frmCustom.ShowDialog();
+        }
+
+        private void dataGridView1_ColumnDisplayIndexChanged(object sender, DataGridViewColumnEventArgs e)
+        {
+            
+        }
+
+        private void UserListCtrl_Load(object sender, EventArgs e)
+        {
+            SetColumnDefaults();
+        }
+
+        private void SaveColumnDefaults()
+        {
+            //Save re-ordering to the default config
+            List<ColumnConfig> cfg = new List<ColumnConfig>();
+            for (int i = 0; i < dataGridView1.Columns.Count; i++)
+            {
+                DataGridViewColumn col = dataGridView1.Columns[i];
+                ColumnConfig c = new ColumnConfig(col.Name, col.DisplayIndex, col.Visible, col.Width);
+                cfg.Add(c);
+            }
+            Properties.Settings.Default.CustomizedColumnsList = cfg;
+            Properties.Settings.Default.Save();
+        }
+        private void SetColumnDefaults()
+        {
+            List<ColumnConfig> cfg = null;
+            //Load the custom column configuration if it exists
+            if (Properties.Settings.Default.CustomizedColumnsList == null)
+                cfg = new List<ColumnConfig>();
+            else
+                cfg = Properties.Settings.Default.CustomizedColumnsList;
+
+            for (int i = 0; i < dataGridView1.Columns.Count; i++)
+            {
+                for (int j = 0; j < cfg.Count; j++)
+                {
+                    if (dataGridView1.Columns[i].Name == cfg[j].ColumnName)
+                    {
+                        dataGridView1.Columns[i].Visible = cfg[j].IsVisible;
+                        dataGridView1.Columns[i].DisplayIndex = cfg[j].SortOrder;
+                        dataGridView1.Columns[i].Width = cfg[j].ColumnWidth;
+                        break;
+                    }
+                }
+            }
+
+        }
+        protected override void OnCreateControl()
+        {
+            base.OnCreateControl();
+            this.ParentForm.FormClosing += new FormClosingEventHandler(ParentForm_FormClosing);
+        }
+
+        void ParentForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            SaveColumnDefaults ();
         }
 
     }
