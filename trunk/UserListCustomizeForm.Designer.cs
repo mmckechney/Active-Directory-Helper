@@ -46,9 +46,9 @@ namespace ActiveDirectoryHelper
             this.columnHeader1});
             this.lstColumns.FullRowSelect = true;
             this.lstColumns.GridLines = true;
-            this.lstColumns.Location = new System.Drawing.Point(26, 24);
+            this.lstColumns.Location = new System.Drawing.Point(14, 24);
             this.lstColumns.Name = "lstColumns";
-            this.lstColumns.Size = new System.Drawing.Size(234, 260);
+            this.lstColumns.Size = new System.Drawing.Size(248, 260);
             this.lstColumns.TabIndex = 0;
             this.lstColumns.UseCompatibleStateImageBehavior = false;
             this.lstColumns.View = System.Windows.Forms.View.Details;
@@ -82,7 +82,7 @@ namespace ActiveDirectoryHelper
             // btnMoveUp
             // 
             this.btnMoveUp.Image = global::ActiveDirectoryHelper.Properties.Resources.move_up;
-            this.btnMoveUp.Location = new System.Drawing.Point(266, 50);
+            this.btnMoveUp.Location = new System.Drawing.Point(268, 50);
             this.btnMoveUp.Name = "btnMoveUp";
             this.btnMoveUp.Size = new System.Drawing.Size(27, 23);
             this.btnMoveUp.TabIndex = 3;
@@ -92,7 +92,7 @@ namespace ActiveDirectoryHelper
             // btnMoveDown
             // 
             this.btnMoveDown.Image = global::ActiveDirectoryHelper.Properties.Resources.move_down;
-            this.btnMoveDown.Location = new System.Drawing.Point(266, 80);
+            this.btnMoveDown.Location = new System.Drawing.Point(268, 80);
             this.btnMoveDown.Name = "btnMoveDown";
             this.btnMoveDown.Size = new System.Drawing.Size(27, 23);
             this.btnMoveDown.TabIndex = 4;
@@ -115,7 +115,7 @@ namespace ActiveDirectoryHelper
             this.Controls.Add(this.lstColumns);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "UserListCustomizeForm";
-            this.Text = "UserListCustomizeForm";
+            this.Text = "User List Custom View Settings";
             this.Load += new System.EventHandler(this.UserListCustomizeForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.groupListTable1)).EndInit();
             this.ResumeLayout(false);

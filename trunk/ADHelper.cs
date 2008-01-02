@@ -14,6 +14,7 @@ namespace ActiveDirectoryHelper
 	/// </summary>
 	public class ADHelper
 	{
+        public static List<string> AvailableLdapProps = new List<string>();
         private static List<string> globalCatalogURL = new List<string>();
 
         public static List<string> GlobalCatalogURL
@@ -321,49 +322,95 @@ namespace ActiveDirectoryHelper
             return new GroupLoadedEventArgs(fullGroupList);
 		}
 
-		internal static ADGroupMembersTableRow GetUsersManagers(string distinguishedName)
+		private static ADGroupMembersTableRow GetUsersManagers(string distinguishedName)
 		{
             ADGroupMembersTableRow firstUser = GetAccountByDN(distinguishedName);
 			return GetUsersManagers(firstUser);
 		}
 		internal static ADGroupMembersTableRow GetUsersManagers( ADGroupMembersTableRow memberRow)
 		{
-			if(memberRow.ManagerDN.Length == 0)
-				return memberRow;
+           if(Properties.Settings.Default.CustomManagerSearch != null && Properties.Settings.Default.CustomManagerSearch.Length > 0)
+           {
+               ADGroupMembersTableRow manager = null;
+               string query = ADHelper.PerformTokenReplacement(Properties.Settings.Default.CustomManagerSearch,memberRow);
+               if (Properties.Settings.Default.CustomManagerSearchIsComposite)
+               {
+                   ADGroupMembersTable tmp = GetAccountFromString(query);
+                   if (tmp != null && tmp.Rows.Count > 0)
+                       manager = tmp[0];
+               }
+               else
+               {
+                   ADGroupMembersTable tmp = GetAccountByQuery(query);
+                   if (tmp != null && tmp.Rows.Count > 0)
+                       manager = tmp[0];
+               }
 
-			//ADGroupMembersTableRow manager = GetAccount(string.Empty,string.Empty,string.Empty,memberRow.ManagerDN)[0];
-			//memberRow.Manager = manager;
-            memberRow.Manager = GetUsersManagers(GetAccountByDN(memberRow.ManagerDN));
-			return memberRow;
+               if(manager != null)
+               {
+                   memberRow.ManagerRow = GetUsersManagers(manager);
+               }
+
+                   return memberRow;
+           }
+           else
+           {
+                if (memberRow.ManagerDN.Length == 0)
+                    return memberRow;
+
+                memberRow.ManagerRow = GetUsersManagers(GetAccountByDN(memberRow.ManagerDN));
+                return memberRow;
+            }
 		}
-        internal static ADGroupMembersTable GetDirectReports(string distinguishedName)
+        internal static ADGroupMembersTable GetDirectReports(ADGroupMembersTableRow row)
         {
             ADGroupMembersTable memTable = new ADGroupMembersTable();
-            StringBuilder sb = new StringBuilder("(&(objectCategory=person)(objectClass=user)");
-            sb.Append("(manager=" + distinguishedName + ")");
-            sb.Append(")");
-            for (int j = 0; j < globalCatalogURL.Count; j++)
+            try
             {
-                DirectoryEntry entry1 = new DirectoryEntry("GC://" + globalCatalogURL[j]);
-                DirectorySearcher searcher1 = new DirectorySearcher(entry1);
-                searcher1.Filter = sb.ToString();
-                AddSearchProperties(ref searcher1);
-                SearchResultCollection collection2 = null;
-                try
+                StringBuilder sb = new StringBuilder("(&(objectCategory=person)(objectClass=user)");
+                if (Properties.Settings.Default.CustomDirectReportSearch == null && Properties.Settings.Default.CustomDirectReportSearch.Length == 0)
                 {
-                    collection2 = searcher1.FindAll();
+                    sb.Append("(manager=" + row.DistinguishedName + ")");
                 }
-                catch { continue; }
-                int num1 = collection2.Count;
-                for (int num2 = 0; num2 < num1; num2++)
+                else if (Properties.Settings.Default.CustomDirectReportSearchIsComposite)
                 {
-                    if (collection2[num2] != null)
+                    return GetAccountFromString(PerformTokenReplacement(Properties.Settings.Default.CustomDirectReportSearch, row));
+                }
+                else
+                {
+                    sb.Append("(" + PerformTokenReplacement(Properties.Settings.Default.CustomDirectReportSearch, row) + ")");
+                }
+                sb.Append(")");
+                for (int j = 0; j < globalCatalogURL.Count; j++)
+                {
+                    DirectoryEntry entry1 = new DirectoryEntry("GC://" + globalCatalogURL[j]);
+                    DirectorySearcher searcher1 = new DirectorySearcher(entry1);
+                    searcher1.Filter = sb.ToString();
+                    AddSearchProperties(ref searcher1);
+                    SearchResultCollection collection2 = null;
+                    try
                     {
-                        SearchResult result = collection2[num2];
-                        AddMemberTableRow(ref memTable, ref result, globalCatalogURL[j]);
+                        collection2 = searcher1.FindAll();
+                    }
+                    catch { continue; }
+                    int num1 = collection2.Count;
+                    for (int num2 = 0; num2 < num1; num2++)
+                    {
+                        if (collection2[num2] != null)
+                        {
+                            SearchResult result = collection2[num2];
+                            AddMemberTableRow(ref memTable, ref result, globalCatalogURL[j]);
+                        }
                     }
                 }
+
             }
+            catch (ArgumentException)
+            {
+                if (ADHelper.InvalidLdapQuery != null)
+                    ADHelper.InvalidLdapQuery(null, EventArgs.Empty);
+            }
+
             string[] colNames = new string[memTable.Columns.Count];
             for (int i = 0; i < memTable.Columns.Count; i++)
             {
@@ -479,6 +526,7 @@ namespace ActiveDirectoryHelper
 
             return nested;
         }
+       
         #region Get Group Memberships
         internal static ADGroupMembersTable GetGroupMembers(List<string> groupNames, string joinType)
 		{
@@ -642,7 +690,7 @@ namespace ActiveDirectoryHelper
         #endregion
 
 
-        #region Get Accounts 
+        #region Get Account(s )
         internal static ADGroupMembersTableRow GetAccountBySID(string sid)
         {
                 ADGroupMembersTable memTable = new ADGroupMembersTable();
@@ -764,6 +812,100 @@ namespace ActiveDirectoryHelper
 		{
             return GetAccount(lastName, firstName, accountId, string.Empty);
         }
+        internal static ADGroupMembersTable GetAccountFromString(string input)
+        {
+            if (input.Trim().Length > 0)
+            {
+                ADGroupMembersTable tblTmp = new ADGroupMembersTable();
+                if (input.IndexOf("@") > -1) //e-mail address
+                {
+                    tblTmp = ADHelper.GetAccount("", "", "", input);
+                }
+                else if (input.IndexOf(",") > -1)  //Last,First
+                {
+                    string[] name = input.Split(new char[] { ',' }, 2, StringSplitOptions.None);
+                    tblTmp = ADHelper.GetAccount(name[0], name[1], "");
+                }
+                else if (input.Trim().IndexOf(' ') > -1)  //First Last or odd combinations there-of
+                {
+                    string[] name = input.Trim().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                    if (name.Length > 2) //Assume that there must be a middle name or inital
+                    {
+                        tblTmp = ADHelper.GetAccount(name[2], name[0], "");
+                    }
+
+                    //If nothing is returned, need to account for multi-part last names "Van Dekamp" for instance, try joining that.
+                    // this will also catch plain "First Last" entries as well.
+                    if (tblTmp.Count == 0)
+                    {
+                        tblTmp = ADHelper.GetAccount(String.Join(" ", name, 1, name.Length - 1), name[0], "");
+                    }
+
+                    //If there's still nothing, try to account for multipart first names "Mary Ellen" for instance.
+                    if (tblTmp.Count == 0)
+                    {
+                        tblTmp = ADHelper.GetAccount(name[name.Length - 1], String.Join(" ", name, 0, name.Length - 1), "");
+                    }
+
+                    //If there's still nothing, last ditch effor to account for both multipart first and last names "Mary Ellen Van Dekamp" for instance.
+                    if (tblTmp.Count == 0 && name.Length == 4)
+                    {
+                        tblTmp = ADHelper.GetAccount(String.Join(" ", name, 2, 2), String.Join(" ", name, 0, 2), "");
+                    }
+
+                }
+                else //user id
+                {
+                    tblTmp = ADHelper.GetAccount("", "", input.Trim());
+                }
+                return tblTmp;
+            }
+
+            return new ADGroupMembersTable();
+        }
+        internal static ADGroupMembersTable GetAccountByQuery(string userLdapQuery)
+        {
+            ADGroupMembersTable memTable = new ADGroupMembersTable();
+
+            try
+            {
+                for (int j = 0; j < globalCatalogURL.Count; j++)
+                {
+                    DirectoryEntry entry1 = new DirectoryEntry("GC://" + globalCatalogURL[j]);
+                    DirectorySearcher searcher1 = new DirectorySearcher(entry1);
+                    searcher1.Filter = "(&(objectClass=user)(" + userLdapQuery + "))";
+                    AddSearchProperties(ref searcher1);
+                    SearchResultCollection collection = null;
+                    try
+                    {
+                        collection = searcher1.FindAll();
+                    }
+                    catch { continue; }
+                    //If nothing found, check next domain..
+                    if (collection.Count == 0)
+                        continue;
+
+                    SearchResult result = collection[0];
+                    AddMemberTableRow(ref memTable, ref result, globalCatalogURL[j]);
+
+
+
+                }
+                memTable = ConvertToCountryName(memTable);
+                if (memTable.Count > 0)
+                    return memTable;
+                else
+                    return null;
+            }
+            catch(ArgumentException arg)
+            {
+                if (ADHelper.InvalidLdapQuery != null)
+                    ADHelper.InvalidLdapQuery(null, EventArgs.Empty);
+            }
+
+            return null;
+
+        }
         #endregion
 
         public static bool DomainIsReachable(string domainName)
@@ -802,7 +944,6 @@ namespace ActiveDirectoryHelper
 
         private static void AddSearchProperties(ref DirectorySearcher searcher)
         {
-
             searcher.PropertiesToLoad.Add("givenname");
             searcher.PropertiesToLoad.Add("sn");
             searcher.PropertiesToLoad.Add("samaccountname");
@@ -833,6 +974,14 @@ namespace ActiveDirectoryHelper
             searcher.PropertiesToLoad.Add("description");
             searcher.PropertiesToLoad.Add("department");
             searcher.PropertiesToLoad.Add("homephone");
+
+            if (Properties.Settings.Default.CustomPropertyList != null)
+            {
+                for (int i = 0; i < Properties.Settings.Default.CustomPropertyList.Count; i++)
+                {
+                    searcher.PropertiesToLoad.Add(Properties.Settings.Default.CustomPropertyList[i].LdapPropertyName);
+                }
+            }
         }
         private static void AddMemberTableRow(ref ADGroupMembersTable memTable, ref SearchResult result, string owningDomain)
         {
@@ -942,9 +1091,97 @@ namespace ActiveDirectoryHelper
                 0,
                 memTable.NewADGroupMembersTableRow());
 
-        }
-	}
+            if (Properties.Settings.Default.CustomPropertyList != null)
+            {
+                string prop;
+                ADGroupMembersTableRow row = (ADGroupMembersTableRow)memTable.Rows[memTable.Rows.Count - 1];
+                for (int i = 0; i < Properties.Settings.Default.CustomPropertyList.Count; i++)
+                {
+                    prop = Properties.Settings.Default.CustomPropertyList[i].LdapPropertyName;
+                    if(row[prop].ToString().Length == 0)
+                        row[prop] =  (string)(result.Properties.Contains(prop) ? result.Properties[prop][0] : "");
+                }
+            }
 
+            if (ADHelper.AvailableLdapProps.Count == 0 && memTable.Rows.Count > 0)
+            {
+                SetLdapPropertyList(memTable[0].DistinguishedName);
+            }
+        }
+        public static void SetLdapPropertyList(string distinguishedName)
+        {
+            for (int j = 0; j < globalCatalogURL.Count; j++)
+            {
+                DirectoryEntry entry1 = new DirectoryEntry("GC://" + globalCatalogURL[j]);
+                DirectorySearcher searcher1 = new DirectorySearcher(entry1);
+                searcher1.Filter = "(&(objectClass=user)(distinguishedname=" + distinguishedName + "))";
+                SearchResultCollection collection = null;
+                try
+                {
+                    collection = searcher1.FindAll();
+                    ICollection coll = collection[0].Properties.PropertyNames;
+                    List<string> tmp = new List<string>();
+                    IEnumerator enumer =  coll.GetEnumerator();
+                    while(enumer.MoveNext())
+                    {
+                        tmp.Add(enumer.Current.ToString());
+                    }
+                    tmp.Sort();
+                    ADHelper.AvailableLdapProps = tmp;
+                    break;
+                }
+                catch (Exception)
+                {
+                    continue;
+                }
+            }
+
+        }
+       
+
+        internal static string PerformTokenReplacement(string tokenedString, ADGroupMembersTableRow row)
+        {
+            ADGroupMembersTable tmp = (ADGroupMembersTable)row.Table;
+            foreach (System.Data.DataColumn col in tmp.Columns)
+            {
+                tokenedString = tokenedString.Replace("{" + col.ColumnName + "}", row[col.ColumnName].ToString());
+            }
+            return tokenedString;
+        }
+
+        public static event EventHandler InvalidLdapQuery;
+    }
+    public class LdapPropertyMapping
+    {
+        
+        public string this[string val]
+        {
+            get
+            {
+                switch (val)
+                {
+                    case "l":
+                        return "City";
+                    case "c":
+                        return "Country";
+                    case "st":
+                        return "State/Prov";
+                    case "mail":
+                        return "EMail";
+                    case "physicalDeliveryOfficeName":
+                        return "Office";
+                    case "sn":
+                        return "Last Name";
+                    case "givenname":
+                        return "First Name";
+                    case "samaccountname":
+                        return "Account ID";
+                    default:
+                        return val;
+                }
+            }
+        }
+    }
 	public class GroupLoadedEventArgs : EventArgs
 	{
 		public readonly SortedList FullGroupList;

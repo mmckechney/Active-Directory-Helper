@@ -214,5 +214,53 @@ namespace ActiveDirectoryHelper.Properties {
                 this["MultipleSearchRecent"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string CustomManagerSearch {
+            get {
+                return ((string)(this["CustomManagerSearch"]));
+            }
+            set {
+                this["CustomManagerSearch"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string CustomDirectReportSearch {
+            get {
+                return ((string)(this["CustomDirectReportSearch"]));
+            }
+            set {
+                this["CustomDirectReportSearch"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool CustomManagerSearchIsComposite {
+            get {
+                return ((bool)(this["CustomManagerSearchIsComposite"]));
+            }
+            set {
+                this["CustomManagerSearchIsComposite"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool CustomDirectReportSearchIsComposite {
+            get {
+                return ((bool)(this["CustomDirectReportSearchIsComposite"]));
+            }
+            set {
+                this["CustomDirectReportSearchIsComposite"] = value;
+            }
+        }
     }
 }

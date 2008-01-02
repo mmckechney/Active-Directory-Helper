@@ -35,20 +35,40 @@ namespace ActiveDirectoryHelper.Properties
             }
         }
 
+        //[global::System.Configuration.UserScopedSettingAttribute()]
+        //[global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        //public List<ColumnConfig> CustomizedColumnsList
+        //{
+        //    get
+        //    {
+        //        return ((List<ColumnConfig>)(this["CustomizedColumnsList"]));
+        //    }
+        //    set
+        //    {
+        //        this["CustomizedColumnsList"] = value;
+        //    }
+        //}
+        public event System.EventHandler PropertyMonitorChanged;
+    
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public List<ColumnConfig> CustomizedColumnsList
+        public List<CustomPropertyConfig> CustomPropertyList
         {
             get
             {
-                return ((List<ColumnConfig>)(this["CustomizedColumnsList"]));
+                try
+                {
+                    return ((List<CustomPropertyConfig>)(this["CustomPropertyList"]));
+                }
+                catch
+                {
+                    return null;
+                }
             }
             set
             {
-                this["CustomizedColumnsList"] = value;
+                this["CustomPropertyList"] = value;
             }
         }
-        public event System.EventHandler PropertyMonitorChanged;
     }
-    
 }

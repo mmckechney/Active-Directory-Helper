@@ -1,8 +1,9 @@
-3.2.10.0
-Version 3.2.10.0
-ADD: Additional user data properties to display
-ADD: Ability to customize user display columns
-ADD: Maintaining of user configuration settings across updates
+3.3.0
+Version 3.3.0
+ADD: Ability to add custom LDAP properties/ display columns to retrieve and display.
+ADD: Ability to use a custom property in the hierarchy search for a user
+ADD: Record count to manager and direct report list
+FIX: Maintaining of user configuration settings across updates
 FIX: Hitting "Enter" key on add domain form now accepts domain and closes form
 FIX: Newly added domain is now added to list as checked
 FIX: About box was huge! Changing to a more reasonable size
