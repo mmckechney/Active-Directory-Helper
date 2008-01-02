@@ -7,87 +7,87 @@
 	<columns>
 		<column>
 			<typed_column_name>LastName</typed_column_name>
-			<source_column_name>LastName</source_column_name>
+			<source_column_name>sn</source_column_name>
 			<data_type>String</data_type>
 			<null_value>String.Empty</null_value>
 		</column>
 		<column>
 			<typed_column_name>FirstName</typed_column_name>
-			<source_column_name>FirstName</source_column_name>
+			<source_column_name>givenname</source_column_name>
 			<data_type>String</data_type>
 			<null_value>String.Empty</null_value>
 		</column>
 		<column>
 			<typed_column_name>AccountId</typed_column_name>
-			<source_column_name>AccountId</source_column_name>
+			<source_column_name>samaccountname</source_column_name>
 			<data_type>String</data_type>
 			<null_value>String.Empty</null_value>
 		</column>
 		<column>
 			<typed_column_name>Title</typed_column_name>
-			<source_column_name>Title</source_column_name>
+			<source_column_name>title</source_column_name>
 			<data_type>String</data_type>
 			<null_value>String.Empty</null_value>
 		</column>
 		<column>
 			<typed_column_name>EMail</typed_column_name>
-			<source_column_name>EMail</source_column_name>
+			<source_column_name>mail</source_column_name>
 			<data_type>String</data_type>
 			<null_value>String.Empty</null_value>
 		</column>
 		<column>
 			<typed_column_name>Phone</typed_column_name>
-			<source_column_name>Phone</source_column_name>
+			<source_column_name>telephonenumber</source_column_name>
 			<data_type>String</data_type>
 			<null_value>String.Empty</null_value>
 		</column>
 		<column>
 			<typed_column_name>DistinguishedName</typed_column_name>
-			<source_column_name>DistinguishedName</source_column_name>
+			<source_column_name>distinguishedname</source_column_name>
 			<data_type>String</data_type>
 			<null_value>String.Empty</null_value>
 		</column>
 
 		<column>
 			<typed_column_name>Country</typed_column_name>
-			<source_column_name>Country</source_column_name>
+			<source_column_name>c</source_column_name>
 			<data_type>String</data_type>
 			<null_value>String.Empty</null_value>
 		</column>
 		<column>
 			<typed_column_name>StateProv</typed_column_name>
-			<source_column_name>StateProv</source_column_name>
+			<source_column_name>st</source_column_name>
 			<data_type>String</data_type>
 			<null_value>String.Empty</null_value>
 		</column>
 		<column>
 			<typed_column_name>City</typed_column_name>
-			<source_column_name>City</source_column_name>
+			<source_column_name>l</source_column_name>
 			<data_type>String</data_type>
 			<null_value>String.Empty</null_value>
 		</column>
 		<column>
 			<typed_column_name>StreetAddress</typed_column_name>
-			<source_column_name>StreetAddress</source_column_name>
+			<source_column_name>streetAddress</source_column_name>
 			<data_type>String</data_type>
 			<null_value>String.Empty</null_value>
 		</column>
 		<column>
 			<typed_column_name>PostalCode</typed_column_name>
-			<source_column_name>PostalCode</source_column_name>
+			<source_column_name>postalCode</source_column_name>
 			<data_type>String</data_type>
 			<null_value>String.Empty</null_value>
 		</column>
 
 		<column>
 			<typed_column_name>Business2Phone</typed_column_name>
-			<source_column_name>Business2Phone</source_column_name>
+			<source_column_name>otherTelephone</source_column_name>
 			<data_type>String</data_type>
 			<null_value>String.Empty</null_value>
 		</column>
 		<column>
 			<typed_column_name>ManagerDN</typed_column_name>
-			<source_column_name>ManagerDN</source_column_name>
+			<source_column_name>manager</source_column_name>
 			<data_type>String</data_type>
 			<null_value>String.Empty</null_value>
 		</column>
@@ -108,7 +108,7 @@
 		</column> -->
 		<column>
 			<typed_column_name>UserAccountControl</typed_column_name>
-			<source_column_name>UserAccountControl</source_column_name>
+			<source_column_name>userAccountControl</source_column_name>
 			<data_type>int</data_type>
 		</column>
 		<column>
@@ -118,7 +118,7 @@
 		</column>
 		<column>
 			<typed_column_name>AccountControlComputed</typed_column_name>
-			<source_column_name>AccountControlComputed</source_column_name>
+			<source_column_name>msDS-User-Account-Control-Computed</source_column_name>
 			<data_type>int</data_type>
 		</column>
 		<column>
@@ -138,12 +138,12 @@
 		</column>
 		<column>
 			<typed_column_name>AccountCreated</typed_column_name>
-			<source_column_name>AccountCreated</source_column_name>
+			<source_column_name>whenCreated</source_column_name>
 			<data_type>DateTime</data_type>
 		</column>
 		<column>
 			<typed_column_name>AccountLastModified</typed_column_name>
-			<source_column_name>AccountLastModified</source_column_name>
+			<source_column_name>whenChanged</source_column_name>
 			<data_type>DateTime</data_type>
 		</column>
 		<column>
@@ -158,22 +158,22 @@
 		</column>
     <column>
       <typed_column_name>Office</typed_column_name>
-      <source_column_name>Office</source_column_name>
+      <source_column_name>physicalDeliveryOfficeName</source_column_name>
       <data_type>string</data_type>
     </column>
     <column>
       <typed_column_name>Description</typed_column_name>
-      <source_column_name>Description</source_column_name>
+      <source_column_name>description</source_column_name>
       <data_type>string</data_type>
     </column>
     <column>
       <typed_column_name>Department</typed_column_name>
-      <source_column_name>Department</source_column_name>
+      <source_column_name>department</source_column_name>
       <data_type>string</data_type>
     </column>
     <column>
       <typed_column_name>HomePhone</typed_column_name>
-      <source_column_name>HomePhone</source_column_name>
+      <source_column_name>homephone</source_column_name>
       <data_type>string</data_type>
     </column>
     <column>
@@ -183,8 +183,8 @@
 			<null_value>0</null_value>
 		</column>
 		<column>
-			<typed_column_name>Manager</typed_column_name>
-			<source_column_name>Manager</source_column_name>
+			<typed_column_name>ManagerRow</typed_column_name>
+			<source_column_name>ManagerRow</source_column_name>
 			<data_type>ADGroupMembersTableRow</data_type>
 		</column>
 	</columns>

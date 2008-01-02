@@ -108,6 +108,7 @@
     </Content>
     <Content Include="App.ico" />
     <Content Include="App2.ico" />
+    <Content Include="current_version.txt" />
     <Content Include="GroupListTable.xml">
       <Generator>TypedTableBuilder</Generator>
       <LastGenOutput>GroupListTable.cs</LastGenOutput>
@@ -127,18 +128,40 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+    <Compile Include="ADGroupMembersTable_partial.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ADHelper.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="AdsUserFlags.cs" />
     <Compile Include="Collections\GroupCompareInstructions.cs" />
     <Compile Include="ColumnConfig.cs" />
-    <Compile Include="Crypter.cs" />
-    <Compile Include="OnlineDirectoryForm.cs">
+    <Compile Include="CustomDirectReportQueryForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="OnlineDirectoryForm.Designer.cs">
-      <DependentUpon>OnlineDirectoryForm.cs</DependentUpon>
+    <Compile Include="CustomDirectReportQueryForm.Designer.cs">
+      <DependentUpon>CustomDirectReportQueryForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomManagerQueryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CustomManagerQueryForm.Designer.cs">
+      <DependentUpon>CustomManagerQueryForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomPropertyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CustomPropertyForm.Designer.cs">
+      <DependentUpon>CustomPropertyForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Crypter.cs" />
+    <Compile Include="CustomPropertyConfig.cs" />
+    <Compile Include="CustomQueryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CustomQueryForm.Designer.cs">
+      <DependentUpon>CustomQueryForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ColumnSorter.cs" />
@@ -147,12 +170,6 @@
     </Compile>
     <Compile Include="ProxyForm.Designer.cs">
       <DependentUpon>ProxyForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UserListCustomizeForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UserListCustomizeForm.Designer.cs">
-      <DependentUpon>UserListCustomizeForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UserPropertiesCtrl.cs">
       <SubType>UserControl</SubType>
@@ -238,17 +255,25 @@
       <DependentUpon>ADGroupMembersTable.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="OnlineDirectoryForm.resx">
+    <EmbeddedResource Include="CustomDirectReportQueryForm.resx">
       <SubType>Designer</SubType>
-      <DependentUpon>OnlineDirectoryForm.cs</DependentUpon>
+      <DependentUpon>CustomDirectReportQueryForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomManagerQueryForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>CustomManagerQueryForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomPropertyForm.resx">
+      <DependentUpon>CustomPropertyForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomQueryForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>CustomQueryForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ProxyForm.resx">
       <SubType>Designer</SubType>
       <DependentUpon>ProxyForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UserListCustomizeForm.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>UserListCustomizeForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserPropertiesCtrl.resx">
       <DependentUpon>UserPropertiesCtrl.cs</DependentUpon>

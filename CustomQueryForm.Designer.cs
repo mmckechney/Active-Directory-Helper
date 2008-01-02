@@ -1,6 +1,6 @@
 namespace ActiveDirectoryHelper
 {
-    partial class OnlineDirectoryForm
+    partial class CustomQueryForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,13 +28,13 @@ namespace ActiveDirectoryHelper
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OnlineDirectoryForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CustomQueryForm));
             this.txtFormat = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblExample = new System.Windows.Forms.Label();
             this.lstProps = new System.Windows.Forms.ListView();
             this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
             this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.lblMain = new System.Windows.Forms.Label();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.SuspendLayout();
@@ -43,17 +43,17 @@ namespace ActiveDirectoryHelper
             // 
             this.txtFormat.Location = new System.Drawing.Point(238, 50);
             this.txtFormat.Name = "txtFormat";
-            this.txtFormat.Size = new System.Drawing.Size(500, 21);
+            this.txtFormat.Size = new System.Drawing.Size(564, 21);
             this.txtFormat.TabIndex = 0;
             // 
-            // label1
+            // lblExample
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(238, 27);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(512, 15);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Example: http://myonlinedirectory.com/search.aspx?lname={LastName}&&fname={FirstN" +
+            this.lblExample.AutoSize = true;
+            this.lblExample.Location = new System.Drawing.Point(238, 27);
+            this.lblExample.Name = "lblExample";
+            this.lblExample.Size = new System.Drawing.Size(512, 15);
+            this.lblExample.TabIndex = 1;
+            this.lblExample.Text = "Example: http://myonlinedirectory.com/search.aspx?lname={LastName}&&fname={FirstN" +
                 "ame}\r\n";
             // 
             // lstProps
@@ -81,24 +81,25 @@ namespace ActiveDirectoryHelper
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(238, 83);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(308, 30);
+            this.label2.Size = new System.Drawing.Size(407, 30);
             this.label2.TabIndex = 3;
-            this.label2.Text = "To include a property, double click property name in list \r\nor use the format {Pr" +
-                "opertyName} to include value.";
+            this.label2.Text = "To include a property\'s value at runtime, double click property name in list \r\nor" +
+                " use the format {PropertyName} to include value.";
             // 
-            // label3
+            // lblMain
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(238, 14);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(263, 13);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "URL format to use to link to on-line directory:";
+            this.lblMain.AutoSize = true;
+            this.lblMain.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMain.Location = new System.Drawing.Point(238, 14);
+            this.lblMain.Name = "lblMain";
+            this.lblMain.Size = new System.Drawing.Size(263, 13);
+            this.lblMain.TabIndex = 4;
+            this.lblMain.Text = "URL format to use to link to on-line directory:";
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(585, 253);
+            this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSave.Location = new System.Drawing.Point(643, 253);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 26);
             this.btnSave.TabIndex = 5;
@@ -108,8 +109,9 @@ namespace ActiveDirectoryHelper
             // 
             // btnCancel
             // 
+            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(676, 253);
+            this.btnCancel.Location = new System.Drawing.Point(727, 253);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 26);
             this.btnCancel.TabIndex = 6;
@@ -117,23 +119,23 @@ namespace ActiveDirectoryHelper
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
-            // OnlineDirectoryForm
+            // CustomQueryForm
             // 
             this.AcceptButton = this.btnSave;
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(760, 291);
+            this.ClientSize = new System.Drawing.Size(811, 291);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSave);
-            this.Controls.Add(this.label3);
+            this.Controls.Add(this.lblMain);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.lstProps);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblExample);
             this.Controls.Add(this.txtFormat);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "OnlineDirectoryForm";
+            this.Name = "CustomQueryForm";
             this.Text = "Online Directory Link Setup";
             this.Load += new System.EventHandler(this.OnlineDirectoryForm_Load);
             this.ResumeLayout(false);
@@ -143,13 +145,13 @@ namespace ActiveDirectoryHelper
 
         #endregion
 
-        private System.Windows.Forms.TextBox txtFormat;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ListView lstProps;
         private System.Windows.Forms.ColumnHeader columnHeader1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button btnSave;
-        private System.Windows.Forms.Button btnCancel;
+        public System.Windows.Forms.TextBox txtFormat;
+        public System.Windows.Forms.Label lblExample;
+        public System.Windows.Forms.ListView lstProps;
+        public System.Windows.Forms.Label label2;
+        public System.Windows.Forms.Label lblMain;
+        public System.Windows.Forms.Button btnSave;
+        public System.Windows.Forms.Button btnCancel;
     }
 }

@@ -96,6 +96,9 @@ namespace ActiveDirectoryHelper
         private bool startQuiet = false;
         private ToolStripMenuItem proxyCredentialsToolStripMenuItem;
         private ToolStripMenuItem configureOnLineDirectoryLinkFormatToolStripMenuItem;
+        private ToolStripMenuItem customSearchFormatsToolStripMenuItem;
+        private ToolStripMenuItem managerHierarchySearchToolStripMenuItem;
+        private ToolStripMenuItem directReportSearchToolStripMenuItem;
         private bool proxyAuthAcknowledged = false;
         public MainForm()
         {
@@ -108,6 +111,7 @@ namespace ActiveDirectoryHelper
         }
         public MainForm(string[] args) : this()
         {
+            //TODO: add custom properties to the Group member table at runtime....
             if (args.Length > 0)
             {
                 string quiet = args[0].Trim().ToLower();
@@ -146,7 +150,7 @@ namespace ActiveDirectoryHelper
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.ddMixType = new System.Windows.Forms.ComboBox();
             this.cmbGroupList1 = new System.Windows.Forms.ComboBox();
@@ -215,6 +219,9 @@ namespace ActiveDirectoryHelper
             this.bgFindGroupMembers = new System.ComponentModel.BackgroundWorker();
             this.bgFindGroupComparison = new System.ComponentModel.BackgroundWorker();
             this.bgFindMultiple = new System.ComponentModel.BackgroundWorker();
+            this.customSearchFormatsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.managerHierarchySearchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.directReportSearchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgGroup2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupListTable2)).BeginInit();
@@ -335,16 +342,16 @@ namespace ActiveDirectoryHelper
             this.dgGroups1.Location = new System.Drawing.Point(16, 40);
             this.dgGroups1.Name = "dgGroups1";
             this.dgGroups1.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Sunken;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.Format = "#";
-            dataGridViewCellStyle1.NullValue = null;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgGroups1.RowHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle6.Format = "#";
+            dataGridViewCellStyle6.NullValue = null;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgGroups1.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.dgGroups1.RowHeadersWidth = 10;
             this.dgGroups1.Size = new System.Drawing.Size(280, 94);
             this.dgGroups1.TabIndex = 13;
@@ -741,6 +748,7 @@ namespace ActiveDirectoryHelper
             this.toolStripDropDownButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.monitorUserPropertiesToolStripMenuItem,
+            this.customSearchFormatsToolStripMenuItem,
             this.configureOnLineDirectoryLinkFormatToolStripMenuItem,
             this.configureOrganizationalUnitHighlightingToolStripMenuItem,
             this.proxyCredentialsToolStripMenuItem,
@@ -901,6 +909,29 @@ namespace ActiveDirectoryHelper
             this.bgFindMultiple.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgFindMultiple_RunWorkerCompleted);
             this.bgFindMultiple.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.Searchers_ProgressChanged);
             // 
+            // customSearchFormatsToolStripMenuItem
+            // 
+            this.customSearchFormatsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.managerHierarchySearchToolStripMenuItem,
+            this.directReportSearchToolStripMenuItem});
+            this.customSearchFormatsToolStripMenuItem.Name = "customSearchFormatsToolStripMenuItem";
+            this.customSearchFormatsToolStripMenuItem.Size = new System.Drawing.Size(284, 22);
+            this.customSearchFormatsToolStripMenuItem.Text = "Custom Search Formats";
+            // 
+            // managerHierarchySearchToolStripMenuItem
+            // 
+            this.managerHierarchySearchToolStripMenuItem.Name = "managerHierarchySearchToolStripMenuItem";
+            this.managerHierarchySearchToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
+            this.managerHierarchySearchToolStripMenuItem.Text = "Manager Hierarchy Search";
+            this.managerHierarchySearchToolStripMenuItem.Click += new System.EventHandler(this.managerHierarchySearchToolStripMenuItem_Click);
+            // 
+            // directReportSearchToolStripMenuItem
+            // 
+            this.directReportSearchToolStripMenuItem.Name = "directReportSearchToolStripMenuItem";
+            this.directReportSearchToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
+            this.directReportSearchToolStripMenuItem.Text = "Direct Report Search";
+            this.directReportSearchToolStripMenuItem.Click += new System.EventHandler(this.directReportSearchToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleBaseSize = new System.Drawing.Size(6, 14);
@@ -966,26 +997,10 @@ namespace ActiveDirectoryHelper
                 string appConfigPath = Path.GetDirectoryName(appConfigFile);
                 if (!File.Exists(appConfigFile))
                 {
-                    if (Directory.Exists(appConfigPath.Substring(0, appConfigPath.LastIndexOf(@"\"))))
-                    {
-                        List<string> appDirs = new List<string>();
-                        appDirs.AddRange(Directory.GetDirectories(appConfigPath.Substring(0, appConfigPath.LastIndexOf(@"\"))));
-                        appDirs.Reverse();
-                        for (int i = 0; i < appDirs.Count; i++) //skip the latest version, we already know it's not there
-                        {
-                            if (File.Exists(appDirs[i] + @"\user.config"))
-                            {
-                                if (!Directory.Exists(appConfigPath))
-                                    Directory.CreateDirectory(appConfigPath);
-
-                                File.Copy(appDirs[i] + @"\user.config", appConfigFile);
-                                break;
-                            }
-                        }
-                    }
+                    Properties.Settings.Default.Upgrade();
                 }
 
-
+                
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 Application.Run(new MainForm(args));
@@ -1073,6 +1088,13 @@ namespace ActiveDirectoryHelper
                 Properties.Settings.Default.Save();
             }
 
+            if (Properties.Settings.Default.CustomPropertyList == null)
+            {
+                List<CustomPropertyConfig> custProps = new List<CustomPropertyConfig>();
+                Properties.Settings.Default.CustomPropertyList = custProps;
+                Properties.Settings.Default.Save();
+            }
+
             propHelper = new PropertyMonitorHelper();
 
             this.helper = new ADHelper();
@@ -1086,7 +1108,6 @@ namespace ActiveDirectoryHelper
                 bgCheckForUpdates.RunWorkerAsync(checkVals);
             }
             catch { }
-
            
         }
         private void StartPropertyMonitoring()
@@ -1733,38 +1754,42 @@ namespace ActiveDirectoryHelper
                 Exception exe = (Exception)e.Result;
                 if (exe.Message.IndexOf("The server is not operational") > -1)
                     MessageBox.Show("Unable to retrieve data. Can not connect to specified domain");
-                return;
+                else
+                    MessageBox.Show("Unable to retrieve data.\r\n"+exe.Message);
             }
 
-            DataView view = usertable.DefaultView;
-            view.Sort = usertable.LastNameColumn.ColumnName;
-            this.userList.PopulateMemberList(view);
-            this.userList.PopulateMemberList(usertable);
-            SetRecords(view.Count);
-
-            if (view.Count > 0)
+            if (usertable != null)
             {
-                if (txtLastName.Text.Length > 0 && !Properties.Settings.Default.LastNameList.Contains(txtLastName.Text))
-                    Properties.Settings.Default.LastNameList.Add(txtLastName.Text);
+                DataView view = usertable.DefaultView;
+                view.Sort = usertable.LastNameColumn.ColumnName;
+                this.userList.PopulateMemberList(view);
+                this.userList.PopulateMemberList(usertable);
+                SetRecords(view.Count);
 
-                if (txtFirstName.Text.Length > 0 && !Properties.Settings.Default.FirstNameList.Contains(txtFirstName.Text))
-                    Properties.Settings.Default.FirstNameList.Add(txtFirstName.Text);
+                if (view.Count > 0)
+                {
+                    if (txtLastName.Text.Length > 0 && !Properties.Settings.Default.LastNameList.Contains(txtLastName.Text))
+                        Properties.Settings.Default.LastNameList.Add(txtLastName.Text);
 
-                if (txtSapId.Text.Length > 0 && !Properties.Settings.Default.IdList.Contains(txtSapId.Text))
-                    Properties.Settings.Default.IdList.Add(txtSapId.Text);
+                    if (txtFirstName.Text.Length > 0 && !Properties.Settings.Default.FirstNameList.Contains(txtFirstName.Text))
+                        Properties.Settings.Default.FirstNameList.Add(txtFirstName.Text);
 
-                Properties.Settings.Default.Save();
+                    if (txtSapId.Text.Length > 0 && !Properties.Settings.Default.IdList.Contains(txtSapId.Text))
+                        Properties.Settings.Default.IdList.Add(txtSapId.Text);
+
+                    Properties.Settings.Default.Save();
+                }
+
+
+                if (chkClearResults.Checked && view.Count > 0)
+                {
+                    txtFirstName.Text = string.Empty;
+                    txtLastName.Text = string.Empty;
+                    txtSapId.Text = string.Empty;
+                }
+
+                SetUserDisplay(ref usertable, groups);
             }
-
-
-            if (chkClearResults.Checked && view.Count > 0)
-            {
-                txtFirstName.Text = string.Empty;
-                txtLastName.Text = string.Empty;
-                txtSapId.Text = string.Empty;
-            }
-
-            SetUserDisplay(ref usertable, groups);
             SetExecuteTime(DateTime.Now);
 
             this.EnableButtons();
@@ -2018,66 +2043,17 @@ namespace ActiveDirectoryHelper
                 ADGroupMembersTable tblTmp = new ADGroupMembersTable();
                 this.searchStartTime = DateTime.Now;
 
-                    for (int i = 0; i < users.Count; i++)
-                    {
-                        if (users[i].Trim().Length > 0)
-                        {
-                            if (users[i].IndexOf("@") > -1) //e-mail address
-                            {
-                                tblTmp = ADHelper.GetAccount("", "", "", users[i]);
-                            }
-                            else if (users[i].IndexOf(",") > -1)  //Last,First
-                            {
-                                string[] name = users[i].Split(new char[] { ',' }, 2, StringSplitOptions.None);
-                                tblTmp = ADHelper.GetAccount(name[0], name[1], "");
-                            }
-                            else if (users[i].Trim().IndexOf(' ') > -1)  //First Last or odd combinations there-of
-                            {
-                                string[] name = users[i].Trim().Split(new char[] { ' ' },StringSplitOptions.RemoveEmptyEntries);
-                                if (name.Length > 2) //Assume that there must be a middle name or inital
-                                {
-                                    tblTmp = ADHelper.GetAccount(name[2], name[0], "");
-                                }
+                for (int i = 0; i < users.Count; i++)
+                {
+                    tblTmp = ADHelper.GetAccountFromString(users[i]);
+                    foreach (ADGroupMembersTableRow row in tblTmp)
+                        tblConsolidated.ImportRow(row);
 
-                                //If nothing is returned, need to account for multi-part last names "Van Dekamp" for instance, try joining that.
-                                // this will also catch plain "First Last" entries as well.
-                                if (tblTmp.Count == 0)
-                                {
-                                    tblTmp = ADHelper.GetAccount(String.Join(" ",name,1,name.Length-1),name[0],"");
-                                }
-
-                                //If there's still nothing, try to account for multipart first names "Mary Ellen" for instance.
-                                 if (tblTmp.Count == 0)
-                                 {
-                                     tblTmp = ADHelper.GetAccount(name[name.Length-1], String.Join(" ", name, 0, name.Length - 1),"");
-                                 }
-
-                                 //If there's still nothing, last ditch effor to account for both multipart first and last names "Mary Ellen Van Dekamp" for instance.
-                                 if (tblTmp.Count == 0 && name.Length == 4 )
-                                 {
-                                     tblTmp = ADHelper.GetAccount(String.Join(" ", name, 2, 2), String.Join(" ", name, 0, 2),"");
-                                 }
-
-                            }
-                            else //user id
-                            {
-                                tblTmp = ADHelper.GetAccount("", "", users[i].Trim());
-                            }
-
-                            foreach (ADGroupMembersTableRow row in tblTmp)
-                                tblConsolidated.ImportRow(row);
-
-                            tblTmp.Rows.Clear();
-                        }
-
-                    
+                    tblTmp.Rows.Clear();
                 }
+
             }
             e.Result = tblConsolidated;
-
-               
-            
-
         }
 
 
@@ -2105,7 +2081,21 @@ namespace ActiveDirectoryHelper
 
         private void configureOnLineDirectoryLinkFormatToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OnlineDirectoryForm frmOL = new OnlineDirectoryForm();
+            CustomQueryForm frmOL = new CustomQueryForm(CustomQueryType.OnLineDirectory);
+            frmOL.ShowDialog();
+        }
+
+
+
+        private void managerHierarchySearchToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CustomManagerQueryForm frmOL = new CustomManagerQueryForm();
+            frmOL.ShowDialog();
+        }
+
+        private void directReportSearchToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CustomDirectReportQueryForm frmOL = new CustomDirectReportQueryForm();
             frmOL.ShowDialog();
         }
 

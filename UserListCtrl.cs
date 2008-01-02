@@ -14,6 +14,7 @@ namespace ActiveDirectoryHelper
     /// </summary>
     public class UserListCtrl : System.Windows.Forms.UserControl
     {
+        private static bool subscribedToLdapEvent = false;
        // private bool showManagerColumn = false;
 
         //public bool ShowManagerColumn
@@ -56,28 +57,21 @@ namespace ActiveDirectoryHelper
         private ToolStripSeparator toolStripSeparator2;
         private ToolStripMenuItem viewOnLineDirectoryToolStripMenuItem;
         private ToolStripSeparator toolStripSeparator3;
-        private ToolStripMenuItem customizeColumnsToolStripMenuItem;
         private DataGridViewTextBoxColumn lastNameDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn firstNameDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn userIdDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn titleDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn eMailDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn phoneDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn countryDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn AccountStatus;
-        private DataGridViewTextBoxColumn SearchedDomain;
-        private DataGridViewTextBoxColumn StreetAddress;
-        private DataGridViewTextBoxColumn PostalCode;
-        private DataGridViewTextBoxColumn AccountCreated;
-        private DataGridViewTextBoxColumn AccountLastModified;
-        private DataGridViewTextBoxColumn Office;
-        private DataGridViewTextBoxColumn Description;
-        private DataGridViewTextBoxColumn Department;
-        private DataGridViewTextBoxColumn HomePhone;
         private DataGridViewTextBoxColumn business2PhoneDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn DistinguishedName;
-        private DataGridViewTextBoxColumn StateProv;
-        private DataGridViewTextBoxColumn City;
+        private ToolStripMenuItem customizeLdapPropertiesRetrievedToolStripMenuItem;
+        private DataGridViewTextBoxColumn snDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn givennameDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn samaccountnameDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn departmentDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn mailDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn titleDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn telephonenumberDataGridViewTextBoxColumn;
         private IContainer components;
 
         public UserListCtrl()
@@ -85,8 +79,17 @@ namespace ActiveDirectoryHelper
             // This call is required by the Windows.Forms Form Designer.
             InitializeComponent();
 
-            // TODO: Add any initialization after the InitializeComponent call
+            if (UserListCtrl.subscribedToLdapEvent == false)
+            {
+                ADHelper.InvalidLdapQuery += new EventHandler(ADHelper_InvalidLdapQuery);
+                UserListCtrl.subscribedToLdapEvent = true;
+            }
+        }
 
+        void ADHelper_InvalidLdapQuery(object sender, EventArgs e)
+        {
+            MessageBox.Show("The requested LDAP query is invalid. Please check your custom search settings via the \"Setting --> Custom Search Formats\" menu option",
+                "Invalid Search", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         /// <summary> 
@@ -133,27 +136,12 @@ namespace ActiveDirectoryHelper
             this.mnuCopyforSql = new System.Windows.Forms.MenuItem();
             this.mnuSpreadSheet = new System.Windows.Forms.MenuItem();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.lastNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.firstNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.userIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.snDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.givennameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.samaccountnameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.mailDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.titleDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.eMailDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.phoneDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.countryDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.AccountStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SearchedDomain = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.StreetAddress = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PostalCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.AccountCreated = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.AccountLastModified = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Office = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Department = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.HomePhone = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.business2PhoneDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DistinguishedName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.StateProv = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.City = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.telephonenumberDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ctxActions = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.getUsersGroupsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.getUsersManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -167,7 +155,7 @@ namespace ActiveDirectoryHelper
             this.copyIDsWithDomainPrefixToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyIDsAsUserdomainToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.customizeColumnsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.customizeLdapPropertiesRetrievedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aDGroupMembersTableBindingSource = new System.Windows.Forms.BindingSource(this.components);
             mnuCopyHighlightGroups = new System.Windows.Forms.MenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -295,27 +283,12 @@ namespace ActiveDirectoryHelper
             this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.lastNameDataGridViewTextBoxColumn,
-            this.firstNameDataGridViewTextBoxColumn,
-            this.userIdDataGridViewTextBoxColumn,
+            this.snDataGridViewTextBoxColumn,
+            this.givennameDataGridViewTextBoxColumn,
+            this.samaccountnameDataGridViewTextBoxColumn,
+            this.mailDataGridViewTextBoxColumn,
             this.titleDataGridViewTextBoxColumn,
-            this.eMailDataGridViewTextBoxColumn,
-            this.phoneDataGridViewTextBoxColumn,
-            this.countryDataGridViewTextBoxColumn,
-            this.AccountStatus,
-            this.SearchedDomain,
-            this.StreetAddress,
-            this.PostalCode,
-            this.AccountCreated,
-            this.AccountLastModified,
-            this.Office,
-            this.Description,
-            this.Department,
-            this.HomePhone,
-            this.business2PhoneDataGridViewTextBoxColumn,
-            this.DistinguishedName,
-            this.StateProv,
-            this.City});
+            this.telephonenumberDataGridViewTextBoxColumn});
             this.dataGridView1.ContextMenuStrip = this.ctxActions;
             this.dataGridView1.DataSource = this.aDGroupMembersTableBindingSource;
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -336,171 +309,47 @@ namespace ActiveDirectoryHelper
             this.dataGridView1.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_CellMouseDown);
             this.dataGridView1.ColumnDisplayIndexChanged += new System.Windows.Forms.DataGridViewColumnEventHandler(this.dataGridView1_ColumnDisplayIndexChanged);
             // 
-            // lastNameDataGridViewTextBoxColumn
+            // snDataGridViewTextBoxColumn
             // 
-            this.lastNameDataGridViewTextBoxColumn.DataPropertyName = "LastName";
-            this.lastNameDataGridViewTextBoxColumn.HeaderText = "Last Name";
-            this.lastNameDataGridViewTextBoxColumn.MinimumWidth = 100;
-            this.lastNameDataGridViewTextBoxColumn.Name = "lastNameDataGridViewTextBoxColumn";
-            this.lastNameDataGridViewTextBoxColumn.ReadOnly = true;
+            this.snDataGridViewTextBoxColumn.DataPropertyName = "sn";
+            this.snDataGridViewTextBoxColumn.HeaderText = "Last Name";
+            this.snDataGridViewTextBoxColumn.Name = "snDataGridViewTextBoxColumn";
+            this.snDataGridViewTextBoxColumn.ReadOnly = true;
             // 
-            // firstNameDataGridViewTextBoxColumn
+            // givennameDataGridViewTextBoxColumn
             // 
-            this.firstNameDataGridViewTextBoxColumn.DataPropertyName = "FirstName";
-            this.firstNameDataGridViewTextBoxColumn.HeaderText = "First Name";
-            this.firstNameDataGridViewTextBoxColumn.Name = "firstNameDataGridViewTextBoxColumn";
-            this.firstNameDataGridViewTextBoxColumn.ReadOnly = true;
-            this.firstNameDataGridViewTextBoxColumn.Width = 85;
+            this.givennameDataGridViewTextBoxColumn.DataPropertyName = "givenname";
+            this.givennameDataGridViewTextBoxColumn.HeaderText = "First Name";
+            this.givennameDataGridViewTextBoxColumn.Name = "givennameDataGridViewTextBoxColumn";
+            this.givennameDataGridViewTextBoxColumn.ReadOnly = true;
             // 
-            // userIdDataGridViewTextBoxColumn
+            // samaccountnameDataGridViewTextBoxColumn
             // 
-            this.userIdDataGridViewTextBoxColumn.DataPropertyName = "AccountId";
-            this.userIdDataGridViewTextBoxColumn.HeaderText = "Acct Id";
-            this.userIdDataGridViewTextBoxColumn.Name = "userIdDataGridViewTextBoxColumn";
-            this.userIdDataGridViewTextBoxColumn.ReadOnly = true;
-            this.userIdDataGridViewTextBoxColumn.Width = 85;
+            this.samaccountnameDataGridViewTextBoxColumn.DataPropertyName = "samaccountname";
+            this.samaccountnameDataGridViewTextBoxColumn.HeaderText = "Acct ID";
+            this.samaccountnameDataGridViewTextBoxColumn.Name = "samaccountnameDataGridViewTextBoxColumn";
+            this.samaccountnameDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // mailDataGridViewTextBoxColumn
+            // 
+            this.mailDataGridViewTextBoxColumn.DataPropertyName = "mail";
+            this.mailDataGridViewTextBoxColumn.HeaderText = "EMail";
+            this.mailDataGridViewTextBoxColumn.Name = "mailDataGridViewTextBoxColumn";
+            this.mailDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // titleDataGridViewTextBoxColumn
             // 
-            this.titleDataGridViewTextBoxColumn.DataPropertyName = "Title";
+            this.titleDataGridViewTextBoxColumn.DataPropertyName = "title";
             this.titleDataGridViewTextBoxColumn.HeaderText = "Title";
             this.titleDataGridViewTextBoxColumn.Name = "titleDataGridViewTextBoxColumn";
             this.titleDataGridViewTextBoxColumn.ReadOnly = true;
-            this.titleDataGridViewTextBoxColumn.Width = 160;
             // 
-            // eMailDataGridViewTextBoxColumn
+            // telephonenumberDataGridViewTextBoxColumn
             // 
-            this.eMailDataGridViewTextBoxColumn.DataPropertyName = "EMail";
-            this.eMailDataGridViewTextBoxColumn.HeaderText = "EMail";
-            this.eMailDataGridViewTextBoxColumn.Name = "eMailDataGridViewTextBoxColumn";
-            this.eMailDataGridViewTextBoxColumn.ReadOnly = true;
-            this.eMailDataGridViewTextBoxColumn.Width = 200;
-            // 
-            // phoneDataGridViewTextBoxColumn
-            // 
-            this.phoneDataGridViewTextBoxColumn.DataPropertyName = "Phone";
-            this.phoneDataGridViewTextBoxColumn.HeaderText = "Phone";
-            this.phoneDataGridViewTextBoxColumn.Name = "phoneDataGridViewTextBoxColumn";
-            this.phoneDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // countryDataGridViewTextBoxColumn
-            // 
-            this.countryDataGridViewTextBoxColumn.DataPropertyName = "Country";
-            this.countryDataGridViewTextBoxColumn.HeaderText = "Country";
-            this.countryDataGridViewTextBoxColumn.Name = "countryDataGridViewTextBoxColumn";
-            this.countryDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // AccountStatus
-            // 
-            this.AccountStatus.DataPropertyName = "AccountStatus";
-            this.AccountStatus.HeaderText = "AcctStat";
-            this.AccountStatus.Name = "AccountStatus";
-            this.AccountStatus.ReadOnly = true;
-            this.AccountStatus.Width = 55;
-            // 
-            // SearchedDomain
-            // 
-            this.SearchedDomain.DataPropertyName = "SearchedDomain";
-            this.SearchedDomain.HeaderText = "Domain";
-            this.SearchedDomain.Name = "SearchedDomain";
-            this.SearchedDomain.ReadOnly = true;
-            // 
-            // StreetAddress
-            // 
-            this.StreetAddress.DataPropertyName = "StreetAddress";
-            this.StreetAddress.HeaderText = "Street";
-            this.StreetAddress.Name = "StreetAddress";
-            this.StreetAddress.ReadOnly = true;
-            this.StreetAddress.Visible = false;
-            // 
-            // PostalCode
-            // 
-            this.PostalCode.DataPropertyName = "PostalCode";
-            this.PostalCode.HeaderText = "Postal";
-            this.PostalCode.Name = "PostalCode";
-            this.PostalCode.ReadOnly = true;
-            this.PostalCode.Visible = false;
-            // 
-            // AccountCreated
-            // 
-            this.AccountCreated.DataPropertyName = "AccountCreated";
-            this.AccountCreated.HeaderText = "Acct Created";
-            this.AccountCreated.Name = "AccountCreated";
-            this.AccountCreated.ReadOnly = true;
-            this.AccountCreated.Visible = false;
-            // 
-            // AccountLastModified
-            // 
-            this.AccountLastModified.DataPropertyName = "AccountLastModified";
-            this.AccountLastModified.HeaderText = "Acct Last Mod";
-            this.AccountLastModified.Name = "AccountLastModified";
-            this.AccountLastModified.ReadOnly = true;
-            this.AccountLastModified.Visible = false;
-            // 
-            // Office
-            // 
-            this.Office.DataPropertyName = "Office";
-            this.Office.HeaderText = "Office";
-            this.Office.Name = "Office";
-            this.Office.ReadOnly = true;
-            this.Office.Visible = false;
-            // 
-            // Description
-            // 
-            this.Description.DataPropertyName = "Description";
-            this.Description.HeaderText = "Description";
-            this.Description.Name = "Description";
-            this.Description.ReadOnly = true;
-            this.Description.Visible = false;
-            // 
-            // Department
-            // 
-            this.Department.DataPropertyName = "Department";
-            this.Department.HeaderText = "Department";
-            this.Department.Name = "Department";
-            this.Department.ReadOnly = true;
-            this.Department.Visible = false;
-            // 
-            // HomePhone
-            // 
-            this.HomePhone.DataPropertyName = "HomePhone";
-            this.HomePhone.HeaderText = "Home Phone";
-            this.HomePhone.Name = "HomePhone";
-            this.HomePhone.ReadOnly = true;
-            this.HomePhone.Visible = false;
-            // 
-            // business2PhoneDataGridViewTextBoxColumn
-            // 
-            this.business2PhoneDataGridViewTextBoxColumn.DataPropertyName = "Business2Phone";
-            this.business2PhoneDataGridViewTextBoxColumn.HeaderText = "Phone 2";
-            this.business2PhoneDataGridViewTextBoxColumn.Name = "business2PhoneDataGridViewTextBoxColumn";
-            this.business2PhoneDataGridViewTextBoxColumn.ReadOnly = true;
-            this.business2PhoneDataGridViewTextBoxColumn.Visible = false;
-            this.business2PhoneDataGridViewTextBoxColumn.Width = 60;
-            // 
-            // DistinguishedName
-            // 
-            this.DistinguishedName.DataPropertyName = "DistinguishedName";
-            this.DistinguishedName.HeaderText = "DN";
-            this.DistinguishedName.Name = "DistinguishedName";
-            this.DistinguishedName.ReadOnly = true;
-            this.DistinguishedName.Visible = false;
-            // 
-            // StateProv
-            // 
-            this.StateProv.DataPropertyName = "StateProv";
-            this.StateProv.HeaderText = "State/Prov";
-            this.StateProv.Name = "StateProv";
-            this.StateProv.ReadOnly = true;
-            this.StateProv.Visible = false;
-            // 
-            // City
-            // 
-            this.City.DataPropertyName = "City";
-            this.City.HeaderText = "City";
-            this.City.Name = "City";
-            this.City.ReadOnly = true;
-            this.City.Visible = false;
+            this.telephonenumberDataGridViewTextBoxColumn.DataPropertyName = "telephonenumber";
+            this.telephonenumberDataGridViewTextBoxColumn.HeaderText = "Phone";
+            this.telephonenumberDataGridViewTextBoxColumn.Name = "telephonenumberDataGridViewTextBoxColumn";
+            this.telephonenumberDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // ctxActions
             // 
@@ -517,96 +366,96 @@ namespace ActiveDirectoryHelper
             this.copyIDsWithDomainPrefixToolStripMenuItem,
             this.copyIDsAsUserdomainToolStripMenuItem,
             this.toolStripSeparator3,
-            this.customizeColumnsToolStripMenuItem});
+            this.customizeLdapPropertiesRetrievedToolStripMenuItem});
             this.ctxActions.Name = "ctxActions";
-            this.ctxActions.Size = new System.Drawing.Size(222, 242);
+            this.ctxActions.Size = new System.Drawing.Size(281, 264);
             this.ctxActions.Opening += new System.ComponentModel.CancelEventHandler(this.ctxActions_Opening);
             // 
             // getUsersGroupsToolStripMenuItem
             // 
             this.getUsersGroupsToolStripMenuItem.Name = "getUsersGroupsToolStripMenuItem";
-            this.getUsersGroupsToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.getUsersGroupsToolStripMenuItem.Size = new System.Drawing.Size(280, 22);
             this.getUsersGroupsToolStripMenuItem.Text = "Get User\'s Groups";
             this.getUsersGroupsToolStripMenuItem.Click += new System.EventHandler(this.getUsersGroupsToolStripMenuItem_Click);
             // 
             // getUsersManagerToolStripMenuItem
             // 
             this.getUsersManagerToolStripMenuItem.Name = "getUsersManagerToolStripMenuItem";
-            this.getUsersManagerToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.getUsersManagerToolStripMenuItem.Size = new System.Drawing.Size(280, 22);
             this.getUsersManagerToolStripMenuItem.Text = "Get User\'s Management";
             this.getUsersManagerToolStripMenuItem.Click += new System.EventHandler(this.getUsersManagerToolStripMenuItem_Click);
             // 
             // getUsersDirectReportsToolStripMenuItem
             // 
             this.getUsersDirectReportsToolStripMenuItem.Name = "getUsersDirectReportsToolStripMenuItem";
-            this.getUsersDirectReportsToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.getUsersDirectReportsToolStripMenuItem.Size = new System.Drawing.Size(280, 22);
             this.getUsersDirectReportsToolStripMenuItem.Text = "Get User\'s Direct Reports";
             this.getUsersDirectReportsToolStripMenuItem.Click += new System.EventHandler(this.getUsersDirectReportsToolStripMenuItem_Click);
             // 
             // listUsersPropertiesToolStripMenuItem
             // 
             this.listUsersPropertiesToolStripMenuItem.Name = "listUsersPropertiesToolStripMenuItem";
-            this.listUsersPropertiesToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.listUsersPropertiesToolStripMenuItem.Size = new System.Drawing.Size(280, 22);
             this.listUsersPropertiesToolStripMenuItem.Text = "List User\'s Properties";
             this.listUsersPropertiesToolStripMenuItem.Click += new System.EventHandler(this.listUsersPropertiesToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(218, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(277, 6);
             // 
             // viewOnLineDirectoryToolStripMenuItem
             // 
             this.viewOnLineDirectoryToolStripMenuItem.Enabled = false;
             this.viewOnLineDirectoryToolStripMenuItem.Name = "viewOnLineDirectoryToolStripMenuItem";
-            this.viewOnLineDirectoryToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.viewOnLineDirectoryToolStripMenuItem.Size = new System.Drawing.Size(280, 22);
             this.viewOnLineDirectoryToolStripMenuItem.Text = "View On-Line Directory";
             this.viewOnLineDirectoryToolStripMenuItem.Click += new System.EventHandler(this.viewOnLineDirectoryToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(218, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(277, 6);
             // 
             // copyValueToolStripMenuItem
             // 
             this.copyValueToolStripMenuItem.Name = "copyValueToolStripMenuItem";
-            this.copyValueToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.copyValueToolStripMenuItem.Size = new System.Drawing.Size(280, 22);
             this.copyValueToolStripMenuItem.Text = "Copy Value";
             this.copyValueToolStripMenuItem.Click += new System.EventHandler(this.copyValueToolStripMenuItem_Click);
             // 
             // copyIDAndGroupsToolStripMenuItem
             // 
             this.copyIDAndGroupsToolStripMenuItem.Name = "copyIDAndGroupsToolStripMenuItem";
-            this.copyIDAndGroupsToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.copyIDAndGroupsToolStripMenuItem.Size = new System.Drawing.Size(280, 22);
             this.copyIDAndGroupsToolStripMenuItem.Text = "Copy IDs and Groups";
             this.copyIDAndGroupsToolStripMenuItem.Click += new System.EventHandler(this.copyIDAndGroupsToolStripMenuItem_Click);
             // 
             // copyIDsWithDomainPrefixToolStripMenuItem
             // 
             this.copyIDsWithDomainPrefixToolStripMenuItem.Name = "copyIDsWithDomainPrefixToolStripMenuItem";
-            this.copyIDsWithDomainPrefixToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.copyIDsWithDomainPrefixToolStripMenuItem.Size = new System.Drawing.Size(280, 22);
             this.copyIDsWithDomainPrefixToolStripMenuItem.Text = "Copy IDs with Domain Prefix";
             this.copyIDsWithDomainPrefixToolStripMenuItem.Click += new System.EventHandler(this.copyIDsWithDomainPrefixToolStripMenuItem_Click);
             // 
             // copyIDsAsUserdomainToolStripMenuItem
             // 
             this.copyIDsAsUserdomainToolStripMenuItem.Name = "copyIDsAsUserdomainToolStripMenuItem";
-            this.copyIDsAsUserdomainToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.copyIDsAsUserdomainToolStripMenuItem.Size = new System.Drawing.Size(280, 22);
             this.copyIDsAsUserdomainToolStripMenuItem.Text = "Copy IDs as user@domain";
             this.copyIDsAsUserdomainToolStripMenuItem.Click += new System.EventHandler(this.copyIDsAsUserdomainToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(218, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(277, 6);
             // 
-            // customizeColumnsToolStripMenuItem
+            // customizeLdapPropertiesRetrievedToolStripMenuItem
             // 
-            this.customizeColumnsToolStripMenuItem.Name = "customizeColumnsToolStripMenuItem";
-            this.customizeColumnsToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
-            this.customizeColumnsToolStripMenuItem.Text = "Customize Columns";
-            this.customizeColumnsToolStripMenuItem.Click += new System.EventHandler(this.customizeColumnsToolStripMenuItem_Click);
+            this.customizeLdapPropertiesRetrievedToolStripMenuItem.Name = "customizeLdapPropertiesRetrievedToolStripMenuItem";
+            this.customizeLdapPropertiesRetrievedToolStripMenuItem.Size = new System.Drawing.Size(280, 22);
+            this.customizeLdapPropertiesRetrievedToolStripMenuItem.Text = "Customize Properties/Columns Retrieved";
+            this.customizeLdapPropertiesRetrievedToolStripMenuItem.Click += new System.EventHandler(this.customizeLdapPropertiesRetrievedToolStripMenuItem_Click);
             // 
             // aDGroupMembersTableBindingSource
             // 
@@ -645,6 +494,9 @@ namespace ActiveDirectoryHelper
 
             }
             this.aDGroupMembersTableBindingSource.DataSource = view;
+
+            if (this.RecordCount != null)
+                this.RecordCount(view.Count);
            
         }
         internal void PopulateMemberList(ADGroupMembersTable memTable)
@@ -666,7 +518,7 @@ namespace ActiveDirectoryHelper
             tbl.ImportRow(memberRow);
             int rank = 0;
 
-            ADGroupMembersTableRow manager = memberRow.Manager;
+            ADGroupMembersTableRow manager = memberRow.ManagerRow;
             try
             {
                 while (manager.LastName.Length > 0)
@@ -674,11 +526,14 @@ namespace ActiveDirectoryHelper
                     rank++;
                     manager.Rank = rank;
                     tbl.ImportRow(manager);
-                    manager = manager.Manager;
+                    manager = manager.ManagerRow;
                 }
             }
             catch { }
             this.aDGroupMembersTableBindingSource.DataSource = tbl;
+
+            if (this.RecordCount != null)
+                this.RecordCount(tbl.Rows.Count);
         }
 
         private void getUsersGroupsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -756,8 +611,8 @@ namespace ActiveDirectoryHelper
 
             ADGroupMembersTableRow row = (ADGroupMembersTableRow)((DataRowView)this.dataGridView1.SelectedCells[0].OwningRow.DataBoundItem).Row;
 
-            string distinguishedName = row.DistinguishedName;
-            ADGroupMembersTableRow memberRow = ADHelper.GetUsersManagers(distinguishedName);
+            //string distinguishedName = row.DistinguishedName;
+            ADGroupMembersTableRow memberRow = ADHelper.GetUsersManagers(row);
             UserManagers frmManagers = new UserManagers(memberRow);
             frmManagers.ShowDialog();
         }
@@ -774,7 +629,7 @@ namespace ActiveDirectoryHelper
             string firstName = row.FirstName;
             string userId = row.AccountId;
 
-            ADGroupMembersTable memberTable = ADHelper.GetDirectReports(distinguishedName);
+            ADGroupMembersTable memberTable = ADHelper.GetDirectReports(row);
             UserManagers frmReports = new UserManagers(memberTable);
             frmReports.Text = firstName + " " + lastName + " (" + userId + ") :: Direct Reports";
             frmReports.ShowDialog();
@@ -797,6 +652,7 @@ namespace ActiveDirectoryHelper
             frmProps.Show();
         }
         public event StatusEventHandler StatusEvent;
+        public event RecordCountEventHandler RecordCount;
 
         private void copyValueToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -915,11 +771,7 @@ namespace ActiveDirectoryHelper
             {
                 string url = Properties.Settings.Default.OnLineDirectoryFormat;
                 ADGroupMembersTableRow row = (ADGroupMembersTableRow)((DataRowView)this.dataGridView1.SelectedCells[0].OwningRow.DataBoundItem).Row;
-                ADGroupMembersTable tmp = (ADGroupMembersTable)row.Table;
-                foreach (System.Data.DataColumn col in tmp.Columns)
-                {
-                    url = url.Replace("{" + col.ColumnName + "}", row[col.ColumnName].ToString());
-                }
+                url = ADHelper.PerformTokenReplacement(url, row);
                 System.Diagnostics.Process.Start(url);
             }
             catch
@@ -927,12 +779,13 @@ namespace ActiveDirectoryHelper
             }
         }
 
-        private void customizeColumnsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            DataGridViewColumnCollection coll = this.dataGridView1.Columns;
-            UserListCustomizeForm frmCustom = new UserListCustomizeForm(ref coll);
-            frmCustom.ShowDialog();
-        }
+        //private void customizeColumnsToolStripMenuItem_Click(object sender, EventArgs e)
+        //{
+        //    SetCustomPropertyColumns();
+        //    DataGridViewColumnCollection coll = this.dataGridView1.Columns;
+        //    UserListCustomizeForm frmCustom = new UserListCustomizeForm(ref coll);
+        //    frmCustom.ShowDialog();
+        //}
 
         private void dataGridView1_ColumnDisplayIndexChanged(object sender, DataGridViewColumnEventArgs e)
         {
@@ -941,45 +794,148 @@ namespace ActiveDirectoryHelper
 
         private void UserListCtrl_Load(object sender, EventArgs e)
         {
-            SetColumnDefaults();
+            SetCustomPropertyColumns();
+            //SetColumnDefaults();
         }
 
         private void SaveColumnDefaults()
         {
             //Save re-ordering to the default config
-            List<ColumnConfig> cfg = new List<ColumnConfig>();
-            for (int i = 0; i < dataGridView1.Columns.Count; i++)
-            {
-                DataGridViewColumn col = dataGridView1.Columns[i];
-                ColumnConfig c = new ColumnConfig(col.Name, col.DisplayIndex, col.Visible, col.Width);
-                cfg.Add(c);
-            }
-            Properties.Settings.Default.CustomizedColumnsList = cfg;
-            Properties.Settings.Default.Save();
-        }
-        private void SetColumnDefaults()
-        {
-            List<ColumnConfig> cfg = null;
-            //Load the custom column configuration if it exists
-            if (Properties.Settings.Default.CustomizedColumnsList == null)
-                cfg = new List<ColumnConfig>();
+            List<CustomPropertyConfig> cfg;
+            if (Properties.Settings.Default.CustomPropertyList == null)
+                cfg = GetPropertyDefaults();
             else
-                cfg = Properties.Settings.Default.CustomizedColumnsList;
+                cfg = Properties.Settings.Default.CustomPropertyList;
 
             for (int i = 0; i < dataGridView1.Columns.Count; i++)
             {
+                 DataGridViewColumn col = dataGridView1.Columns[i];
                 for (int j = 0; j < cfg.Count; j++)
                 {
-                    if (dataGridView1.Columns[i].Name == cfg[j].ColumnName)
+                    if (col.Name == cfg[j].ColumnName)
                     {
-                        dataGridView1.Columns[i].Visible = cfg[j].IsVisible;
-                        dataGridView1.Columns[i].DisplayIndex = cfg[j].SortOrder;
-                        dataGridView1.Columns[i].Width = cfg[j].ColumnWidth;
+                        cfg[j].SortOrder = col.DisplayIndex;
+                        cfg[j].ColumnWidth = col.Width;
                         break;
                     }
                 }
             }
+            Properties.Settings.Default.CustomPropertyList = cfg;
+            Properties.Settings.Default.Save();
+        }
+        private void SetCustomPropertyColumns()
+        {
+            List<CustomPropertyConfig> cfgs;
+            if (Properties.Settings.Default.CustomPropertyList == null)
+                cfgs = GetPropertyDefaults();
+            else
+                cfgs = Properties.Settings.Default.CustomPropertyList;
 
+            for (int i = 0; i < this.dataGridView1.Columns.Count; i++)
+                this.dataGridView1.Columns[i].Visible = false;
+
+            for (int i = 0; i < cfgs.Count; i++)
+            {
+                CustomPropertyConfig cfg = cfgs[i];
+                if (!this.dataGridView1.Columns.Contains(cfg.ColumnName))
+                {
+                    DataGridViewTextBoxColumn col = new DataGridViewTextBoxColumn();
+                    col.Name = cfg.ColumnName;
+                    col.HeaderText = cfg.DisplayName;
+                    col.DataPropertyName = cfg.LdapPropertyName;
+                    col.Visible = cfg.DisplayColumn;
+                    col.Width = cfg.ColumnWidth;
+                    col.DisplayIndex = cfg.SortOrder;
+                    this.dataGridView1.Columns.Add(col);
+                }
+                else
+                {
+                    this.dataGridView1.Columns[cfg.ColumnName].HeaderText = cfg.DisplayName;
+                    this.dataGridView1.Columns[cfg.ColumnName].DisplayIndex = ((cfg.SortOrder >= this.dataGridView1.Columns.Count) ? this.dataGridView1.Columns.Count-1 :cfg.SortOrder);
+                    this.dataGridView1.Columns[cfg.ColumnName].Width = cfg.ColumnWidth;
+                    this.dataGridView1.Columns[cfg.ColumnName].Visible = cfg.DisplayColumn;
+                }
+            }
+
+            ADGroupMembersTable tmp = new ADGroupMembersTable();
+            for (int i = 0; i < tmp.Columns.Count; i++)
+            {
+                if (!this.dataGridView1.Columns.Contains(tmp.Columns[i].ColumnName + "DataGridViewTextBoxColumn"))
+                {
+                    DataGridViewTextBoxColumn col = new DataGridViewTextBoxColumn();
+                    col.Name = tmp.Columns[i].ColumnName + "DataGridViewTextBoxColumn";
+                    col.HeaderText = tmp.Columns[i].ColumnName;
+                    col.DataPropertyName = tmp.Columns[i].ColumnName;
+                    col.Visible = false;
+                    this.dataGridView1.Columns.Add(col);
+                }
+            }
+
+
+
+            
+        }
+        //private void SetColumnDefaults()
+        //{
+        //    List<CustomPropertyConfig> cfg = null;
+        //    //Load the custom column configuration if it exists
+        //    if (Properties.Settings.Default.CustomPropertyList == null)
+        //        cfg = GetPropertyDefaults();
+        //    else
+        //        cfg = Properties.Settings.Default.CustomPropertyList;
+        //    bool found = false;
+        //    for (int i = 0; i < dataGridView1.Columns.Count; i++)
+        //    {
+        //        for (int j = 0; j < cfg.Count; j++)
+        //        {
+        //            if (dataGridView1.Columns[i].Name == cfg[j].ColumnName)
+        //            {
+        //                dataGridView1.Columns[i].Visible = cfg[j].DisplayColumn;
+        //                dataGridView1.Columns[i].DisplayIndex = cfg[j].SortOrder;
+        //                dataGridView1.Columns[i].Width = cfg[j].ColumnWidth;
+        //                found = true;
+        //                break;
+        //            }
+        //        }
+        //        if (!found)
+        //            dataGridView1.Columns[i].Visible = false;
+
+        //        found = false;
+        //    }
+
+        //}
+        private List<CustomPropertyConfig> GetPropertyDefaults()
+        {
+
+            List<CustomPropertyConfig> cfgs = new List<CustomPropertyConfig>();
+            CustomPropertyConfig cfg = new CustomPropertyConfig("sn","Last Name",true,0,"snDataGridViewTextBoxColumn", 144);
+            cfgs.Add(cfg);
+
+            cfg = new CustomPropertyConfig("givenname","First Name",true,1,"givennameDataGridViewTextBoxColumn", 103);
+            cfgs.Add(cfg);
+
+            cfg = new CustomPropertyConfig("samaccountname","Account ID",true,2,"samaccountnameDataGridViewTextBoxColumn", 93);
+            cfgs.Add(cfg);
+
+            cfg = new CustomPropertyConfig("title","Title",true,3,"titleDataGridViewTextBoxColumn", 198);
+            cfgs.Add(cfg);
+
+            cfg = new CustomPropertyConfig("mail","EMail",true,4,"mailDataGridViewTextBoxColumn", 171);
+            cfgs.Add(cfg);
+
+            cfg = new CustomPropertyConfig("telephonenumber","Phone",true,5,"telephonenumberDataGridViewTextBoxColumn", 100);
+            cfgs.Add(cfg);
+
+            cfg = new CustomPropertyConfig("AccountStatus", "AcctStat", true, 6, "AccountStatusDataGridViewTextBoxColumn", 75);
+            cfgs.Add(cfg);
+
+            cfg = new CustomPropertyConfig("SearchedDomain", "Domain", true, 6, "SearchedDomainDataGridViewTextBoxColumn", 100);
+            cfgs.Add(cfg);
+
+
+            Properties.Settings.Default.CustomPropertyList = cfgs;
+            Properties.Settings.Default.Save();
+            return cfgs;
         }
         protected override void OnCreateControl()
         {
@@ -989,10 +945,18 @@ namespace ActiveDirectoryHelper
 
         void ParentForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            SaveColumnDefaults ();
+            SaveColumnDefaults();
+        }
+
+        private void customizeLdapPropertiesRetrievedToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CustomPropertyForm frmProps = new CustomPropertyForm();
+            frmProps.ShowDialog();
+            SetCustomPropertyColumns();
         }
 
     }
     public delegate void StatusEventHandler(string status);
+    public delegate void RecordCountEventHandler(int count);
 }
 

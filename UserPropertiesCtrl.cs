@@ -41,7 +41,7 @@ namespace ActiveDirectoryHelper
             {
                 foreach (System.Data.DataColumn col in this.userProperties.Table.Columns)
                 {
-                    if (col.ColumnName != "Manager" && col.ColumnName != "Rank")
+                    if (col.ColumnName != "ManagerRow" && col.ColumnName != "Rank")
                     {
                         ListViewItem item = new ListViewItem(new string[] { col.ColumnName, this.userProperties[col.ColumnName].ToString() });
                         lstProps.Items.Add(item);

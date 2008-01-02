@@ -25,7 +25,7 @@ namespace ActiveDirectoryHelper.Tables
 	[System.ComponentModel.DesignerCategory("Component")]
 	[System.ComponentModel.DesignTimeVisible(true)]
 	[System.Drawing.ToolboxBitmap(typeof(System.Data.DataSet))]
-	public class ADGroupMembersTable : DataTable, System.Collections.IEnumerable
+	public partial class  ADGroupMembersTable : DataTable, System.Collections.IEnumerable
 	{
 	
 	
@@ -58,11 +58,12 @@ namespace ActiveDirectoryHelper.Tables
 		private DataColumn columnDepartment;
 		private DataColumn columnHomePhone;
 		private DataColumn columnRank;
-		private DataColumn columnManager;
+		private DataColumn columnManagerRow;
 		public  ADGroupMembersTable(): base("AD_GroupMembers_Table")
 		{
 			this.InitClass();
 			this.InitVars();
+            this.AddCustomColumns();
 			this.ColumnChanged += new DataColumnChangeEventHandler( myColumn_Changed );
 		}
 		public ADGroupMembersTable(DataTable table): base(table.TableName)
@@ -75,6 +76,7 @@ namespace ActiveDirectoryHelper.Tables
 			this.DisplayExpression = table.DisplayExpression;
 			this.InitClass();
 			this.InitVars();
+            this.AddCustomColumns();
 			this.ColumnChanged += new DataColumnChangeEventHandler( myColumn_Changed );
 			foreach(DataRow tmpRow in table.Rows)
 			{
@@ -331,11 +333,11 @@ namespace ActiveDirectoryHelper.Tables
 			}
 
 		}
-		public DataColumn ManagerColumn
+		public DataColumn ManagerRowColumn
 		{
 			get
 			{
-				return this.columnManager;
+				return this.columnManagerRow;
 			}
 
 		}
@@ -357,7 +359,7 @@ namespace ActiveDirectoryHelper.Tables
 		{
 			this.Rows.Add(row);
 		}
-		public bool AddADGroupMembersTableRow(String LastName,String FirstName,String AccountId,String Title,String EMail,String Phone,String DistinguishedName,String Country,String StateProv,String City,String StreetAddress,String PostalCode,String Business2Phone,String ManagerDN,int UserAccountControl,string AccountFlags,int AccountControlComputed,string AccountFlagsComputed,string ObjectSID,string ObjectGUID,DateTime AccountCreated,DateTime AccountLastModified,string SearchedDomain,string AccountStatus,string Office,string Description,string Department,string HomePhone,int Rank,ADGroupMembersTableRow Manager)
+		public bool AddADGroupMembersTableRow(String LastName,String FirstName,String AccountId,String Title,String EMail,String Phone,String DistinguishedName,String Country,String StateProv,String City,String StreetAddress,String PostalCode,String Business2Phone,String ManagerDN,int UserAccountControl,string AccountFlags,int AccountControlComputed,string AccountFlagsComputed,string ObjectSID,string ObjectGUID,DateTime AccountCreated,DateTime AccountLastModified,string SearchedDomain,string AccountStatus,string Office,string Description,string Department,string HomePhone,int Rank,ADGroupMembersTableRow ManagerRow)
 		{
 			ADGroupMembersTableRow newRow = (ADGroupMembersTableRow)this.NewRow();
 			try
@@ -391,7 +393,7 @@ namespace ActiveDirectoryHelper.Tables
 				newRow.Department = Department;
 				newRow.HomePhone = HomePhone;
 				newRow.Rank = Rank;
-				newRow.Manager = Manager;
+				newRow.ManagerRow = ManagerRow;
 				this.Rows.Add(newRow);
 			}catch(Exception e)
 			{
@@ -429,39 +431,39 @@ namespace ActiveDirectoryHelper.Tables
 		internal void InitVars()
 		{
 			
-			this.columnLastName=this.Columns["LastName"];
+			this.columnLastName=this.Columns["sn"];
 			
-			this.columnFirstName=this.Columns["FirstName"];
+			this.columnFirstName=this.Columns["givenname"];
 			
-			this.columnAccountId=this.Columns["AccountId"];
+			this.columnAccountId=this.Columns["samaccountname"];
 			
-			this.columnTitle=this.Columns["Title"];
+			this.columnTitle=this.Columns["title"];
 			
-			this.columnEMail=this.Columns["EMail"];
+			this.columnEMail=this.Columns["mail"];
 			
-			this.columnPhone=this.Columns["Phone"];
+			this.columnPhone=this.Columns["telephonenumber"];
 			
-			this.columnDistinguishedName=this.Columns["DistinguishedName"];
+			this.columnDistinguishedName=this.Columns["distinguishedname"];
 			
-			this.columnCountry=this.Columns["Country"];
+			this.columnCountry=this.Columns["c"];
 			
-			this.columnStateProv=this.Columns["StateProv"];
+			this.columnStateProv=this.Columns["st"];
 			
-			this.columnCity=this.Columns["City"];
+			this.columnCity=this.Columns["l"];
 			
-			this.columnStreetAddress=this.Columns["StreetAddress"];
+			this.columnStreetAddress=this.Columns["streetAddress"];
 			
-			this.columnPostalCode=this.Columns["PostalCode"];
+			this.columnPostalCode=this.Columns["postalCode"];
 			
-			this.columnBusiness2Phone=this.Columns["Business2Phone"];
+			this.columnBusiness2Phone=this.Columns["otherTelephone"];
 			
-			this.columnManagerDN=this.Columns["ManagerDN"];
+			this.columnManagerDN=this.Columns["manager"];
 			
-			this.columnUserAccountControl=this.Columns["UserAccountControl"];
+			this.columnUserAccountControl=this.Columns["userAccountControl"];
 			
 			this.columnAccountFlags=this.Columns["AccountFlags"];
 			
-			this.columnAccountControlComputed=this.Columns["AccountControlComputed"];
+			this.columnAccountControlComputed=this.Columns["msDS-User-Account-Control-Computed"];
 			
 			this.columnAccountFlagsComputed=this.Columns["AccountFlagsComputed"];
 			
@@ -469,79 +471,79 @@ namespace ActiveDirectoryHelper.Tables
 			
 			this.columnObjectGUID=this.Columns["ObjectGUID"];
 			
-			this.columnAccountCreated=this.Columns["AccountCreated"];
+			this.columnAccountCreated=this.Columns["whenCreated"];
 			
-			this.columnAccountLastModified=this.Columns["AccountLastModified"];
+			this.columnAccountLastModified=this.Columns["whenChanged"];
 			
 			this.columnSearchedDomain=this.Columns["SearchedDomain"];
 			
 			this.columnAccountStatus=this.Columns["AccountStatus"];
 			
-			this.columnOffice=this.Columns["Office"];
+			this.columnOffice=this.Columns["physicalDeliveryOfficeName"];
 			
-			this.columnDescription=this.Columns["Description"];
+			this.columnDescription=this.Columns["description"];
 			
-			this.columnDepartment=this.Columns["Department"];
+			this.columnDepartment=this.Columns["department"];
 			
-			this.columnHomePhone=this.Columns["HomePhone"];
+			this.columnHomePhone=this.Columns["homephone"];
 			
 			this.columnRank=this.Columns["Rank"];
 			
-			this.columnManager=this.Columns["Manager"];
+			this.columnManagerRow=this.Columns["ManagerRow"];
 			
 		}
 		private  void InitClass()
 		{
 		
-			this.columnLastName = new DataColumn("LastName", typeof(String), null, System.Data.MappingType.Element);
+			this.columnLastName = new DataColumn("sn", typeof(String), null, System.Data.MappingType.Element);
 			this.Columns.Add(this.columnLastName);
 		
-			this.columnFirstName = new DataColumn("FirstName", typeof(String), null, System.Data.MappingType.Element);
+			this.columnFirstName = new DataColumn("givenname", typeof(String), null, System.Data.MappingType.Element);
 			this.Columns.Add(this.columnFirstName);
 		
-			this.columnAccountId = new DataColumn("AccountId", typeof(String), null, System.Data.MappingType.Element);
+			this.columnAccountId = new DataColumn("samaccountname", typeof(String), null, System.Data.MappingType.Element);
 			this.Columns.Add(this.columnAccountId);
 		
-			this.columnTitle = new DataColumn("Title", typeof(String), null, System.Data.MappingType.Element);
+			this.columnTitle = new DataColumn("title", typeof(String), null, System.Data.MappingType.Element);
 			this.Columns.Add(this.columnTitle);
 		
-			this.columnEMail = new DataColumn("EMail", typeof(String), null, System.Data.MappingType.Element);
+			this.columnEMail = new DataColumn("mail", typeof(String), null, System.Data.MappingType.Element);
 			this.Columns.Add(this.columnEMail);
 		
-			this.columnPhone = new DataColumn("Phone", typeof(String), null, System.Data.MappingType.Element);
+			this.columnPhone = new DataColumn("telephonenumber", typeof(String), null, System.Data.MappingType.Element);
 			this.Columns.Add(this.columnPhone);
 		
-			this.columnDistinguishedName = new DataColumn("DistinguishedName", typeof(String), null, System.Data.MappingType.Element);
+			this.columnDistinguishedName = new DataColumn("distinguishedname", typeof(String), null, System.Data.MappingType.Element);
 			this.Columns.Add(this.columnDistinguishedName);
 		
-			this.columnCountry = new DataColumn("Country", typeof(String), null, System.Data.MappingType.Element);
+			this.columnCountry = new DataColumn("c", typeof(String), null, System.Data.MappingType.Element);
 			this.Columns.Add(this.columnCountry);
 		
-			this.columnStateProv = new DataColumn("StateProv", typeof(String), null, System.Data.MappingType.Element);
+			this.columnStateProv = new DataColumn("st", typeof(String), null, System.Data.MappingType.Element);
 			this.Columns.Add(this.columnStateProv);
 		
-			this.columnCity = new DataColumn("City", typeof(String), null, System.Data.MappingType.Element);
+			this.columnCity = new DataColumn("l", typeof(String), null, System.Data.MappingType.Element);
 			this.Columns.Add(this.columnCity);
 		
-			this.columnStreetAddress = new DataColumn("StreetAddress", typeof(String), null, System.Data.MappingType.Element);
+			this.columnStreetAddress = new DataColumn("streetAddress", typeof(String), null, System.Data.MappingType.Element);
 			this.Columns.Add(this.columnStreetAddress);
 		
-			this.columnPostalCode = new DataColumn("PostalCode", typeof(String), null, System.Data.MappingType.Element);
+			this.columnPostalCode = new DataColumn("postalCode", typeof(String), null, System.Data.MappingType.Element);
 			this.Columns.Add(this.columnPostalCode);
 		
-			this.columnBusiness2Phone = new DataColumn("Business2Phone", typeof(String), null, System.Data.MappingType.Element);
+			this.columnBusiness2Phone = new DataColumn("otherTelephone", typeof(String), null, System.Data.MappingType.Element);
 			this.Columns.Add(this.columnBusiness2Phone);
 		
-			this.columnManagerDN = new DataColumn("ManagerDN", typeof(String), null, System.Data.MappingType.Element);
+			this.columnManagerDN = new DataColumn("manager", typeof(String), null, System.Data.MappingType.Element);
 			this.Columns.Add(this.columnManagerDN);
 		
-			this.columnUserAccountControl = new DataColumn("UserAccountControl", typeof(int), null, System.Data.MappingType.Element);
+			this.columnUserAccountControl = new DataColumn("userAccountControl", typeof(int), null, System.Data.MappingType.Element);
 			this.Columns.Add(this.columnUserAccountControl);
 		
 			this.columnAccountFlags = new DataColumn("AccountFlags", typeof(string), null, System.Data.MappingType.Element);
 			this.Columns.Add(this.columnAccountFlags);
 		
-			this.columnAccountControlComputed = new DataColumn("AccountControlComputed", typeof(int), null, System.Data.MappingType.Element);
+			this.columnAccountControlComputed = new DataColumn("msDS-User-Account-Control-Computed", typeof(int), null, System.Data.MappingType.Element);
 			this.Columns.Add(this.columnAccountControlComputed);
 		
 			this.columnAccountFlagsComputed = new DataColumn("AccountFlagsComputed", typeof(string), null, System.Data.MappingType.Element);
@@ -553,10 +555,10 @@ namespace ActiveDirectoryHelper.Tables
 			this.columnObjectGUID = new DataColumn("ObjectGUID", typeof(string), null, System.Data.MappingType.Element);
 			this.Columns.Add(this.columnObjectGUID);
 		
-			this.columnAccountCreated = new DataColumn("AccountCreated", typeof(DateTime), null, System.Data.MappingType.Element);
+			this.columnAccountCreated = new DataColumn("whenCreated", typeof(DateTime), null, System.Data.MappingType.Element);
 			this.Columns.Add(this.columnAccountCreated);
 		
-			this.columnAccountLastModified = new DataColumn("AccountLastModified", typeof(DateTime), null, System.Data.MappingType.Element);
+			this.columnAccountLastModified = new DataColumn("whenChanged", typeof(DateTime), null, System.Data.MappingType.Element);
 			this.Columns.Add(this.columnAccountLastModified);
 		
 			this.columnSearchedDomain = new DataColumn("SearchedDomain", typeof(string), null, System.Data.MappingType.Element);
@@ -565,23 +567,23 @@ namespace ActiveDirectoryHelper.Tables
 			this.columnAccountStatus = new DataColumn("AccountStatus", typeof(string), null, System.Data.MappingType.Element);
 			this.Columns.Add(this.columnAccountStatus);
 		
-			this.columnOffice = new DataColumn("Office", typeof(string), null, System.Data.MappingType.Element);
+			this.columnOffice = new DataColumn("physicalDeliveryOfficeName", typeof(string), null, System.Data.MappingType.Element);
 			this.Columns.Add(this.columnOffice);
 		
-			this.columnDescription = new DataColumn("Description", typeof(string), null, System.Data.MappingType.Element);
+			this.columnDescription = new DataColumn("description", typeof(string), null, System.Data.MappingType.Element);
 			this.Columns.Add(this.columnDescription);
 		
-			this.columnDepartment = new DataColumn("Department", typeof(string), null, System.Data.MappingType.Element);
+			this.columnDepartment = new DataColumn("department", typeof(string), null, System.Data.MappingType.Element);
 			this.Columns.Add(this.columnDepartment);
 		
-			this.columnHomePhone = new DataColumn("HomePhone", typeof(string), null, System.Data.MappingType.Element);
+			this.columnHomePhone = new DataColumn("homephone", typeof(string), null, System.Data.MappingType.Element);
 			this.Columns.Add(this.columnHomePhone);
 		
 			this.columnRank = new DataColumn("Rank", typeof(int), null, System.Data.MappingType.Element);
 			this.Columns.Add(this.columnRank);
 		
-			this.columnManager = new DataColumn("Manager", typeof(ADGroupMembersTableRow), null, System.Data.MappingType.Element);
-			this.Columns.Add(this.columnManager);
+			this.columnManagerRow = new DataColumn("ManagerRow", typeof(ADGroupMembersTableRow), null, System.Data.MappingType.Element);
+			this.Columns.Add(this.columnManagerRow);
 		
 		
 		
@@ -1338,22 +1340,22 @@ namespace ActiveDirectoryHelper.Tables
 			}
 		}
 		
-		public ADGroupMembersTableRow Manager
+		public ADGroupMembersTableRow ManagerRow
 		{
 			get
 			{
 				try
 				{
-					return ((ADGroupMembersTableRow)(this[this.tableADGroupMembersTable.ManagerColumn]));
+					return ((ADGroupMembersTableRow)(this[this.tableADGroupMembersTable.ManagerRowColumn]));
 				}
 				catch(InvalidCastException e)
 				{
-					throw new System.ApplicationException("Error in Auto-Generated: ADGroupMembersTableRow.Manager property. Underlying value is System.DbNull",e);
+					throw new System.ApplicationException("Error in Auto-Generated: ADGroupMembersTableRow.ManagerRow property. Underlying value is System.DbNull",e);
 				}
 			}
 			set
 			{
-				this[this.tableADGroupMembersTable.ManagerColumn] = value;
+				this[this.tableADGroupMembersTable.ManagerRowColumn] = value;
 			}
 		}
 		
@@ -1363,7 +1365,7 @@ namespace ActiveDirectoryHelper.Tables
 			
 			try
 			{
-				this[this.tableADGroupMembersTable.LastNameColumn] = SourceRow["LastName"];
+				this[this.tableADGroupMembersTable.LastNameColumn] = SourceRow["sn"];
 			}
 			catch(Exception e)
 			{
@@ -1373,7 +1375,7 @@ namespace ActiveDirectoryHelper.Tables
 			
 			try
 			{
-				this[this.tableADGroupMembersTable.FirstNameColumn] = SourceRow["FirstName"];
+				this[this.tableADGroupMembersTable.FirstNameColumn] = SourceRow["givenname"];
 			}
 			catch(Exception e)
 			{
@@ -1383,7 +1385,7 @@ namespace ActiveDirectoryHelper.Tables
 			
 			try
 			{
-				this[this.tableADGroupMembersTable.AccountIdColumn] = SourceRow["AccountId"];
+				this[this.tableADGroupMembersTable.AccountIdColumn] = SourceRow["samaccountname"];
 			}
 			catch(Exception e)
 			{
@@ -1393,7 +1395,7 @@ namespace ActiveDirectoryHelper.Tables
 			
 			try
 			{
-				this[this.tableADGroupMembersTable.TitleColumn] = SourceRow["Title"];
+				this[this.tableADGroupMembersTable.TitleColumn] = SourceRow["title"];
 			}
 			catch(Exception e)
 			{
@@ -1403,7 +1405,7 @@ namespace ActiveDirectoryHelper.Tables
 			
 			try
 			{
-				this[this.tableADGroupMembersTable.EMailColumn] = SourceRow["EMail"];
+				this[this.tableADGroupMembersTable.EMailColumn] = SourceRow["mail"];
 			}
 			catch(Exception e)
 			{
@@ -1413,7 +1415,7 @@ namespace ActiveDirectoryHelper.Tables
 			
 			try
 			{
-				this[this.tableADGroupMembersTable.PhoneColumn] = SourceRow["Phone"];
+				this[this.tableADGroupMembersTable.PhoneColumn] = SourceRow["telephonenumber"];
 			}
 			catch(Exception e)
 			{
@@ -1423,7 +1425,7 @@ namespace ActiveDirectoryHelper.Tables
 			
 			try
 			{
-				this[this.tableADGroupMembersTable.DistinguishedNameColumn] = SourceRow["DistinguishedName"];
+				this[this.tableADGroupMembersTable.DistinguishedNameColumn] = SourceRow["distinguishedname"];
 			}
 			catch(Exception e)
 			{
@@ -1433,7 +1435,7 @@ namespace ActiveDirectoryHelper.Tables
 			
 			try
 			{
-				this[this.tableADGroupMembersTable.CountryColumn] = SourceRow["Country"];
+				this[this.tableADGroupMembersTable.CountryColumn] = SourceRow["c"];
 			}
 			catch(Exception e)
 			{
@@ -1443,7 +1445,7 @@ namespace ActiveDirectoryHelper.Tables
 			
 			try
 			{
-				this[this.tableADGroupMembersTable.StateProvColumn] = SourceRow["StateProv"];
+				this[this.tableADGroupMembersTable.StateProvColumn] = SourceRow["st"];
 			}
 			catch(Exception e)
 			{
@@ -1453,7 +1455,7 @@ namespace ActiveDirectoryHelper.Tables
 			
 			try
 			{
-				this[this.tableADGroupMembersTable.CityColumn] = SourceRow["City"];
+				this[this.tableADGroupMembersTable.CityColumn] = SourceRow["l"];
 			}
 			catch(Exception e)
 			{
@@ -1463,7 +1465,7 @@ namespace ActiveDirectoryHelper.Tables
 			
 			try
 			{
-				this[this.tableADGroupMembersTable.StreetAddressColumn] = SourceRow["StreetAddress"];
+				this[this.tableADGroupMembersTable.StreetAddressColumn] = SourceRow["streetAddress"];
 			}
 			catch(Exception e)
 			{
@@ -1473,7 +1475,7 @@ namespace ActiveDirectoryHelper.Tables
 			
 			try
 			{
-				this[this.tableADGroupMembersTable.PostalCodeColumn] = SourceRow["PostalCode"];
+				this[this.tableADGroupMembersTable.PostalCodeColumn] = SourceRow["postalCode"];
 			}
 			catch(Exception e)
 			{
@@ -1483,7 +1485,7 @@ namespace ActiveDirectoryHelper.Tables
 			
 			try
 			{
-				this[this.tableADGroupMembersTable.Business2PhoneColumn] = SourceRow["Business2Phone"];
+				this[this.tableADGroupMembersTable.Business2PhoneColumn] = SourceRow["otherTelephone"];
 			}
 			catch(Exception e)
 			{
@@ -1493,7 +1495,7 @@ namespace ActiveDirectoryHelper.Tables
 			
 			try
 			{
-				this[this.tableADGroupMembersTable.ManagerDNColumn] = SourceRow["ManagerDN"];
+				this[this.tableADGroupMembersTable.ManagerDNColumn] = SourceRow["manager"];
 			}
 			catch(Exception e)
 			{
@@ -1503,7 +1505,7 @@ namespace ActiveDirectoryHelper.Tables
 			
 			try
 			{
-				this[this.tableADGroupMembersTable.UserAccountControlColumn] = SourceRow["UserAccountControl"];
+				this[this.tableADGroupMembersTable.UserAccountControlColumn] = SourceRow["userAccountControl"];
 			}
 			catch(Exception e)
 			{
@@ -1523,7 +1525,7 @@ namespace ActiveDirectoryHelper.Tables
 			
 			try
 			{
-				this[this.tableADGroupMembersTable.AccountControlComputedColumn] = SourceRow["AccountControlComputed"];
+				this[this.tableADGroupMembersTable.AccountControlComputedColumn] = SourceRow["msDS-User-Account-Control-Computed"];
 			}
 			catch(Exception e)
 			{
@@ -1563,7 +1565,7 @@ namespace ActiveDirectoryHelper.Tables
 			
 			try
 			{
-				this[this.tableADGroupMembersTable.AccountCreatedColumn] = SourceRow["AccountCreated"];
+				this[this.tableADGroupMembersTable.AccountCreatedColumn] = SourceRow["whenCreated"];
 			}
 			catch(Exception e)
 			{
@@ -1573,7 +1575,7 @@ namespace ActiveDirectoryHelper.Tables
 			
 			try
 			{
-				this[this.tableADGroupMembersTable.AccountLastModifiedColumn] = SourceRow["AccountLastModified"];
+				this[this.tableADGroupMembersTable.AccountLastModifiedColumn] = SourceRow["whenChanged"];
 			}
 			catch(Exception e)
 			{
@@ -1603,7 +1605,7 @@ namespace ActiveDirectoryHelper.Tables
 			
 			try
 			{
-				this[this.tableADGroupMembersTable.OfficeColumn] = SourceRow["Office"];
+				this[this.tableADGroupMembersTable.OfficeColumn] = SourceRow["physicalDeliveryOfficeName"];
 			}
 			catch(Exception e)
 			{
@@ -1613,7 +1615,7 @@ namespace ActiveDirectoryHelper.Tables
 			
 			try
 			{
-				this[this.tableADGroupMembersTable.DescriptionColumn] = SourceRow["Description"];
+				this[this.tableADGroupMembersTable.DescriptionColumn] = SourceRow["description"];
 			}
 			catch(Exception e)
 			{
@@ -1623,7 +1625,7 @@ namespace ActiveDirectoryHelper.Tables
 			
 			try
 			{
-				this[this.tableADGroupMembersTable.DepartmentColumn] = SourceRow["Department"];
+				this[this.tableADGroupMembersTable.DepartmentColumn] = SourceRow["department"];
 			}
 			catch(Exception e)
 			{
@@ -1633,7 +1635,7 @@ namespace ActiveDirectoryHelper.Tables
 			
 			try
 			{
-				this[this.tableADGroupMembersTable.HomePhoneColumn] = SourceRow["HomePhone"];
+				this[this.tableADGroupMembersTable.HomePhoneColumn] = SourceRow["homephone"];
 			}
 			catch(Exception e)
 			{
@@ -1653,7 +1655,7 @@ namespace ActiveDirectoryHelper.Tables
 			
 			try
 			{
-				this[this.tableADGroupMembersTable.ManagerColumn] = SourceRow["Manager"];
+				this[this.tableADGroupMembersTable.ManagerRowColumn] = SourceRow["ManagerRow"];
 			}
 			catch(Exception e)
 			{
