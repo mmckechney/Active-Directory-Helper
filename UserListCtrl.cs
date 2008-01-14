@@ -15,6 +15,7 @@ namespace ActiveDirectoryHelper
     public class UserListCtrl : System.Windows.Forms.UserControl
     {
         private static bool subscribedToLdapEvent = false;
+        private static bool subscribedToCompilerEvent = false;
        // private bool showManagerColumn = false;
 
         //public bool ShowManagerColumn
@@ -84,6 +85,17 @@ namespace ActiveDirectoryHelper
                 ADHelper.InvalidLdapQuery += new EventHandler(ADHelper_InvalidLdapQuery);
                 UserListCtrl.subscribedToLdapEvent = true;
             }
+            if (UserListCtrl.subscribedToCompilerEvent == false)
+            {
+                ADHelper.CSharpSnippetCompileError += new EventHandler(ADHelper_CSharpSnippetCompileError);
+                UserListCtrl.subscribedToCompilerEvent = true;
+            }
+        }
+
+        void ADHelper_CSharpSnippetCompileError(object sender, EventArgs e)
+        {
+            string message = "Failed to compile/execute custom hierarchy C# code snippet:\r\n\r\n" + sender.ToString();
+            MessageBox.Show(message, "Custom Code Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
         void ADHelper_InvalidLdapQuery(object sender, EventArgs e)
@@ -608,12 +620,13 @@ namespace ActiveDirectoryHelper
         {
             if (this.dataGridView1.SelectedCells.Count == 0)
                 return;
-
+            this.Cursor = Cursors.AppStarting;
             ADGroupMembersTableRow row = (ADGroupMembersTableRow)((DataRowView)this.dataGridView1.SelectedCells[0].OwningRow.DataBoundItem).Row;
 
             //string distinguishedName = row.DistinguishedName;
             ADGroupMembersTableRow memberRow = ADHelper.GetUsersManagers(row);
             UserManagers frmManagers = new UserManagers(memberRow);
+            this.Cursor = Cursors.Default;
             frmManagers.ShowDialog();
         }
 
@@ -621,7 +634,7 @@ namespace ActiveDirectoryHelper
         {
             if (this.dataGridView1.SelectedCells.Count == 0)
                 return;
-
+            this.Cursor = Cursors.AppStarting;
             ADGroupMembersTableRow row = (ADGroupMembersTableRow)((DataRowView)this.dataGridView1.SelectedCells[0].OwningRow.DataBoundItem).Row;
 
             string distinguishedName = row.DistinguishedName;
@@ -632,6 +645,7 @@ namespace ActiveDirectoryHelper
             ADGroupMembersTable memberTable = ADHelper.GetDirectReports(row);
             UserManagers frmReports = new UserManagers(memberTable);
             frmReports.Text = firstName + " " + lastName + " (" + userId + ") :: Direct Reports";
+            this.Cursor = Cursors.Default;
             frmReports.ShowDialog();
         }
 

@@ -54,10 +54,27 @@ namespace ActiveDirectoryHelper
             for (int i = 0; i < this.groupList.Count; i++)
             {
                 if (itemsAdded.Contains(this.groupList[i].GroupName + this.groupList[i].IsInherited.ToString()))
+                {
+                    for(int j=0;j<lstResults.Items.Count;j++)
+                    {
+                        if (lstResults.Items[j].Text == this.groupList[i].GroupName && lstResults.Items[j].Font.Italic)
+                            lstResults.Items[j].ToolTipText += "\r\n- " + String.Join("\r\n- ", this.groupList[i].ParentName.ToArray());
+                    }
                     continue;
+                }
 
                 ListViewItem item = new ListViewItem(this.groupList[i].GroupName);
                 item.Tag = this.groupList[i];
+                if (this.groupList[i].ParentName.Count > 0)
+                {
+                    //item.ToolTipText = "Inherited from:\r\n";
+                    //for (int x = 0; x < this.groupList[i].ParentName.Count; x++)
+                    //{
+                        item.ToolTipText += "Inherited from:\r\n- " + String.Join("\r\n- ",this.groupList[i].ParentName.ToArray());
+                        //if (x > 0) item.ToolTipText += "\r\n";
+                        //item.ToolTipText += "- " + this.groupList[i].ParentName[x];
+                    //}
+                }
                 if (this.groupList[i].IsInherited)
                     item.Font = new Font(item.Font, FontStyle.Italic);
                 for (int j = 0; j < this.highlightSettings.Count; j++)
@@ -127,6 +144,7 @@ namespace ActiveDirectoryHelper
             this.lstResults.GridLines = true;
             this.lstResults.Location = new System.Drawing.Point(3, 3);
             this.lstResults.Name = "lstResults";
+            this.lstResults.ShowItemToolTips = true;
             this.lstResults.Size = new System.Drawing.Size(316, 399);
             this.lstResults.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lstResults.TabIndex = 1;

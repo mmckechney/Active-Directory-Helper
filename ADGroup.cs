@@ -37,9 +37,18 @@ namespace ActiveDirectoryHelper
             this.distinguishedName = distinguishedName;
             this.groupName = groupName;
         }
-        public ADGroup(string groupName, string distinguishedName, bool isInherited) : this(groupName,distinguishedName)
+        public ADGroup(string groupName, string distinguishedName, string parentName, bool isInherited) : this(groupName,distinguishedName)
         {
             this.isInherited = isInherited;
+            this.parentName.Add(parentName);
+        }
+
+        private List<string> parentName = new List<string>();
+
+        public List<string> ParentName
+        {
+            get { return parentName; }
+            set { parentName = value; }
         }
 
         public int CompareTo(object x)

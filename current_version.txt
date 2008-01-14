@@ -1,4 +1,12 @@
-3.3.0
+3.3.1
+Version 3.3.1
+ADD: Additional "last try" user search attempt by First Initial, Last name 
+ADD: Ability to re-validate domain entry via right-click context menu item in domain list
+ADD: New group membership inheritance tool-tip to identify inherited group membership parent(s)
+ADD: Now includes secure authentication against the AD catalog using current security context or supplied credentials
+ADD: Ability to add custom C# code snippet to truly customize the manager & direct report searches
+FIX: Non-string custom properties were throwing cast exception when being added to display collection
+
 Version 3.3.0
 ADD: Ability to add custom LDAP properties/ display columns to retrieve and display.
 ADD: Ability to use a custom property in the hierarchy search for a user

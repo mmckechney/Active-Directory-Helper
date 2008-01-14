@@ -241,25 +241,61 @@ namespace ActiveDirectoryHelper.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool CustomManagerSearchIsComposite {
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string AdAuthenticationID {
             get {
-                return ((bool)(this["CustomManagerSearchIsComposite"]));
+                return ((string)(this["AdAuthenticationID"]));
             }
             set {
-                this["CustomManagerSearchIsComposite"] = value;
+                this["AdAuthenticationID"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string AdAuthenticationPW {
+            get {
+                return ((string)(this["AdAuthenticationPW"]));
+            }
+            set {
+                this["AdAuthenticationPW"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool CustomDirectReportSearchIsComposite {
+        public bool AdAuthenticationUseCustom {
             get {
-                return ((bool)(this["CustomDirectReportSearchIsComposite"]));
+                return ((bool)(this["AdAuthenticationUseCustom"]));
             }
             set {
-                this["CustomDirectReportSearchIsComposite"] = value;
+                this["AdAuthenticationUseCustom"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("StandardLdap")]
+        public string CustomManagerSearchType {
+            get {
+                return ((string)(this["CustomManagerSearchType"]));
+            }
+            set {
+                this["CustomManagerSearchType"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("StandardLdap")]
+        public string CustomDirectReportSearchType {
+            get {
+                return ((string)(this["CustomDirectReportSearchType"]));
+            }
+            set {
+                this["CustomDirectReportSearchType"] = value;
             }
         }
     }

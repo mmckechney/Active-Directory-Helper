@@ -15,19 +15,52 @@ namespace ActiveDirectoryHelper
             base.type = CustomQueryType.ManagerSearch;
             InitializeComponent();
 
-            this.chkComposite.Checked = Properties.Settings.Default.CustomManagerSearchIsComposite;
+            SearchType search = (SearchType)Enum.Parse(typeof(SearchType), Properties.Settings.Default.CustomManagerSearchType);
+
+            switch (search)
+            {
+                case SearchType.CustomCode:
+                    rbtCustom.Checked = true;
+                    break;
+                case SearchType.GenericText:
+                    rbtGeneric.Checked = true;
+                    break;
+                case SearchType.StandardLdap:
+                    rbtStandard.Checked = true;
+                    break;
+            }
         }
 
         protected new void btnSave_Click(object sender, EventArgs e)
         {
-            if(type == CustomQueryType.ManagerSearch)
-                Properties.Settings.Default.CustomManagerSearchIsComposite = chkComposite.Checked;
+
+            SearchType search = SearchType.StandardLdap;
+            if (rbtGeneric.Checked)
+                search = SearchType.GenericText;
+            else if (rbtCustom.Checked)
+                search = SearchType.CustomCode;
+
+            switch(type)
+            {
+                case CustomQueryType.ManagerSearch:
+                    Properties.Settings.Default.CustomManagerSearchType = search.ToString();
+                    break;
+                case CustomQueryType.DirectReportSearch:
+                   Properties.Settings.Default.CustomDirectReportSearchType = search.ToString();
+                   break;
+            }
 
             Properties.Settings.Default.Save();
             this.Close();
         }
 
        
+    }
+    public enum SearchType
+    {
+        StandardLdap, 
+        GenericText,
+        CustomCode
     }
 }
 
