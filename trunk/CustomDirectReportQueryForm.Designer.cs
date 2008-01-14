@@ -29,23 +29,14 @@ namespace ActiveDirectoryHelper
         private void InitializeComponent()
         {
             this.SuspendLayout();
-            // 
-            // chkComposite
-            // 
-            this.chkComposite.Size = new System.Drawing.Size(578, 34);
-            this.chkComposite.Text = "If the searchable property value is a composite value that does not correspond to" +
-                " a single AD property, \r\njust add the formatted property name above and check he" +
-                "re to perform a general text search.";
+          
             // 
             // lblMain
             // 
             this.lblMain.Size = new System.Drawing.Size(516, 13);
             this.lblMain.Text = "LDAP Query format to use for retrieving direct report list (default is by disting" +
                 "uishedname):";
-            // 
-            // btnSave
-            // 
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+           
             // 
             // CustomDirectReportQueryForm
             // 

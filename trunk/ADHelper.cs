@@ -7,6 +7,10 @@ using System.Text;
 using System.Data;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.CodeDom;
+using System.CodeDom.Compiler;
+using Microsoft.CSharp;
+using System.Reflection;
 namespace ActiveDirectoryHelper
 {
 	/// <summary>
@@ -296,7 +300,8 @@ namespace ActiveDirectoryHelper
 			SortedList fullGroupList = new SortedList();
             for (int idx = 0; idx < globalCatalogURL.Count; idx++)
             {
-                DirectoryEntry entry1 = new DirectoryEntry("GC://"+globalCatalogURL[idx]);
+                DirectoryEntry entry1 = GetDirectoryEntry(globalCatalogURL[idx]);
+
                 DirectorySearcher searcher1 = new DirectorySearcher(entry1);
                 searcher1.Filter = "(objectClass=group)";
                 searcher1.PropertiesToLoad.Add("name");
@@ -327,31 +332,59 @@ namespace ActiveDirectoryHelper
             ADGroupMembersTableRow firstUser = GetAccountByDN(distinguishedName);
 			return GetUsersManagers(firstUser);
 		}
-		internal static ADGroupMembersTableRow GetUsersManagers( ADGroupMembersTableRow memberRow)
+        internal static ADGroupMembersTableRow GetUsersManagers(ADGroupMembersTableRow memberRow)
+        {
+            return GetUsersManagers(memberRow, "");
+        }
+		/// <summary>
+        /// Retrieves a user's manager by building a nested hierarchy of ADGroupMembersTableRows via the ManagerRow property
+		/// </summary>
+        /// <param name="memberRow">Group Members Table row for the current user to be searched</param>
+		/// <param name="lastQuery">The LDAP query used in the last recursive call -- used to halt endless loops, especially when the custom C# code is used.</param>
+		/// <returns></returns>
+        internal static ADGroupMembersTableRow GetUsersManagers( ADGroupMembersTableRow memberRow, string lastQuery)
 		{
            if(Properties.Settings.Default.CustomManagerSearch != null && Properties.Settings.Default.CustomManagerSearch.Length > 0)
            {
-               ADGroupMembersTableRow manager = null;
-               string query = ADHelper.PerformTokenReplacement(Properties.Settings.Default.CustomManagerSearch,memberRow);
-               if (Properties.Settings.Default.CustomManagerSearchIsComposite)
+               bool searchByquery = false;
+               SearchType search = (SearchType)Enum.Parse(typeof(SearchType), Properties.Settings.Default.CustomManagerSearchType);
+               string query = string.Empty; ; 
+               switch(search)
                {
-                   ADGroupMembersTable tmp = GetAccountFromString(query);
-                   if (tmp != null && tmp.Rows.Count > 0)
-                       manager = tmp[0];
-               }
-               else
-               {
-                   ADGroupMembersTable tmp = GetAccountByQuery(query);
-                   if (tmp != null && tmp.Rows.Count > 0)
-                       manager = tmp[0];
-               }
+                   case SearchType.CustomCode:
+                       query = ADHelper.PerformTokenReplacement(Properties.Settings.Default.CustomManagerSearch, memberRow);
+                       if (query.Length > 0)
+                           query = Eval(query);
+                       else
+                           return memberRow;
+                        
+                       searchByquery = true;
+                       break;
+                   case SearchType.StandardLdap:
+                       query = ADHelper.PerformTokenReplacement(Properties.Settings.Default.CustomManagerSearch, memberRow);
+                       searchByquery = true;
+                       break;
+                   case SearchType.GenericText:
+                       query = ADHelper.PerformTokenReplacement(Properties.Settings.Default.CustomManagerSearch, memberRow);
+                       searchByquery = false;
+                       break;
 
-               if(manager != null)
-               {
-                   memberRow.ManagerRow = GetUsersManagers(manager);
                }
-
+               if (query == lastQuery)
                    return memberRow;
+
+               ADGroupMembersTable tmp;
+               if (!searchByquery)
+                   tmp = GetAccountFromString(query);
+               else
+                   tmp = GetAccountByQuery(query);
+
+               if (tmp != null && tmp.Rows.Count > 0)
+               {
+                   memberRow.ManagerRow = GetUsersManagers(tmp[0], query);
+               }
+
+               return memberRow;
            }
            else
            {
@@ -372,18 +405,28 @@ namespace ActiveDirectoryHelper
                 {
                     sb.Append("(manager=" + row.DistinguishedName + ")");
                 }
-                else if (Properties.Settings.Default.CustomDirectReportSearchIsComposite)
-                {
-                    return GetAccountFromString(PerformTokenReplacement(Properties.Settings.Default.CustomDirectReportSearch, row));
-                }
                 else
                 {
-                    sb.Append("(" + PerformTokenReplacement(Properties.Settings.Default.CustomDirectReportSearch, row) + ")");
+                    SearchType search = (SearchType)Enum.Parse(typeof(SearchType), Properties.Settings.Default.CustomDirectReportSearchType);
+                    switch (search)
+                    {
+                        case SearchType.GenericText:
+                            return GetAccountFromString(PerformTokenReplacement(Properties.Settings.Default.CustomDirectReportSearch, row));
+                        case SearchType.CustomCode:
+                            string query = PerformTokenReplacement(Properties.Settings.Default.CustomDirectReportSearch, row);
+                            query = Eval(query);
+                            sb.Append(ADHelper.PerformTokenReplacement(query, row));
+                            break;
+                        case SearchType.StandardLdap:
+                            sb.Append("(" + PerformTokenReplacement(Properties.Settings.Default.CustomDirectReportSearch, row) + ")");
+                            break;
+                    }
                 }
                 sb.Append(")");
                 for (int j = 0; j < globalCatalogURL.Count; j++)
                 {
-                    DirectoryEntry entry1 = new DirectoryEntry("GC://" + globalCatalogURL[j]);
+                    DirectoryEntry entry1 = GetDirectoryEntry(globalCatalogURL[j]);
+
                     DirectorySearcher searcher1 = new DirectorySearcher(entry1);
                     searcher1.Filter = sb.ToString();
                     AddSearchProperties(ref searcher1);
@@ -427,7 +470,7 @@ namespace ActiveDirectoryHelper
 			//Make a Connection with the Global Catalog Server
             for (int j = 0; j < globalCatalogURL.Count; j++)
             {
-                System.DirectoryServices.DirectoryEntry Root = new System.DirectoryServices.DirectoryEntry("GC://" + globalCatalogURL[j]);
+                System.DirectoryServices.DirectoryEntry Root = GetDirectoryEntry(globalCatalogURL[j]); 
                 //Create a directory searcher based on the root catalog server
                 using (System.DirectoryServices.DirectorySearcher GSearch = new System.DirectoryServices.DirectorySearcher(Root))
                 {
@@ -465,10 +508,14 @@ namespace ActiveDirectoryHelper
                         //Get the number of members in this group
                         int MaxGroups = Groups.Count;
 
+                        string tmpName;
+                        string tmpDN;
                         for (int i = 0; i < Groups.Count; i++)
                         {
-                            grps.Add(new ADGroup((System.String)Groups[i].Properties["name"][0], (System.String)Groups[i].Properties["distinguishedname"][0]));
-                            grps.AddRange(GetNestedGroups((System.String)Groups[i].Properties["distinguishedname"][0], globalCatalogURL[j]));
+                            tmpName = (System.String)Groups[i].Properties["name"][0];
+                            tmpDN = (System.String)Groups[i].Properties["distinguishedname"][0];
+                            grps.Add(new ADGroup(tmpName, tmpDN));
+                            grps.AddRange(GetNestedGroups(tmpName,tmpDN, globalCatalogURL[j]));
                         }
                     }
                 }
@@ -476,11 +523,12 @@ namespace ActiveDirectoryHelper
 
 			return grps;
         }
-        internal static System.Collections.Generic.List<ADGroup> GetNestedGroups(string parentGroupDN, string parentCatalogURL)
+        internal static System.Collections.Generic.List<ADGroup> GetNestedGroups(string parentName, string parentGroupDN, string parentCatalogURL)
         {
             System.Collections.Generic.List<ADGroup> nested = new System.Collections.Generic.List<ADGroup>();
             //Make a Connection with the Global Catalog Server
-            System.DirectoryServices.DirectoryEntry Root = new System.DirectoryServices.DirectoryEntry("GC://" + parentCatalogURL);
+            System.DirectoryServices.DirectoryEntry Root = GetDirectoryEntry(parentCatalogURL);
+
             //Create a directory searcher based on the root catalog server
             using (System.DirectoryServices.DirectorySearcher GSearch = new System.DirectoryServices.DirectorySearcher(Root))
             {
@@ -512,12 +560,16 @@ namespace ActiveDirectoryHelper
                     //Get the number of members in this group
                     int MaxGroups = Groups.Count;
 
+                    string tmpName;
+                    string tmpDN;
                     for (int i = 0; i < Groups.Count; i++)
                     {
-                        nested.Add(new ADGroup((System.String)Groups[i].Properties["name"][0], (System.String)Groups[i].Properties["distinguishedname"][0], true));
+                        tmpName = (System.String)Groups[i].Properties["name"][0];
+                        tmpDN = (System.String)Groups[i].Properties["distinguishedname"][0];
+                        nested.Add(new ADGroup(tmpName, tmpDN,parentName, true));
 
                         if (Groups[i].Properties["distinguishedname"][0].ToString().IndexOf("OU=Distribution Groups") == -1)
-                            nested.AddRange(GetNestedGroups((System.String)Groups[i].Properties["distinguishedname"][0], parentCatalogURL));
+                            nested.AddRange(GetNestedGroups(tmpName, tmpDN, parentCatalogURL));
                     }
 
                 }
@@ -526,7 +578,22 @@ namespace ActiveDirectoryHelper
 
             return nested;
         }
-       
+
+        internal static DirectoryEntry GetDirectoryEntry(string catalogURL)
+        {
+
+            DirectoryEntry entry = new DirectoryEntry("GC://" + catalogURL);
+            entry.AuthenticationType = AuthenticationTypes.Secure;
+            if (Properties.Settings.Default.AdAuthenticationID != null && Properties.Settings.Default.AdAuthenticationPW != null &&
+                Properties.Settings.Default.AdAuthenticationID.Length > 0 && Properties.Settings.Default.AdAuthenticationPW.Length > 0 && Properties.Settings.Default.AdAuthenticationUseCustom)
+            {
+                entry.Password = Encryption.Crypter.Decrypt(Properties.Settings.Default.AdAuthenticationPW);
+                entry.Username = Encryption.Crypter.Decrypt(Properties.Settings.Default.AdAuthenticationID);
+            }
+            
+            return entry;
+            
+        }
         #region Get Group Memberships
         internal static ADGroupMembersTable GetGroupMembers(List<string> groupNames, string joinType)
 		{
@@ -544,7 +611,7 @@ namespace ActiveDirectoryHelper
                 ADGroupMembersTable memTable = new ADGroupMembersTable();
                 for (int j = 0; j < globalCatalogURL.Count; j++)
                 {
-                    DirectoryEntry entry1 = new DirectoryEntry("GC://"+globalCatalogURL[j]);
+                    DirectoryEntry entry1 = GetDirectoryEntry(globalCatalogURL[j]);
                     DirectorySearcher searcher1 = new DirectorySearcher(entry1);
                     searcher1.Filter = sb.ToString();
                     searcher1.PropertiesToLoad.Add("distinguishedname");
@@ -628,8 +695,7 @@ namespace ActiveDirectoryHelper
                 try
                 {
                     //Make a Connection with the Global Catalog Server
-                    System.DirectoryServices.DirectoryEntry Root = new System.DirectoryServices.DirectoryEntry("GC://" + globalCatalogURL[idx]);
-
+                    System.DirectoryServices.DirectoryEntry Root = GetDirectoryEntry(globalCatalogURL[idx]);
                     //Create a directory searcher based on the root catalog server
                     using (System.DirectoryServices.DirectorySearcher GSearch = new System.DirectoryServices.DirectorySearcher(Root))
                     {
@@ -689,14 +755,13 @@ namespace ActiveDirectoryHelper
         }
         #endregion
 
-
         #region Get Account(s )
         internal static ADGroupMembersTableRow GetAccountBySID(string sid)
         {
                 ADGroupMembersTable memTable = new ADGroupMembersTable();
                 for (int j = 0; j < globalCatalogURL.Count; j++)
                 {
-                    DirectoryEntry entry1 = new DirectoryEntry("GC://" + globalCatalogURL[j]);
+                    DirectoryEntry entry1 = GetDirectoryEntry(globalCatalogURL[j]);
                     DirectorySearcher searcher1 = new DirectorySearcher(entry1);
                     searcher1.Filter = "(&(objectclass=user)(objectsid=" + sid + "))";
                     AddSearchProperties(ref searcher1);
@@ -730,7 +795,9 @@ namespace ActiveDirectoryHelper
            
             for (int j = 0; j < globalCatalogURL.Count; j++)
             {
-                DirectoryEntry entry1 = new DirectoryEntry("GC://" + globalCatalogURL[j]);
+                DirectoryEntry entry1 = GetDirectoryEntry(globalCatalogURL[j]);
+ 
+
                 DirectorySearcher searcher1 = new DirectorySearcher(entry1);
                 searcher1.Filter = "(&(objectClass=user)(distinguishedname=" + distinguishedName + "))";
                 AddSearchProperties(ref searcher1);
@@ -773,7 +840,8 @@ namespace ActiveDirectoryHelper
             sb.Append(")");
             for (int j = 0; j < globalCatalogURL.Count; j++)
             {
-                DirectoryEntry entry1 = new DirectoryEntry("GC://" + globalCatalogURL[j]);
+                DirectoryEntry entry1 = GetDirectoryEntry(globalCatalogURL[j]);
+
                 DirectorySearcher searcher1 = new DirectorySearcher(entry1);
                 searcher1.Filter = sb.ToString();
                 AddSearchProperties(ref searcher1);
@@ -853,6 +921,14 @@ namespace ActiveDirectoryHelper
                         tblTmp = ADHelper.GetAccount(String.Join(" ", name, 2, 2), String.Join(" ", name, 0, 2), "");
                     }
 
+                    //OK, the real last ditch effort... try first initial, last name search...
+                    if (tblTmp.Count == 0 && name.Length >= 2)
+                    {
+                        string first = name[0].Substring(0,1);
+                        string last = name[name.Length-1];
+                        tblTmp =  ADHelper.GetAccount(last, first, "");
+                    }
+
                 }
                 else //user id
                 {
@@ -871,7 +947,8 @@ namespace ActiveDirectoryHelper
             {
                 for (int j = 0; j < globalCatalogURL.Count; j++)
                 {
-                    DirectoryEntry entry1 = new DirectoryEntry("GC://" + globalCatalogURL[j]);
+                    DirectoryEntry entry1 = GetDirectoryEntry(globalCatalogURL[j]);
+
                     DirectorySearcher searcher1 = new DirectorySearcher(entry1);
                     searcher1.Filter = "(&(objectClass=user)(" + userLdapQuery + "))";
                     AddSearchProperties(ref searcher1);
@@ -910,7 +987,8 @@ namespace ActiveDirectoryHelper
 
         public static bool DomainIsReachable(string domainName)
         {
-            DirectoryEntry entry1 = new DirectoryEntry("GC://" + domainName);
+            DirectoryEntry entry1 = GetDirectoryEntry(domainName);
+
             DirectorySearcher searcher1 = new DirectorySearcher(entry1);
             searcher1.Filter = "(&(objectClass=user)(objectGuid=506FA7DB-EF07-4ca1-9634-F080ED120212))";
             searcher1.PropertiesToLoad.Add("distinguishedname");
@@ -1099,7 +1177,7 @@ namespace ActiveDirectoryHelper
                 {
                     prop = Properties.Settings.Default.CustomPropertyList[i].LdapPropertyName;
                     if(row[prop].ToString().Length == 0)
-                        row[prop] =  (string)(result.Properties.Contains(prop) ? result.Properties[prop][0] : "");
+                        row[prop] =  (string)(result.Properties.Contains(prop) ? result.Properties[prop][0].ToString() : "");
                 }
             }
 
@@ -1112,7 +1190,9 @@ namespace ActiveDirectoryHelper
         {
             for (int j = 0; j < globalCatalogURL.Count; j++)
             {
-                DirectoryEntry entry1 = new DirectoryEntry("GC://" + globalCatalogURL[j]);
+                DirectoryEntry entry1 = GetDirectoryEntry(globalCatalogURL[j]);
+                entry1.AuthenticationType = AuthenticationTypes.Secure;
+
                 DirectorySearcher searcher1 = new DirectorySearcher(entry1);
                 searcher1.Filter = "(&(objectClass=user)(distinguishedname=" + distinguishedName + "))";
                 SearchResultCollection collection = null;
@@ -1149,7 +1229,60 @@ namespace ActiveDirectoryHelper
             return tokenedString;
         }
 
+        internal static string Eval(string sCSCode)
+        {
+
+            CSharpCodeProvider c = new CSharpCodeProvider();
+            CompilerParameters cp = new CompilerParameters();
+
+            cp.ReferencedAssemblies.Add("system.dll");
+            
+            cp.CompilerOptions = "/t:library";
+            cp.GenerateInMemory = true;
+
+            StringBuilder sb = new StringBuilder("");
+            sb.Append("using System;\n");
+            sb.Append("using System.Text;\n");
+            sb.Append("namespace ActiveDirectoryHelper{ \n");
+            sb.Append("\tpublic class CSCodeEvaler{ \n");
+            sb.Append("\t\tpublic string EvalCode(){\n");
+            sb.Append("\t\t\treturn " + sCSCode + "; \n");
+            sb.Append("\t\t} \n");
+            sb.Append("\t} \n");
+            sb.Append("}\n");
+
+            CompilerResults cr = c.CompileAssemblyFromSource(cp, sb.ToString());
+            if (cr.Errors.Count > 0)
+            {
+                if (CSharpSnippetCompileError != null)
+                    CSharpSnippetCompileError(sCSCode, EventArgs.Empty);
+
+                return sCSCode;
+            }
+
+            System.Reflection.Assembly a = cr.CompiledAssembly;
+            object o = a.CreateInstance("ActiveDirectoryHelper.CSCodeEvaler");
+
+            Type t = o.GetType();
+            MethodInfo mi = t.GetMethod("EvalCode");
+
+            try
+            {
+                object s = mi.Invoke(o, null);
+                return s.ToString();
+            }
+            catch (Exception exe)
+            {
+                if (CSharpSnippetCompileError != null)
+                    CSharpSnippetCompileError(sCSCode, EventArgs.Empty);
+                
+                return string.Empty;
+            }
+
+        }
+
         public static event EventHandler InvalidLdapQuery;
+        public static event EventHandler CSharpSnippetCompileError;
     }
     public class LdapPropertyMapping
     {

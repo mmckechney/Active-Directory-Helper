@@ -1,6 +1,6 @@
 namespace ActiveDirectoryHelper
 {
-    partial class ProxyForm
+    partial class CredentialsForm
     {
         /// <summary>
         /// Required designer variable.
@@ -34,7 +34,7 @@ namespace ActiveDirectoryHelper
             this.btnCancel = new System.Windows.Forms.Button();
             this.txtUserName = new System.Windows.Forms.TextBox();
             this.txtPassword = new System.Windows.Forms.TextBox();
-            this.chkUseProxy = new System.Windows.Forms.CheckBox();
+            this.chkUse = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // label1
@@ -90,22 +90,22 @@ namespace ActiveDirectoryHelper
             this.txtPassword.Size = new System.Drawing.Size(153, 20);
             this.txtPassword.TabIndex = 5;
             // 
-            // chkUseProxy
+            // chkUse
             // 
-            this.chkUseProxy.AutoSize = true;
-            this.chkUseProxy.Location = new System.Drawing.Point(50, 77);
-            this.chkUseProxy.Name = "chkUseProxy";
-            this.chkUseProxy.Size = new System.Drawing.Size(232, 17);
-            this.chkUseProxy.TabIndex = 6;
-            this.chkUseProxy.Text = "Use system configured Internet proxy server";
-            this.chkUseProxy.UseVisualStyleBackColor = true;
+            this.chkUse.AutoSize = true;
+            this.chkUse.Location = new System.Drawing.Point(29, 78);
+            this.chkUse.Name = "chkUse";
+            this.chkUse.Size = new System.Drawing.Size(232, 17);
+            this.chkUse.TabIndex = 6;
+            this.chkUse.Text = "Use system configured Internet proxy server";
+            this.chkUse.UseVisualStyleBackColor = true;
             // 
-            // ProxyForm
+            // CredentialsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(332, 140);
-            this.Controls.Add(this.chkUseProxy);
+            this.Controls.Add(this.chkUse);
             this.Controls.Add(this.txtPassword);
             this.Controls.Add(this.txtUserName);
             this.Controls.Add(this.btnCancel);
@@ -113,10 +113,10 @@ namespace ActiveDirectoryHelper
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.Name = "ProxyForm";
+            this.Name = "CredentialsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Proxy Credentials";
-            this.Load += new System.EventHandler(this.ProxyForm_Load);
+            this.Load += new System.EventHandler(this.CredentialsForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -130,6 +130,6 @@ namespace ActiveDirectoryHelper
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.TextBox txtUserName;
         private System.Windows.Forms.TextBox txtPassword;
-        private System.Windows.Forms.CheckBox chkUseProxy;
+        private System.Windows.Forms.CheckBox chkUse;
     }
 }

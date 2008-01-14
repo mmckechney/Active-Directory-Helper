@@ -11,22 +11,28 @@ namespace ActiveDirectoryHelper
     public partial class CustomDirectReportQueryForm : ActiveDirectoryHelper.CustomManagerQueryForm
     {
         
-        public CustomDirectReportQueryForm()
+        public CustomDirectReportQueryForm() :base()
         {
             base.type = CustomQueryType.DirectReportSearch;
             InitializeComponent();
-            base.chkComposite.Checked = Properties.Settings.Default.CustomDirectReportSearchIsComposite;
+
+            SearchType search = (SearchType)Enum.Parse(typeof(SearchType), Properties.Settings.Default.CustomDirectReportSearchType);
+
+            switch (search)
+            {
+                case SearchType.CustomCode:
+                    rbtCustom.Checked = true;
+                    break;
+                case SearchType.GenericText:
+                    rbtGeneric.Checked = true;
+                    break;
+                case SearchType.StandardLdap:
+                    rbtStandard.Checked = true;
+                    break;
+            }
         }
 
-        protected new void btnSave_Click(object sender, EventArgs e)
-        {
-            if(type == CustomQueryType.DirectReportSearch)
-                Properties.Settings.Default.CustomDirectReportSearchIsComposite = chkComposite.Checked;
-            
-            Properties.Settings.Default.Save();
-
-            this.Close();
-        }
+       
     }
 }
 

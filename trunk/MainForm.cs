@@ -99,6 +99,8 @@ namespace ActiveDirectoryHelper
         private ToolStripMenuItem customSearchFormatsToolStripMenuItem;
         private ToolStripMenuItem managerHierarchySearchToolStripMenuItem;
         private ToolStripMenuItem directReportSearchToolStripMenuItem;
+        private ToolStripMenuItem revalidateDomainToolStripMenuItem;
+        private ToolStripMenuItem activeDirectoryBindingCredentialsToolStripMenuItem;
         private bool proxyAuthAcknowledged = false;
         public MainForm()
         {
@@ -150,7 +152,7 @@ namespace ActiveDirectoryHelper
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.ddMixType = new System.Windows.Forms.ComboBox();
             this.cmbGroupList1 = new System.Windows.Forms.ComboBox();
@@ -193,6 +195,7 @@ namespace ActiveDirectoryHelper
             this.lstDomains = new System.Windows.Forms.ListView();
             this.colGroupName = new System.Windows.Forms.ColumnHeader();
             this.ctxDomainList = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.revalidateDomainToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.removeDomainToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnAddDomain = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -202,6 +205,9 @@ namespace ActiveDirectoryHelper
             this.statExecuteTime = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.monitorUserPropertiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.customSearchFormatsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.managerHierarchySearchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.directReportSearchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.configureOnLineDirectoryLinkFormatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.configureOrganizationalUnitHighlightingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.proxyCredentialsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -219,9 +225,7 @@ namespace ActiveDirectoryHelper
             this.bgFindGroupMembers = new System.ComponentModel.BackgroundWorker();
             this.bgFindGroupComparison = new System.ComponentModel.BackgroundWorker();
             this.bgFindMultiple = new System.ComponentModel.BackgroundWorker();
-            this.customSearchFormatsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.managerHierarchySearchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.directReportSearchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.activeDirectoryBindingCredentialsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgGroup2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupListTable2)).BeginInit();
@@ -342,16 +346,16 @@ namespace ActiveDirectoryHelper
             this.dgGroups1.Location = new System.Drawing.Point(16, 40);
             this.dgGroups1.Name = "dgGroups1";
             this.dgGroups1.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Sunken;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle6.Format = "#";
-            dataGridViewCellStyle6.NullValue = null;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgGroups1.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.Format = "#";
+            dataGridViewCellStyle1.NullValue = null;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgGroups1.RowHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgGroups1.RowHeadersWidth = 10;
             this.dgGroups1.Size = new System.Drawing.Size(280, 94);
             this.dgGroups1.TabIndex = 13;
@@ -671,15 +675,23 @@ namespace ActiveDirectoryHelper
             // ctxDomainList
             // 
             this.ctxDomainList.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.revalidateDomainToolStripMenuItem,
             this.removeDomainToolStripMenuItem});
             this.ctxDomainList.Name = "contextMenuStrip1";
-            this.ctxDomainList.Size = new System.Drawing.Size(162, 26);
+            this.ctxDomainList.Size = new System.Drawing.Size(191, 48);
             this.ctxDomainList.Opening += new System.ComponentModel.CancelEventHandler(this.ctxDomainList_Opening);
+            // 
+            // revalidateDomainToolStripMenuItem
+            // 
+            this.revalidateDomainToolStripMenuItem.Name = "revalidateDomainToolStripMenuItem";
+            this.revalidateDomainToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.revalidateDomainToolStripMenuItem.Text = "Re-validate domain(s)";
+            this.revalidateDomainToolStripMenuItem.Click += new System.EventHandler(this.revalidateDomainToolStripMenuItem_Click);
             // 
             // removeDomainToolStripMenuItem
             // 
             this.removeDomainToolStripMenuItem.Name = "removeDomainToolStripMenuItem";
-            this.removeDomainToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.removeDomainToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
             this.removeDomainToolStripMenuItem.Text = "Remove domain";
             this.removeDomainToolStripMenuItem.Click += new System.EventHandler(this.removeDomainToolStripMenuItem_Click);
             // 
@@ -752,6 +764,7 @@ namespace ActiveDirectoryHelper
             this.configureOnLineDirectoryLinkFormatToolStripMenuItem,
             this.configureOrganizationalUnitHighlightingToolStripMenuItem,
             this.proxyCredentialsToolStripMenuItem,
+            this.activeDirectoryBindingCredentialsToolStripMenuItem,
             this.aboutToolStripMenuItem});
             this.toolStripDropDownButton1.Font = new System.Drawing.Font("Tahoma", 8.25F);
             this.toolStripDropDownButton1.ForeColor = System.Drawing.Color.Blue;
@@ -767,6 +780,29 @@ namespace ActiveDirectoryHelper
             this.monitorUserPropertiesToolStripMenuItem.Size = new System.Drawing.Size(284, 22);
             this.monitorUserPropertiesToolStripMenuItem.Text = "Monitor User Properties";
             this.monitorUserPropertiesToolStripMenuItem.Click += new System.EventHandler(this.monitorUserPropertiesToolStripMenuItem_Click);
+            // 
+            // customSearchFormatsToolStripMenuItem
+            // 
+            this.customSearchFormatsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.managerHierarchySearchToolStripMenuItem,
+            this.directReportSearchToolStripMenuItem});
+            this.customSearchFormatsToolStripMenuItem.Name = "customSearchFormatsToolStripMenuItem";
+            this.customSearchFormatsToolStripMenuItem.Size = new System.Drawing.Size(284, 22);
+            this.customSearchFormatsToolStripMenuItem.Text = "Custom Search Formats";
+            // 
+            // managerHierarchySearchToolStripMenuItem
+            // 
+            this.managerHierarchySearchToolStripMenuItem.Name = "managerHierarchySearchToolStripMenuItem";
+            this.managerHierarchySearchToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
+            this.managerHierarchySearchToolStripMenuItem.Text = "Manager Hierarchy Search";
+            this.managerHierarchySearchToolStripMenuItem.Click += new System.EventHandler(this.managerHierarchySearchToolStripMenuItem_Click);
+            // 
+            // directReportSearchToolStripMenuItem
+            // 
+            this.directReportSearchToolStripMenuItem.Name = "directReportSearchToolStripMenuItem";
+            this.directReportSearchToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
+            this.directReportSearchToolStripMenuItem.Text = "Direct Report Search";
+            this.directReportSearchToolStripMenuItem.Click += new System.EventHandler(this.directReportSearchToolStripMenuItem_Click);
             // 
             // configureOnLineDirectoryLinkFormatToolStripMenuItem
             // 
@@ -909,28 +945,12 @@ namespace ActiveDirectoryHelper
             this.bgFindMultiple.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgFindMultiple_RunWorkerCompleted);
             this.bgFindMultiple.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.Searchers_ProgressChanged);
             // 
-            // customSearchFormatsToolStripMenuItem
+            // activeDirectoryBindingCredentialsToolStripMenuItem
             // 
-            this.customSearchFormatsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.managerHierarchySearchToolStripMenuItem,
-            this.directReportSearchToolStripMenuItem});
-            this.customSearchFormatsToolStripMenuItem.Name = "customSearchFormatsToolStripMenuItem";
-            this.customSearchFormatsToolStripMenuItem.Size = new System.Drawing.Size(284, 22);
-            this.customSearchFormatsToolStripMenuItem.Text = "Custom Search Formats";
-            // 
-            // managerHierarchySearchToolStripMenuItem
-            // 
-            this.managerHierarchySearchToolStripMenuItem.Name = "managerHierarchySearchToolStripMenuItem";
-            this.managerHierarchySearchToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
-            this.managerHierarchySearchToolStripMenuItem.Text = "Manager Hierarchy Search";
-            this.managerHierarchySearchToolStripMenuItem.Click += new System.EventHandler(this.managerHierarchySearchToolStripMenuItem_Click);
-            // 
-            // directReportSearchToolStripMenuItem
-            // 
-            this.directReportSearchToolStripMenuItem.Name = "directReportSearchToolStripMenuItem";
-            this.directReportSearchToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
-            this.directReportSearchToolStripMenuItem.Text = "Direct Report Search";
-            this.directReportSearchToolStripMenuItem.Click += new System.EventHandler(this.directReportSearchToolStripMenuItem_Click);
+            this.activeDirectoryBindingCredentialsToolStripMenuItem.Name = "activeDirectoryBindingCredentialsToolStripMenuItem";
+            this.activeDirectoryBindingCredentialsToolStripMenuItem.Size = new System.Drawing.Size(284, 22);
+            this.activeDirectoryBindingCredentialsToolStripMenuItem.Text = "Active Directory Binding Credentials";
+            this.activeDirectoryBindingCredentialsToolStripMenuItem.Click += new System.EventHandler(this.activeDirectoryBindingCredentialsToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -1545,17 +1565,30 @@ namespace ActiveDirectoryHelper
             btnAddDomain.Enabled = false;
 
             //If reported, the domain fails...
-            if (e.ProgressPercentage == 0 && e.UserState is string)
+            if (e.UserState is string)
             {
                 for (int i = 0; i < lstDomains.Items.Count; i++)
                 {
                     if (lstDomains.Items[i].Text == e.UserState.ToString())
                     {
-                        lstDomains.Items[i].ForeColor = Color.LightGray;
-                        lstDomains.Items[i].Checked = false;
-                        lstDomains.Items[i].ToolTipText = "The " + e.UserState.ToString() + " domain is currently unreachable";
-                        if (ADHelper.GlobalCatalogURL.Contains(e.UserState.ToString()))
-                            ADHelper.GlobalCatalogURL.Remove(e.UserState.ToString());
+                        if (e.ProgressPercentage == 0)
+                        {
+                            lstDomains.Items[i].ForeColor = Color.LightGray;
+                            lstDomains.Items[i].Checked = false;
+                            lstDomains.Items[i].ToolTipText = "The " + e.UserState.ToString() + " domain is currently unreachable";
+
+                            if (ADHelper.GlobalCatalogURL.Contains(e.UserState.ToString()))
+                                ADHelper.GlobalCatalogURL.Remove(e.UserState.ToString());
+                        }
+                        else if (e.ProgressPercentage == 20)
+                        {
+                            lstDomains.Items[i].ForeColor = Color.Black;
+                            lstDomains.Items[i].Checked = true;
+                            lstDomains.Items[i].ToolTipText = "";
+
+                            if (!ADHelper.GlobalCatalogURL.Contains(e.UserState.ToString()))
+                                ADHelper.GlobalCatalogURL.Add(e.UserState.ToString());
+                        }
 
                     }
                 }
@@ -1570,17 +1603,22 @@ namespace ActiveDirectoryHelper
         }
         private void bgCheckDomain_DoWork(object sender, DoWorkEventArgs e)
         {
-            ((BackgroundWorker)sender).ReportProgress(10);
+            BackgroundWorker bg = (BackgroundWorker)sender;
+            bg.ReportProgress(10);
 
             for (int i = 0; i < Properties.Settings.Default.DomainList.Count; i++)
             {
                 if (i < Properties.Settings.Default.DomainList.Count)
                 {
                     string domain = Properties.Settings.Default.DomainList[i];
-                    ((BackgroundWorker)sender).ReportProgress(10, domain);
+                    bg.ReportProgress(10, domain);
                     if (!ADHelper.DomainIsReachable(domain))
                     {
-                        ((BackgroundWorker)sender).ReportProgress(0, domain);
+                        bg.ReportProgress(0, domain);
+                    }
+                    else
+                    {
+                        bg.ReportProgress(20, domain);
                     }
                 }
             }
@@ -2075,7 +2113,7 @@ namespace ActiveDirectoryHelper
 
         private void proxyCredentialsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ProxyForm frmProx = new ProxyForm();
+            CredentialsForm frmProx = new CredentialsForm(CredentialType.Proxy);
             frmProx.ShowDialog();
         }
 
@@ -2097,6 +2135,20 @@ namespace ActiveDirectoryHelper
         {
             CustomDirectReportQueryForm frmOL = new CustomDirectReportQueryForm();
             frmOL.ShowDialog();
+        }
+
+        private void revalidateDomainToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!bgCheckDomain.IsBusy)
+                bgCheckDomain.RunWorkerAsync();
+            else
+                MessageBox.Show("Domain validation is already in progress", "Currently Validating", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void activeDirectoryBindingCredentialsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CredentialsForm frmAD = new CredentialsForm(CredentialType.ADBinding);
+            frmAD.ShowDialog();
         }
 
     }
