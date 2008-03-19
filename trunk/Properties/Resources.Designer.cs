@@ -60,6 +60,13 @@ namespace ActiveDirectoryHelper.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap _lock {
+            get {
+                object obj = ResourceManager.GetObject("lock", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap move_down {
             get {
                 object obj = ResourceManager.GetObject("move-down", resourceCulture);

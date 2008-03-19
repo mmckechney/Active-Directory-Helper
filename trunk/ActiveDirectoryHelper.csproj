@@ -113,6 +113,7 @@
       <Generator>TypedTableBuilder</Generator>
       <LastGenOutput>GroupListTable.cs</LastGenOutput>
     </Content>
+    <None Include="lock.jpg" />
     <None Include="move-down.JPG" />
     <None Include="move-up.JPG" />
     <Compile Include="AddDomainForm.cs">
@@ -162,6 +163,12 @@
     </Compile>
     <Compile Include="CustomQueryForm.Designer.cs">
       <DependentUpon>CustomQueryForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ExportImportForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ExportImportForm.Designer.cs">
+      <DependentUpon>ExportImportForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ColumnSorter.cs" />
@@ -274,6 +281,10 @@
     <EmbeddedResource Include="CredentialsForm.resx">
       <SubType>Designer</SubType>
       <DependentUpon>CredentialsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExportImportForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ExportImportForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserPropertiesCtrl.resx">
       <DependentUpon>UserPropertiesCtrl.cs</DependentUpon>

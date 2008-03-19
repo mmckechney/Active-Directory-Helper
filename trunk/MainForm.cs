@@ -101,6 +101,11 @@ namespace ActiveDirectoryHelper
         private ToolStripMenuItem directReportSearchToolStripMenuItem;
         private ToolStripMenuItem revalidateDomainToolStripMenuItem;
         private ToolStripMenuItem activeDirectoryBindingCredentialsToolStripMenuItem;
+        private ToolStripSeparator toolStripSeparator2;
+        private ToolStripSeparator toolStripSeparator1;
+        private ToolStripSeparator toolStripSeparator3;
+        private ToolStripMenuItem importExportSettingsToolStripMenuItem;
+        private ToolStripSeparator toolStripSeparator4;
         private bool proxyAuthAcknowledged = false;
         public MainForm()
         {
@@ -204,13 +209,19 @@ namespace ActiveDirectoryHelper
             this.statRecordCount = new System.Windows.Forms.ToolStripStatusLabel();
             this.statExecuteTime = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
+            this.importExportSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.monitorUserPropertiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.configureOrganizationalUnitHighlightingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.customSearchFormatsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.managerHierarchySearchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.directReportSearchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.configureOnLineDirectoryLinkFormatToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.configureOrganizationalUnitHighlightingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.proxyCredentialsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.activeDirectoryBindingCredentialsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlUserList = new System.Windows.Forms.Panel();
             this.userList = new ActiveDirectoryHelper.UserListCtrl();
@@ -225,7 +236,6 @@ namespace ActiveDirectoryHelper
             this.bgFindGroupMembers = new System.ComponentModel.BackgroundWorker();
             this.bgFindGroupComparison = new System.ComponentModel.BackgroundWorker();
             this.bgFindMultiple = new System.ComponentModel.BackgroundWorker();
-            this.activeDirectoryBindingCredentialsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgGroup2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupListTable2)).BeginInit();
@@ -759,12 +769,17 @@ namespace ActiveDirectoryHelper
             // 
             this.toolStripDropDownButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.importExportSettingsToolStripMenuItem,
+            this.toolStripSeparator4,
             this.monitorUserPropertiesToolStripMenuItem,
+            this.configureOrganizationalUnitHighlightingToolStripMenuItem,
+            this.toolStripSeparator2,
             this.customSearchFormatsToolStripMenuItem,
             this.configureOnLineDirectoryLinkFormatToolStripMenuItem,
-            this.configureOrganizationalUnitHighlightingToolStripMenuItem,
+            this.toolStripSeparator1,
             this.proxyCredentialsToolStripMenuItem,
             this.activeDirectoryBindingCredentialsToolStripMenuItem,
+            this.toolStripSeparator3,
             this.aboutToolStripMenuItem});
             this.toolStripDropDownButton1.Font = new System.Drawing.Font("Tahoma", 8.25F);
             this.toolStripDropDownButton1.ForeColor = System.Drawing.Color.Blue;
@@ -774,12 +789,37 @@ namespace ActiveDirectoryHelper
             this.toolStripDropDownButton1.Size = new System.Drawing.Size(59, 20);
             this.toolStripDropDownButton1.Text = "Settings";
             // 
+            // importExportSettingsToolStripMenuItem
+            // 
+            this.importExportSettingsToolStripMenuItem.Name = "importExportSettingsToolStripMenuItem";
+            this.importExportSettingsToolStripMenuItem.Size = new System.Drawing.Size(256, 22);
+            this.importExportSettingsToolStripMenuItem.Text = "Import/Export Settings";
+            this.importExportSettingsToolStripMenuItem.Visible = false;
+            this.importExportSettingsToolStripMenuItem.Click += new System.EventHandler(this.importExportSettingsToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(253, 6);
+            // 
             // monitorUserPropertiesToolStripMenuItem
             // 
             this.monitorUserPropertiesToolStripMenuItem.Name = "monitorUserPropertiesToolStripMenuItem";
-            this.monitorUserPropertiesToolStripMenuItem.Size = new System.Drawing.Size(284, 22);
+            this.monitorUserPropertiesToolStripMenuItem.Size = new System.Drawing.Size(256, 22);
             this.monitorUserPropertiesToolStripMenuItem.Text = "Monitor User Properties";
             this.monitorUserPropertiesToolStripMenuItem.Click += new System.EventHandler(this.monitorUserPropertiesToolStripMenuItem_Click);
+            // 
+            // configureOrganizationalUnitHighlightingToolStripMenuItem
+            // 
+            this.configureOrganizationalUnitHighlightingToolStripMenuItem.Name = "configureOrganizationalUnitHighlightingToolStripMenuItem";
+            this.configureOrganizationalUnitHighlightingToolStripMenuItem.Size = new System.Drawing.Size(256, 22);
+            this.configureOrganizationalUnitHighlightingToolStripMenuItem.Text = "Organizational Unit Highlighting";
+            this.configureOrganizationalUnitHighlightingToolStripMenuItem.Click += new System.EventHandler(this.configureOrganizationalUnitHighlightingToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(253, 6);
             // 
             // customSearchFormatsToolStripMenuItem
             // 
@@ -787,7 +827,7 @@ namespace ActiveDirectoryHelper
             this.managerHierarchySearchToolStripMenuItem,
             this.directReportSearchToolStripMenuItem});
             this.customSearchFormatsToolStripMenuItem.Name = "customSearchFormatsToolStripMenuItem";
-            this.customSearchFormatsToolStripMenuItem.Size = new System.Drawing.Size(284, 22);
+            this.customSearchFormatsToolStripMenuItem.Size = new System.Drawing.Size(256, 22);
             this.customSearchFormatsToolStripMenuItem.Text = "Custom Search Formats";
             // 
             // managerHierarchySearchToolStripMenuItem
@@ -807,28 +847,38 @@ namespace ActiveDirectoryHelper
             // configureOnLineDirectoryLinkFormatToolStripMenuItem
             // 
             this.configureOnLineDirectoryLinkFormatToolStripMenuItem.Name = "configureOnLineDirectoryLinkFormatToolStripMenuItem";
-            this.configureOnLineDirectoryLinkFormatToolStripMenuItem.Size = new System.Drawing.Size(284, 22);
-            this.configureOnLineDirectoryLinkFormatToolStripMenuItem.Text = "Configure On-Line Directory Link Format";
+            this.configureOnLineDirectoryLinkFormatToolStripMenuItem.Size = new System.Drawing.Size(256, 22);
+            this.configureOnLineDirectoryLinkFormatToolStripMenuItem.Text = "On-Line Directory Link Format";
             this.configureOnLineDirectoryLinkFormatToolStripMenuItem.Click += new System.EventHandler(this.configureOnLineDirectoryLinkFormatToolStripMenuItem_Click);
             // 
-            // configureOrganizationalUnitHighlightingToolStripMenuItem
+            // toolStripSeparator1
             // 
-            this.configureOrganizationalUnitHighlightingToolStripMenuItem.Name = "configureOrganizationalUnitHighlightingToolStripMenuItem";
-            this.configureOrganizationalUnitHighlightingToolStripMenuItem.Size = new System.Drawing.Size(284, 22);
-            this.configureOrganizationalUnitHighlightingToolStripMenuItem.Text = "Configure Organizational Unit Highlighting";
-            this.configureOrganizationalUnitHighlightingToolStripMenuItem.Click += new System.EventHandler(this.configureOrganizationalUnitHighlightingToolStripMenuItem_Click);
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(253, 6);
             // 
             // proxyCredentialsToolStripMenuItem
             // 
             this.proxyCredentialsToolStripMenuItem.Name = "proxyCredentialsToolStripMenuItem";
-            this.proxyCredentialsToolStripMenuItem.Size = new System.Drawing.Size(284, 22);
+            this.proxyCredentialsToolStripMenuItem.Size = new System.Drawing.Size(256, 22);
             this.proxyCredentialsToolStripMenuItem.Text = "Proxy Credentials";
             this.proxyCredentialsToolStripMenuItem.Click += new System.EventHandler(this.proxyCredentialsToolStripMenuItem_Click);
+            // 
+            // activeDirectoryBindingCredentialsToolStripMenuItem
+            // 
+            this.activeDirectoryBindingCredentialsToolStripMenuItem.Name = "activeDirectoryBindingCredentialsToolStripMenuItem";
+            this.activeDirectoryBindingCredentialsToolStripMenuItem.Size = new System.Drawing.Size(256, 22);
+            this.activeDirectoryBindingCredentialsToolStripMenuItem.Text = "Active Directory Binding Credentials";
+            this.activeDirectoryBindingCredentialsToolStripMenuItem.Click += new System.EventHandler(this.activeDirectoryBindingCredentialsToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(253, 6);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(284, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(256, 22);
             this.aboutToolStripMenuItem.Text = "About...";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -944,13 +994,6 @@ namespace ActiveDirectoryHelper
             this.bgFindMultiple.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgFindMultiple_DoWork);
             this.bgFindMultiple.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgFindMultiple_RunWorkerCompleted);
             this.bgFindMultiple.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.Searchers_ProgressChanged);
-            // 
-            // activeDirectoryBindingCredentialsToolStripMenuItem
-            // 
-            this.activeDirectoryBindingCredentialsToolStripMenuItem.Name = "activeDirectoryBindingCredentialsToolStripMenuItem";
-            this.activeDirectoryBindingCredentialsToolStripMenuItem.Size = new System.Drawing.Size(284, 22);
-            this.activeDirectoryBindingCredentialsToolStripMenuItem.Text = "Active Directory Binding Credentials";
-            this.activeDirectoryBindingCredentialsToolStripMenuItem.Click += new System.EventHandler(this.activeDirectoryBindingCredentialsToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -1232,6 +1275,14 @@ namespace ActiveDirectoryHelper
         {
             if (txtLastName.Text.Trim().Length == 0 && txtFirstName.Text.Trim().Length == 0 && txtSapId.Text.Trim().Length == 0)
                 return;
+
+            if (Properties.Settings.Default.SelectedDomains == null || Properties.Settings.Default.SelectedDomains.Count == 0)
+            {
+                MessageBox.Show("A search can not be performed without a domain. Please select a valid domain or use the \"Add Domain\" button to add one", "Missing Domain Information", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                return;
+            }
+
+
             this.searchStartTime = DateTime.Now;
             bgFindAccount.RunWorkerAsync();
             CheckForUpdatesViaSearch();
@@ -1249,6 +1300,13 @@ namespace ActiveDirectoryHelper
         }
         private void btnGetGroup_Click(object sender, EventArgs e)
         {
+            if (Properties.Settings.Default.SelectedDomains == null || Properties.Settings.Default.SelectedDomains.Count == 0)
+            {
+                MessageBox.Show("A search can not be performed without a domain. Please select a valid domain or use the \"Add Domain\" button to add one", "Missing Domain Information", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                return;
+            }
+
+
             if (this.groupListTable1.Rows.Count == 0)
             {
                 MessageBox.Show("Please add a group to the list by selecting a group from the drop-down and hitting the <enter> key", "Please select a group", MessageBoxButtons.OK);
@@ -1275,6 +1333,13 @@ namespace ActiveDirectoryHelper
 
         private void btnGroupComparison_Click(object sender, EventArgs e)
         {
+            if (Properties.Settings.Default.SelectedDomains == null || Properties.Settings.Default.SelectedDomains.Count == 0)
+            {
+                MessageBox.Show("A search can not be performed without a domain. Please select a valid domain or use the \"Add Domain\" button to add one", "Missing Domain Information", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                return;
+            }
+
+
             if (this.groupListTable1.Rows.Count == 0 ||
                 this.groupListTable2.Rows.Count == 0)
             {
@@ -1419,6 +1484,9 @@ namespace ActiveDirectoryHelper
                     lstDomains.Items.Add(item);
                     lstDomains.Sort();
 
+
+                        
+
                     bgCheckDomain.RunWorkerAsync();
                 }
             }
@@ -1450,6 +1518,12 @@ namespace ActiveDirectoryHelper
                 if (!Properties.Settings.Default.SelectedDomains.Contains(val))
                     Properties.Settings.Default.SelectedDomains.Add(val);
             }
+
+            //if it wasn't added manually,then get rid of it altogether
+            if (Properties.Settings.Default.SelectedDomains.Contains("mydomain.com") &&
+                !Properties.Settings.Default.DomainList.Contains("mydomain.com"))
+                Properties.Settings.Default.SelectedDomains.Remove("mydomain.com");
+
             Properties.Settings.Default.Save();
 
 
@@ -2149,6 +2223,13 @@ namespace ActiveDirectoryHelper
         {
             CredentialsForm frmAD = new CredentialsForm(CredentialType.ADBinding);
             frmAD.ShowDialog();
+        }
+
+        private void importExportSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ExportImportForm frmExp = new ExportImportForm();
+            frmExp.ShowDialog();
+
         }
 
     }
