@@ -2,8 +2,11 @@ using System.Collections.Generic;
 using ActiveDirectoryHelper.Collections;
 namespace ActiveDirectoryHelper.Properties
 {
-    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase
+    public sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase
     {
+        static Settings()
+        {
+        }
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         public List<HighlightSetting> OUHighlightSetting
