@@ -63,6 +63,7 @@ namespace ActiveDirectoryHelper.Tables
 		{
 			this.InitClass();
 			this.InitVars();
+            this.AddCustomColumns();
 			this.ColumnChanged += new DataColumnChangeEventHandler( myColumn_Changed );
 		}
 		public ADGroupMembersTable(DataTable table): base(table.TableName)
@@ -75,6 +76,7 @@ namespace ActiveDirectoryHelper.Tables
 			this.DisplayExpression = table.DisplayExpression;
 			this.InitClass();
 			this.InitVars();
+            this.AddCustomColumns();
 			this.ColumnChanged += new DataColumnChangeEventHandler( myColumn_Changed );
 			foreach(DataRow tmpRow in table.Rows)
 			{
