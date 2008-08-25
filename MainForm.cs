@@ -1935,47 +1935,75 @@ namespace ActiveDirectoryHelper
                     verData.CheckIntervalElapsed = true;
                     try
                     {
+                        //try the basic defauld credentials...
                         System.Net.WebRequest req = System.Net.WebRequest.Create(filePath);
-                        string pw = string.Empty;
-                        string un = string.Empty;
-                        if (Properties.Settings.Default.ProxyUseProxy)
-                        {
-                            if (Properties.Settings.Default.ProxyPassword.Length > 0)
-                                pw = Encryption.Crypter.Decrypt(Properties.Settings.Default.ProxyPassword);
-
-                            if (Properties.Settings.Default.ProxyUserName.Length > 0)
-                                un = Encryption.Crypter.Decrypt(Properties.Settings.Default.ProxyUserName);
-
-
-                            NetworkCredential cred = new NetworkCredential(un, pw);
-                            req.Proxy = WebRequest.DefaultWebProxy;
-                            req.Proxy.Credentials = cred;
-                        }
+                        req.Proxy = System.Net.WebRequest.DefaultWebProxy;
+                        req.Proxy.Credentials = System.Net.CredentialCache.DefaultCredentials;
                         req.Timeout = 5000;
-                        System.Net.WebResponse resp = req.GetResponse();
-                        System.IO.StreamReader sr = new System.IO.StreamReader(resp.GetResponseStream());
 
-                        string versionFile = sr.ReadToEnd();
-                        sr.Close();
+                        System.Net.WebResponse resp = null;
+                        System.IO.StreamReader sr = null;
+                        string versionFile = string.Empty;
 
-                        string[] versions = versionFile.Split(new string[] { "\r\n" }, StringSplitOptions.None);
-                        verData.LatestVersion = new Version(versions[0]);
-                        if (versions.Length > 1)
-                            verData.ReleaseNotes = String.Join("\r\n", versions, 1, versions.Length - 1);
-                    }
-                    catch (WebException we)
-                    {
-                        if (we.Message.ToLower().IndexOf("proxy authentication required") > -1)
+                        try
                         {
-                            verData.ProxyFailure = true;
-                            verData.UpdateFileReadError = true;
+                            resp = req.GetResponse();
+                            sr = new System.IO.StreamReader(resp.GetResponseStream());
+                            versionFile = sr.ReadToEnd();
+                            sr.Close();
+
                         }
-                        else if (we.Message.ToLower().IndexOf("The operation has timed out") > -1)
+                        catch
                         {
-                            verData.ProxyFailure = false;
-                            verData.UpdateFileReadError = true;
+                            try
+                            {
+                                //If the basic don't work, go for the explicit credentials...
+                                string pw = string.Empty;
+                                string un = string.Empty;
+                                if (Properties.Settings.Default.ProxyUseProxy)
+                                {
+                                    if (Properties.Settings.Default.ProxyPassword.Length > 0)
+                                        pw = Encryption.Crypter.Decrypt(Properties.Settings.Default.ProxyPassword);
+
+                                    if (Properties.Settings.Default.ProxyUserName.Length > 0)
+                                        un = Encryption.Crypter.Decrypt(Properties.Settings.Default.ProxyUserName);
+
+
+                                    NetworkCredential cred = new NetworkCredential(un, pw);
+                                    req.Proxy = WebRequest.DefaultWebProxy;
+                                    req.Proxy.Credentials = cred;
+
+                                    resp = req.GetResponse();
+                                    sr = new System.IO.StreamReader(resp.GetResponseStream());
+                                    versionFile = sr.ReadToEnd();
+                                    sr.Close();
+                                }
+                            }
+                            catch (WebException we)
+                            {
+                                if (we.Message.ToLower().IndexOf("proxy authentication required") > -1)
+                                {
+                                    verData.ProxyFailure = true;
+                                    verData.UpdateFileReadError = true;
+                                }
+                                else if (we.Message.ToLower().IndexOf("The operation has timed out") > -1)
+                                {
+                                    verData.ProxyFailure = false;
+                                    verData.UpdateFileReadError = true;
+                                }
+                            }
+                        }
+
+
+                        if (versionFile.Length > 0)
+                        {
+                            string[] versions = versionFile.Split(new string[] { "\r\n" }, StringSplitOptions.None);
+                            verData.LatestVersion = new Version(versions[0]);
+                            if (versions.Length > 1)
+                                verData.ReleaseNotes = String.Join("\r\n", versions, 1, versions.Length - 1);
                         }
                     }
+                 
                     catch (Exception exe)
                     {
                         verData.UpdateFileReadError = true;

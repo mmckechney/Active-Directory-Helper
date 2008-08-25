@@ -303,6 +303,8 @@ namespace ActiveDirectoryHelper
                 DirectoryEntry entry1 = GetDirectoryEntry(globalCatalogURL[idx]);
 
                 DirectorySearcher searcher1 = new DirectorySearcher(entry1);
+                searcher1.PageSize = 1000;
+                searcher1.SizeLimit = 100000;
                 searcher1.Filter = "(objectClass=group)";
                 searcher1.PropertiesToLoad.Add("name");
                 searcher1.PropertiesToLoad.Add("distinguishedname");

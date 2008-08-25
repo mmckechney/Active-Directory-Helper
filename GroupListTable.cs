@@ -4,7 +4,7 @@
 //     (TypedDataTableBuilder  -- Michael McKechney, author)
 //		
 //     Visual Studio .NET Custom Tool Setting: TypedTableBuilder
-//	   Version: 3.1.1.17637
+//	   Version: 4.0.0.18379
 //
 //     Changes to this file may cause incorrect behavior and will be lost if 
 //     the code is regenerated.
@@ -25,7 +25,7 @@ namespace ActiveDirectoryHelper.Tables
 	[System.ComponentModel.DesignerCategory("Component")]
 	[System.ComponentModel.DesignTimeVisible(true)]
 	[System.Drawing.ToolboxBitmap(typeof(System.Data.DataSet))]
-	public class GroupListTable : DataTable, System.Collections.IEnumerable
+	public partial class GroupListTable : DataTable, System.Collections.IEnumerable
 	{
 	
 	
@@ -344,7 +344,7 @@ namespace ActiveDirectoryHelper.Tables
 		}
 
 	}
-	public class GroupListTableRow : DataRow 
+	public partial class GroupListTableRow : DataRow 
 	{
 		private GroupListTable tableGroupListTable;
 		internal GroupListTableRow(DataRowBuilder rb) : base(rb)
