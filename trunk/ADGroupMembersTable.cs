@@ -4,7 +4,7 @@
 //     (TypedDataTableBuilder  -- Michael McKechney, author)
 //		
 //     Visual Studio .NET Custom Tool Setting: TypedTableBuilder
-//	   Version: 3.1.1.17637
+//	   Version: 4.0.0.18379
 //
 //     Changes to this file may cause incorrect behavior and will be lost if 
 //     the code is regenerated.
@@ -25,7 +25,7 @@ namespace ActiveDirectoryHelper.Tables
 	[System.ComponentModel.DesignerCategory("Component")]
 	[System.ComponentModel.DesignTimeVisible(true)]
 	[System.Drawing.ToolboxBitmap(typeof(System.Data.DataSet))]
-	public partial class  ADGroupMembersTable : DataTable, System.Collections.IEnumerable
+	public partial class ADGroupMembersTable : DataTable, System.Collections.IEnumerable
 	{
 	
 	
@@ -63,7 +63,6 @@ namespace ActiveDirectoryHelper.Tables
 		{
 			this.InitClass();
 			this.InitVars();
-            this.AddCustomColumns();
 			this.ColumnChanged += new DataColumnChangeEventHandler( myColumn_Changed );
 		}
 		public ADGroupMembersTable(DataTable table): base(table.TableName)
@@ -76,7 +75,6 @@ namespace ActiveDirectoryHelper.Tables
 			this.DisplayExpression = table.DisplayExpression;
 			this.InitClass();
 			this.InitVars();
-            this.AddCustomColumns();
 			this.ColumnChanged += new DataColumnChangeEventHandler( myColumn_Changed );
 			foreach(DataRow tmpRow in table.Rows)
 			{
@@ -781,7 +779,7 @@ namespace ActiveDirectoryHelper.Tables
 		}
 
 	}
-	public class ADGroupMembersTableRow : DataRow 
+	public partial class ADGroupMembersTableRow : DataRow 
 	{
 		private ADGroupMembersTable tableADGroupMembersTable;
 		internal ADGroupMembersTableRow(DataRowBuilder rb) : base(rb)
