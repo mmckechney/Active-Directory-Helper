@@ -254,6 +254,7 @@ namespace ActiveDirectoryHelper
             // 
             // ddMixType
             // 
+            this.ddMixType.BackColor = System.Drawing.Color.Ivory;
             this.ddMixType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ddMixType.Items.AddRange(new object[] {
             "Members not in -->",
@@ -266,6 +267,7 @@ namespace ActiveDirectoryHelper
             // 
             // cmbGroupList1
             // 
+            this.cmbGroupList1.BackColor = System.Drawing.Color.Ivory;
             this.cmbGroupList1.Items.AddRange(new object[] {
             "<getting groups>"});
             this.cmbGroupList1.Location = new System.Drawing.Point(16, 17);
@@ -278,6 +280,7 @@ namespace ActiveDirectoryHelper
             // 
             // cmbGroupList2
             // 
+            this.cmbGroupList2.BackColor = System.Drawing.Color.Ivory;
             this.cmbGroupList2.Items.AddRange(new object[] {
             "<getting groups>"});
             this.cmbGroupList2.Location = new System.Drawing.Point(448, 17);
@@ -383,6 +386,7 @@ namespace ActiveDirectoryHelper
             // 
             // ddGroup2Join
             // 
+            this.ddGroup2Join.BackColor = System.Drawing.Color.Ivory;
             this.ddGroup2Join.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ddGroup2Join.Items.AddRange(new object[] {
             "OR",
@@ -394,6 +398,7 @@ namespace ActiveDirectoryHelper
             // 
             // ddGroup1Join
             // 
+            this.ddGroup1Join.BackColor = System.Drawing.Color.Ivory;
             this.ddGroup1Join.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ddGroup1Join.Items.AddRange(new object[] {
             "OR",
@@ -486,6 +491,7 @@ namespace ActiveDirectoryHelper
             // 
             // btnFindAccount
             // 
+            this.btnFindAccount.BackColor = System.Drawing.Color.Ivory;
             this.btnFindAccount.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnFindAccount.Location = new System.Drawing.Point(474, 26);
             this.btnFindAccount.Name = "btnFindAccount";
@@ -517,6 +523,7 @@ namespace ActiveDirectoryHelper
             // 
             this.txtSapId.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.txtSapId.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.txtSapId.BackColor = System.Drawing.Color.Ivory;
             this.txtSapId.Location = new System.Drawing.Point(368, 28);
             this.txtSapId.Name = "txtSapId";
             this.txtSapId.Size = new System.Drawing.Size(96, 21);
@@ -543,6 +550,7 @@ namespace ActiveDirectoryHelper
             // 
             this.txtFirstName.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.txtFirstName.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.txtFirstName.BackColor = System.Drawing.Color.Ivory;
             this.txtFirstName.Location = new System.Drawing.Point(192, 28);
             this.txtFirstName.Name = "txtFirstName";
             this.txtFirstName.Size = new System.Drawing.Size(168, 21);
@@ -553,6 +561,7 @@ namespace ActiveDirectoryHelper
             // 
             this.txtLastName.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.txtLastName.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.txtLastName.BackColor = System.Drawing.Color.Ivory;
             this.txtLastName.Location = new System.Drawing.Point(16, 28);
             this.txtLastName.Name = "txtLastName";
             this.txtLastName.Size = new System.Drawing.Size(168, 21);
@@ -660,6 +669,7 @@ namespace ActiveDirectoryHelper
             this.lstDomains.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.lstDomains.BackColor = System.Drawing.Color.Ivory;
             this.lstDomains.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lstDomains.CheckBoxes = true;
             this.lstDomains.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -744,6 +754,7 @@ namespace ActiveDirectoryHelper
             // 
             // statGroupProgress
             // 
+            this.statGroupProgress.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.statGroupProgress.Name = "statGroupProgress";
             this.statGroupProgress.Padding = new System.Windows.Forms.Padding(0, 0, 20, 0);
             this.statGroupProgress.Size = new System.Drawing.Size(120, 16);
@@ -998,6 +1009,7 @@ namespace ActiveDirectoryHelper
             // MainForm
             // 
             this.AutoScaleBaseSize = new System.Drawing.Size(6, 14);
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(1082, 688);
             this.Controls.Add(this.pnlUserList);
             this.Controls.Add(this.pnlGroupList);
@@ -1007,8 +1019,8 @@ namespace ActiveDirectoryHelper
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Active Directory Group and Membership Helper";
-            this.Closing += new System.ComponentModel.CancelEventHandler(this.Form1_Closing);
             this.Load += new System.EventHandler(this.MainForm_Load);
+            this.Closing += new System.ComponentModel.CancelEventHandler(this.Form1_Closing);
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgGroup2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupListTable2)).EndInit();
@@ -2007,7 +2019,7 @@ namespace ActiveDirectoryHelper
                     catch (Exception exe)
                     {
                         verData.UpdateFileReadError = true;
-                        System.Diagnostics.EventLog.WriteEntry("ADHelper", "Unable to read update file.\r\n" + exe.ToString(), EventLogEntryType.Error, 901);
+                        System.Diagnostics.EventLog.WriteEntry("ActiveDirectoryHelper", "Unable to read update file.\r\n" + exe.ToString(), EventLogEntryType.Error, 901);
                     }
 
                     Properties.Settings.Default.LastProgramUpdateCheck = DateTime.Now;
@@ -2025,7 +2037,7 @@ namespace ActiveDirectoryHelper
             {
                 verData.UpdateFileReadError = true;
                 verData.CheckIntervalElapsed = true;
-                System.Diagnostics.EventLog.WriteEntry("ADHelper", "Error Checking for updates.\r\n" + exe.ToString(), EventLogEntryType.Error, 902);
+                System.Diagnostics.EventLog.WriteEntry("ActiveDirectoryHelper", "Error Checking for updates.\r\n" + exe.ToString(), EventLogEntryType.Error, 902);
 
             }
             finally

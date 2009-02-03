@@ -1259,6 +1259,10 @@ namespace ActiveDirectoryHelper
                 if (CSharpSnippetCompileError != null)
                     CSharpSnippetCompileError(sCSCode, EventArgs.Empty);
 
+                foreach (CompilerError err in cr.Errors)
+                    sb.Append("\r\n" + err.ErrorText);
+
+                System.Diagnostics.EventLog.WriteEntry("ActiveDirectoryHelper", "Error compiling CS Code:\r\n" + sb.ToString(),System.Diagnostics.EventLogEntryType.Error);
                 return sCSCode;
             }
 
@@ -1277,6 +1281,10 @@ namespace ActiveDirectoryHelper
             {
                 if (CSharpSnippetCompileError != null)
                     CSharpSnippetCompileError(sCSCode, EventArgs.Empty);
+
+                sb.Append("\r\n" + exe.ToString());
+                System.Diagnostics.EventLog.WriteEntry("ActiveDirectoryHelper", "Error compiling CS Code:\r\n" + sb.ToString(), System.Diagnostics.EventLogEntryType.Error);
+
                 
                 return string.Empty;
             }

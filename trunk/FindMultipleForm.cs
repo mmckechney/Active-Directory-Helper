@@ -58,7 +58,7 @@ namespace ActiveDirectoryHelper
                 for (int i = 0; i < Properties.Settings.Default.MultipleSearchRecent.Count; i++)
                 {
                     string value = Properties.Settings.Default.MultipleSearchRecent[i];
-                    string menuText = value.Replace("\r\n", "~").Substring(0, ((value.Length < 40) ? value.Length - 1 : 40)) + "...";
+                    string menuText = value.Replace("\r\n", "~").Substring(0, ((value.Length <= 40) ? value.Length - 1 : 40)) + "...";
                     ToolStripMenuItem item = new ToolStripMenuItem(menuText, null, RecentSearches_EventHandler);
 
                     item.Tag = value;

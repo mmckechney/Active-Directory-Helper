@@ -94,7 +94,7 @@ namespace ActiveDirectoryHelper
 
         void ADHelper_CSharpSnippetCompileError(object sender, EventArgs e)
         {
-            string message = "Failed to compile/execute custom hierarchy C# code snippet:\r\n\r\n" + sender.ToString();
+            string message = "Failed to compile/execute custom hierarchy C# code snippet:\r\n\r\n" + sender.ToString() + "\r\n\r\nYou may need to add a property type to your retrieved values.\r\nUse the \"Customize Properties/Columns Retrieved\" menu of the user list to add.";
             MessageBox.Show(message, "Custom Code Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
