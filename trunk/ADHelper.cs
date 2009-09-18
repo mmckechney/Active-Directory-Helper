@@ -539,8 +539,9 @@ namespace ActiveDirectoryHelper
                 GSearch.Filter = "(&(objectClass=group)(distinguishedname=" + parentGroupDN + "))";//(&(objectclass=user)(objectsid=" + sid + ")) (&(objectclass=foreignSecurityPrincipal)(objectsid=" + sid + "))) ";
                 GSearch.PropertiesToLoad.Add("distinguishedname");
                 System.DirectoryServices.SearchResultCollection ResultGroup = GSearch.FindAll();
+               
                  //Check to make sure a group is actually returned
-                if (ResultGroup.Count != 0)
+                if (ResultGroup != null && ResultGroup.Count != 0)
                 {
                     for (int k = 0; k < ResultGroup[0].Properties["objectclass"].Count; k++)
                         System.Diagnostics.Debug.WriteLine((string)ResultGroup[0].Properties["objectclass"][k]);
@@ -570,7 +571,8 @@ namespace ActiveDirectoryHelper
                         tmpDN = (System.String)Groups[i].Properties["distinguishedname"][0];
                         nested.Add(new ADGroup(tmpName, tmpDN,parentName, true));
 
-                        if (Groups[i].Properties["distinguishedname"][0].ToString().IndexOf("OU=Distribution Groups") == -1)
+                        if (Groups[i].Properties["distinguishedname"][0].ToString().IndexOf("OU=Distribution Groups") == -1 
+                            && tmpDN != parentGroupDN) //added DN check to account for recursive relationships that would cause stack overflow
                             nested.AddRange(GetNestedGroups(tmpName, tmpDN, parentCatalogURL));
                     }
 
