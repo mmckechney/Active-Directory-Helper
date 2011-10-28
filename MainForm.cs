@@ -113,8 +113,6 @@ namespace ActiveDirectoryHelper
             // Required for Windows Form Designer support
             //
             InitializeComponent();
-
-            Microsoft.Win32.SystemEvents.SessionEnded += new Microsoft.Win32.SessionEndedEventHandler(SystemEvents_SessionEnded);
         }
         public MainForm(string[] args) : this()
         {
@@ -125,13 +123,6 @@ namespace ActiveDirectoryHelper
                 if (quiet == "/q" || quiet == "/quiet" || quiet == "/quietstart")
                     this.startQuiet = true;
             }
-        }
-
-        void SystemEvents_SessionEnded(object sender, Microsoft.Win32.SessionEndedEventArgs e)
-        {
-            notifyIcon1.Visible = false;
-            notifyIcon1.Dispose();
-            Application.Exit();
         }
 
         /// <summary>
@@ -198,7 +189,7 @@ namespace ActiveDirectoryHelper
             this.statusStrip2 = new System.Windows.Forms.StatusStrip();
             this.statDomain = new System.Windows.Forms.ToolStripStatusLabel();
             this.lstDomains = new System.Windows.Forms.ListView();
-            this.colGroupName = new System.Windows.Forms.ColumnHeader();
+            this.colGroupName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ctxDomainList = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.revalidateDomainToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.removeDomainToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -602,8 +593,8 @@ namespace ActiveDirectoryHelper
             // 
             this.bgGetGroupList.WorkerReportsProgress = true;
             this.bgGetGroupList.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgGetGroupList_DoWork);
-            this.bgGetGroupList.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgGetGroupList_RunWorkerCompleted);
             this.bgGetGroupList.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.bgGetGroupList_ProgressChanged);
+            this.bgGetGroupList.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgGetGroupList_RunWorkerCompleted);
             // 
             // pnlSearchCriteria
             // 
@@ -920,15 +911,15 @@ namespace ActiveDirectoryHelper
             // 
             this.bgFindAccount.WorkerReportsProgress = true;
             this.bgFindAccount.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgFindAccount_DoWork);
-            this.bgFindAccount.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgFindAccount_RunWorkerCompleted);
             this.bgFindAccount.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.Searchers_ProgressChanged);
+            this.bgFindAccount.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgFindAccount_RunWorkerCompleted);
             // 
             // bgCheckDomain
             // 
             this.bgCheckDomain.WorkerReportsProgress = true;
             this.bgCheckDomain.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgCheckDomain_DoWork);
-            this.bgCheckDomain.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgCheckDomain_RunWorkerCompleted);
             this.bgCheckDomain.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.bgCheckDomain_ProgressChanged);
+            this.bgCheckDomain.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgCheckDomain_RunWorkerCompleted);
             // 
             // bgCheckForUpdates
             // 
@@ -989,22 +980,22 @@ namespace ActiveDirectoryHelper
             // 
             this.bgFindGroupMembers.WorkerReportsProgress = true;
             this.bgFindGroupMembers.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgFindGroupMembers_DoWork);
-            this.bgFindGroupMembers.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgFindGroupMembers_RunWorkerCompleted);
             this.bgFindGroupMembers.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.Searchers_ProgressChanged);
+            this.bgFindGroupMembers.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgFindGroupMembers_RunWorkerCompleted);
             // 
             // bgFindGroupComparison
             // 
             this.bgFindGroupComparison.WorkerReportsProgress = true;
             this.bgFindGroupComparison.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgFindGroupComparison_DoWork);
-            this.bgFindGroupComparison.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgFindGroupComparison_RunWorkerCompleted);
             this.bgFindGroupComparison.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.Searchers_ProgressChanged);
+            this.bgFindGroupComparison.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgFindGroupComparison_RunWorkerCompleted);
             // 
             // bgFindMultiple
             // 
             this.bgFindMultiple.WorkerReportsProgress = true;
             this.bgFindMultiple.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgFindMultiple_DoWork);
-            this.bgFindMultiple.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgFindMultiple_RunWorkerCompleted);
             this.bgFindMultiple.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.Searchers_ProgressChanged);
+            this.bgFindMultiple.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgFindMultiple_RunWorkerCompleted);
             // 
             // MainForm
             // 
@@ -1019,8 +1010,8 @@ namespace ActiveDirectoryHelper
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Active Directory Group and Membership Helper";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
-            this.Closing += new System.ComponentModel.CancelEventHandler(this.Form1_Closing);
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgGroup2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupListTable2)).EndInit();
@@ -1222,12 +1213,6 @@ namespace ActiveDirectoryHelper
             this.Show();
             this.WindowState = FormWindowState.Normal;
             this.Activate();
-        }
-
-        private void Form1_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            this.Hide();
-            e.Cancel = true;
         }
 
         private void grpAccounts_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
@@ -2270,6 +2255,15 @@ namespace ActiveDirectoryHelper
             ExportImportForm frmExp = new ExportImportForm();
             frmExp.ShowDialog();
 
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason != CloseReason.WindowsShutDown && e.CloseReason != CloseReason.ApplicationExitCall)
+            {
+                this.Hide();
+                e.Cancel = true;
+            }
         }
 
     }
