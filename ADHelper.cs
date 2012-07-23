@@ -1134,6 +1134,9 @@ namespace ActiveDirectoryHelper
                 sidValue = Marshal.PtrToStringAuto(ptrSid);
             }
 
+            
+
+
 
             DateTime created = (result.Properties.Contains("whenCreated")) ? DateTime.Parse(result.Properties["whenCreated"][0].ToString()) : DateTime.MinValue;
             DateTime modified = (result.Properties.Contains("whenChanged")) ? DateTime.Parse(result.Properties["whenChanged"][0].ToString()) : DateTime.MinValue;
@@ -1180,8 +1183,28 @@ namespace ActiveDirectoryHelper
                 for (int i = 0; i < Properties.Settings.Default.CustomPropertyList.Count; i++)
                 {
                     prop = Properties.Settings.Default.CustomPropertyList[i].LdapPropertyName;
-                    if(row[prop].ToString().Length == 0)
-                        row[prop] =  (string)(result.Properties.Contains(prop) ? result.Properties[prop][0].ToString() : "");
+                    if (row[prop].ToString().Length == 0)
+                    {
+                        if (result.Properties[prop].Count > 0)
+                        {
+                            switch (prop)
+                            {
+                                case "lastlogontimestamp":
+                                case "pwdlastset":
+                                case "usncreated":
+                                case "usnchanged":
+                                    row[prop] = DateTime.FromFileTime((long)result.Properties[prop][0]).ToString();
+                                    break;
+                                default:
+                                    row[prop] = (string)(result.Properties.Contains(prop) ? result.Properties[prop][0].ToString() : "");
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            row[prop] = "<Not found>";
+                        }
+                    }
                 }
             }
 
