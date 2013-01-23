@@ -7,6 +7,8 @@ using System.Windows.Forms;
 using System.Text;
 using ActiveDirectoryHelper.Tables;
 using System.Collections.Generic;
+using Microsoft.Lync.Model;
+using Microsoft.Lync.Model.Extensibility;
 namespace ActiveDirectoryHelper
 {
     /// <summary>
@@ -73,6 +75,8 @@ namespace ActiveDirectoryHelper
         private DataGridViewTextBoxColumn mailDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn titleDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn telephonenumberDataGridViewTextBoxColumn;
+        private ToolStripMenuItem sendInstantMessageToolStripMenuItem;
+        private ToolStripSeparator toolStripSeparator4;
         private IContainer components;
 
         public UserListCtrl()
@@ -169,6 +173,8 @@ namespace ActiveDirectoryHelper
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.customizeLdapPropertiesRetrievedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aDGroupMembersTableBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.sendInstantMessageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             mnuCopyHighlightGroups = new System.Windows.Forms.MenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.ctxActions.SuspendLayout();
@@ -366,6 +372,8 @@ namespace ActiveDirectoryHelper
             // ctxActions
             // 
             this.ctxActions.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.sendInstantMessageToolStripMenuItem,
+            this.toolStripSeparator4,
             this.getUsersGroupsToolStripMenuItem,
             this.getUsersManagerToolStripMenuItem,
             this.getUsersDirectReportsToolStripMenuItem,
@@ -380,98 +388,110 @@ namespace ActiveDirectoryHelper
             this.toolStripSeparator3,
             this.customizeLdapPropertiesRetrievedToolStripMenuItem});
             this.ctxActions.Name = "ctxActions";
-            this.ctxActions.Size = new System.Drawing.Size(281, 264);
+            this.ctxActions.Size = new System.Drawing.Size(292, 292);
             this.ctxActions.Opening += new System.ComponentModel.CancelEventHandler(this.ctxActions_Opening);
             // 
             // getUsersGroupsToolStripMenuItem
             // 
             this.getUsersGroupsToolStripMenuItem.Name = "getUsersGroupsToolStripMenuItem";
-            this.getUsersGroupsToolStripMenuItem.Size = new System.Drawing.Size(280, 22);
+            this.getUsersGroupsToolStripMenuItem.Size = new System.Drawing.Size(291, 22);
             this.getUsersGroupsToolStripMenuItem.Text = "Get User\'s Groups";
             this.getUsersGroupsToolStripMenuItem.Click += new System.EventHandler(this.getUsersGroupsToolStripMenuItem_Click);
             // 
             // getUsersManagerToolStripMenuItem
             // 
             this.getUsersManagerToolStripMenuItem.Name = "getUsersManagerToolStripMenuItem";
-            this.getUsersManagerToolStripMenuItem.Size = new System.Drawing.Size(280, 22);
+            this.getUsersManagerToolStripMenuItem.Size = new System.Drawing.Size(291, 22);
             this.getUsersManagerToolStripMenuItem.Text = "Get User\'s Management";
             this.getUsersManagerToolStripMenuItem.Click += new System.EventHandler(this.getUsersManagerToolStripMenuItem_Click);
             // 
             // getUsersDirectReportsToolStripMenuItem
             // 
             this.getUsersDirectReportsToolStripMenuItem.Name = "getUsersDirectReportsToolStripMenuItem";
-            this.getUsersDirectReportsToolStripMenuItem.Size = new System.Drawing.Size(280, 22);
+            this.getUsersDirectReportsToolStripMenuItem.Size = new System.Drawing.Size(291, 22);
             this.getUsersDirectReportsToolStripMenuItem.Text = "Get User\'s Direct Reports";
             this.getUsersDirectReportsToolStripMenuItem.Click += new System.EventHandler(this.getUsersDirectReportsToolStripMenuItem_Click);
             // 
             // listUsersPropertiesToolStripMenuItem
             // 
             this.listUsersPropertiesToolStripMenuItem.Name = "listUsersPropertiesToolStripMenuItem";
-            this.listUsersPropertiesToolStripMenuItem.Size = new System.Drawing.Size(280, 22);
+            this.listUsersPropertiesToolStripMenuItem.Size = new System.Drawing.Size(291, 22);
             this.listUsersPropertiesToolStripMenuItem.Text = "List User\'s Properties";
             this.listUsersPropertiesToolStripMenuItem.Click += new System.EventHandler(this.listUsersPropertiesToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(277, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(288, 6);
             // 
             // viewOnLineDirectoryToolStripMenuItem
             // 
             this.viewOnLineDirectoryToolStripMenuItem.Enabled = false;
             this.viewOnLineDirectoryToolStripMenuItem.Name = "viewOnLineDirectoryToolStripMenuItem";
-            this.viewOnLineDirectoryToolStripMenuItem.Size = new System.Drawing.Size(280, 22);
+            this.viewOnLineDirectoryToolStripMenuItem.Size = new System.Drawing.Size(291, 22);
             this.viewOnLineDirectoryToolStripMenuItem.Text = "View On-Line Directory";
             this.viewOnLineDirectoryToolStripMenuItem.Click += new System.EventHandler(this.viewOnLineDirectoryToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(277, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(288, 6);
             // 
             // copyValueToolStripMenuItem
             // 
             this.copyValueToolStripMenuItem.Name = "copyValueToolStripMenuItem";
-            this.copyValueToolStripMenuItem.Size = new System.Drawing.Size(280, 22);
+            this.copyValueToolStripMenuItem.Size = new System.Drawing.Size(291, 22);
             this.copyValueToolStripMenuItem.Text = "Copy Value";
             this.copyValueToolStripMenuItem.Click += new System.EventHandler(this.copyValueToolStripMenuItem_Click);
             // 
             // copyIDAndGroupsToolStripMenuItem
             // 
             this.copyIDAndGroupsToolStripMenuItem.Name = "copyIDAndGroupsToolStripMenuItem";
-            this.copyIDAndGroupsToolStripMenuItem.Size = new System.Drawing.Size(280, 22);
+            this.copyIDAndGroupsToolStripMenuItem.Size = new System.Drawing.Size(291, 22);
             this.copyIDAndGroupsToolStripMenuItem.Text = "Copy IDs and Groups";
             this.copyIDAndGroupsToolStripMenuItem.Click += new System.EventHandler(this.copyIDAndGroupsToolStripMenuItem_Click);
             // 
             // copyIDsWithDomainPrefixToolStripMenuItem
             // 
             this.copyIDsWithDomainPrefixToolStripMenuItem.Name = "copyIDsWithDomainPrefixToolStripMenuItem";
-            this.copyIDsWithDomainPrefixToolStripMenuItem.Size = new System.Drawing.Size(280, 22);
+            this.copyIDsWithDomainPrefixToolStripMenuItem.Size = new System.Drawing.Size(291, 22);
             this.copyIDsWithDomainPrefixToolStripMenuItem.Text = "Copy IDs with Domain Prefix";
             this.copyIDsWithDomainPrefixToolStripMenuItem.Click += new System.EventHandler(this.copyIDsWithDomainPrefixToolStripMenuItem_Click);
             // 
             // copyIDsAsUserdomainToolStripMenuItem
             // 
             this.copyIDsAsUserdomainToolStripMenuItem.Name = "copyIDsAsUserdomainToolStripMenuItem";
-            this.copyIDsAsUserdomainToolStripMenuItem.Size = new System.Drawing.Size(280, 22);
+            this.copyIDsAsUserdomainToolStripMenuItem.Size = new System.Drawing.Size(291, 22);
             this.copyIDsAsUserdomainToolStripMenuItem.Text = "Copy IDs as user@domain";
             this.copyIDsAsUserdomainToolStripMenuItem.Click += new System.EventHandler(this.copyIDsAsUserdomainToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(277, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(288, 6);
             // 
             // customizeLdapPropertiesRetrievedToolStripMenuItem
             // 
             this.customizeLdapPropertiesRetrievedToolStripMenuItem.Name = "customizeLdapPropertiesRetrievedToolStripMenuItem";
-            this.customizeLdapPropertiesRetrievedToolStripMenuItem.Size = new System.Drawing.Size(280, 22);
+            this.customizeLdapPropertiesRetrievedToolStripMenuItem.Size = new System.Drawing.Size(291, 22);
             this.customizeLdapPropertiesRetrievedToolStripMenuItem.Text = "Customize Properties/Columns Retrieved";
             this.customizeLdapPropertiesRetrievedToolStripMenuItem.Click += new System.EventHandler(this.customizeLdapPropertiesRetrievedToolStripMenuItem_Click);
             // 
             // aDGroupMembersTableBindingSource
             // 
             this.aDGroupMembersTableBindingSource.DataSource = typeof(ActiveDirectoryHelper.Tables.ADGroupMembersTable);
+            // 
+            // sendInstantMessageToolStripMenuItem
+            // 
+            this.sendInstantMessageToolStripMenuItem.Name = "sendInstantMessageToolStripMenuItem";
+            this.sendInstantMessageToolStripMenuItem.Size = new System.Drawing.Size(291, 22);
+            this.sendInstantMessageToolStripMenuItem.Text = "Send Instant Message";
+            this.sendInstantMessageToolStripMenuItem.Click += new System.EventHandler(this.sendInstantMessageToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(288, 6);
             // 
             // UserListCtrl
             // 
@@ -774,6 +794,26 @@ namespace ActiveDirectoryHelper
                     viewOnLineDirectoryToolStripMenuItem.Enabled = false;
             }
             catch { }
+
+            try
+            {
+            LyncClient lClient = LyncClient.GetClient();
+            ADGroupMembersTableRow row = (ADGroupMembersTableRow)((DataRowView)this.dataGridView1.SelectedCells[0].OwningRow.DataBoundItem).Row;
+            Contact cont = lClient.ContactManager.GetContactByUri(row.EMail);
+            var avail =  (ContactAvailability)cont.GetContactInformation(ContactInformationType.Availability);
+                if (avail == ContactAvailability.Offline)
+                {
+                    sendInstantMessageToolStripMenuItem.Enabled = false;
+                }
+                else
+                {
+                    sendInstantMessageToolStripMenuItem.Enabled = true;
+                }
+            }
+            catch (Exception)
+            {
+                sendInstantMessageToolStripMenuItem.Enabled = true;
+            }
         }
 
         private void viewOnLineDirectoryToolStripMenuItem_Click(object sender, EventArgs e)
@@ -967,6 +1007,70 @@ namespace ActiveDirectoryHelper
             CustomPropertyForm frmProps = new CustomPropertyForm();
             frmProps.ShowDialog();
             SetCustomPropertyColumns();
+        }
+
+        private void sendInstantMessageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+
+
+
+                ADGroupMembersTableRow row =
+                    (ADGroupMembersTableRow)
+                    ((DataRowView) this.dataGridView1.SelectedCells[0].OwningRow.DataBoundItem).Row;
+
+                if (row == null)
+                    return;
+
+                Automation automation;
+                try
+                {
+                    // Create the major API automation object.
+                    
+                    automation = LyncClient.GetAutomation();
+                }
+                catch (ClientNotFoundException)
+                {
+
+                    MessageBox.Show("In order to send an instant message, Lync must be open.","Lync is not open",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                    
+                }
+                // Create a generic List object to contain a contact URI.
+                // Ensure that a valid URI is added.
+                List<string> inviteeList = new List<string>();
+                inviteeList.Add(row.EMail);
+
+                // Create text for the first IM message.
+                string firstIMText = "";
+
+                // Create a generic Dictionary object to contain conversation setting objects.
+                Dictionary<AutomationModalitySettings, object> modalitySettings =
+                    new Dictionary<AutomationModalitySettings, object>();
+                AutomationModalities chosenMode = AutomationModalities.InstantMessage;
+
+                modalitySettings.Add(AutomationModalitySettings.FirstInstantMessage, firstIMText);
+                modalitySettings.Add(AutomationModalitySettings.SendFirstInstantMessageImmediately, true);
+
+                // Start the conversation.
+                IAsyncResult ar = automation.BeginStartConversation(
+                    chosenMode
+                    , inviteeList
+                    , modalitySettings
+                    , null
+                    , null);
+
+                //Block UI thread until conversation is started
+                automation.EndStartConversation(ar);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("There was a problem opening your instant message window. Sorry!", "Hmmm....", 
+                                   MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
         }
 
     }
