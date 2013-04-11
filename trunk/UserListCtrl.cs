@@ -77,6 +77,7 @@ namespace ActiveDirectoryHelper
         private DataGridViewTextBoxColumn telephonenumberDataGridViewTextBoxColumn;
         private ToolStripMenuItem sendInstantMessageToolStripMenuItem;
         private ToolStripSeparator toolStripSeparator4;
+        private ToolStripMenuItem getAllOfTheUsersReportsToolStripMenuItem;
         private IContainer components;
 
         public UserListCtrl()
@@ -159,6 +160,8 @@ namespace ActiveDirectoryHelper
             this.titleDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.telephonenumberDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ctxActions = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.sendInstantMessageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.getUsersGroupsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.getUsersManagerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.getUsersDirectReportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -173,8 +176,7 @@ namespace ActiveDirectoryHelper
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.customizeLdapPropertiesRetrievedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aDGroupMembersTableBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.sendInstantMessageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.getAllOfTheUsersReportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             mnuCopyHighlightGroups = new System.Windows.Forms.MenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.ctxActions.SuspendLayout();
@@ -324,6 +326,7 @@ namespace ActiveDirectoryHelper
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.Size = new System.Drawing.Size(1075, 336);
             this.dataGridView1.TabIndex = 2;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             this.dataGridView1.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_CellMouseDown);
             this.dataGridView1.ColumnDisplayIndexChanged += new System.Windows.Forms.DataGridViewColumnEventHandler(this.dataGridView1_ColumnDisplayIndexChanged);
             // 
@@ -377,6 +380,7 @@ namespace ActiveDirectoryHelper
             this.getUsersGroupsToolStripMenuItem,
             this.getUsersManagerToolStripMenuItem,
             this.getUsersDirectReportsToolStripMenuItem,
+            this.getAllOfTheUsersReportsToolStripMenuItem,
             this.listUsersPropertiesToolStripMenuItem,
             this.toolStripSeparator2,
             this.viewOnLineDirectoryToolStripMenuItem,
@@ -388,8 +392,20 @@ namespace ActiveDirectoryHelper
             this.toolStripSeparator3,
             this.customizeLdapPropertiesRetrievedToolStripMenuItem});
             this.ctxActions.Name = "ctxActions";
-            this.ctxActions.Size = new System.Drawing.Size(292, 292);
+            this.ctxActions.Size = new System.Drawing.Size(292, 314);
             this.ctxActions.Opening += new System.ComponentModel.CancelEventHandler(this.ctxActions_Opening);
+            // 
+            // sendInstantMessageToolStripMenuItem
+            // 
+            this.sendInstantMessageToolStripMenuItem.Name = "sendInstantMessageToolStripMenuItem";
+            this.sendInstantMessageToolStripMenuItem.Size = new System.Drawing.Size(291, 22);
+            this.sendInstantMessageToolStripMenuItem.Text = "Send Instant Message";
+            this.sendInstantMessageToolStripMenuItem.Click += new System.EventHandler(this.sendInstantMessageToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(288, 6);
             // 
             // getUsersGroupsToolStripMenuItem
             // 
@@ -481,17 +497,12 @@ namespace ActiveDirectoryHelper
             // 
             this.aDGroupMembersTableBindingSource.DataSource = typeof(ActiveDirectoryHelper.Tables.ADGroupMembersTable);
             // 
-            // sendInstantMessageToolStripMenuItem
+            // getAllOfTheUsersReportsToolStripMenuItem
             // 
-            this.sendInstantMessageToolStripMenuItem.Name = "sendInstantMessageToolStripMenuItem";
-            this.sendInstantMessageToolStripMenuItem.Size = new System.Drawing.Size(291, 22);
-            this.sendInstantMessageToolStripMenuItem.Text = "Send Instant Message";
-            this.sendInstantMessageToolStripMenuItem.Click += new System.EventHandler(this.sendInstantMessageToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator4
-            // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(288, 6);
+            this.getAllOfTheUsersReportsToolStripMenuItem.Name = "getAllOfTheUsersReportsToolStripMenuItem";
+            this.getAllOfTheUsersReportsToolStripMenuItem.Size = new System.Drawing.Size(291, 22);
+            this.getAllOfTheUsersReportsToolStripMenuItem.Text = "Get All of the User\'s Reports";
+            this.getAllOfTheUsersReportsToolStripMenuItem.Click += new System.EventHandler(this.getAllOfTheUsersReportsToolStripMenuItem_Click);
             // 
             // UserListCtrl
             // 
@@ -1071,6 +1082,30 @@ namespace ActiveDirectoryHelper
                                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void getAllOfTheUsersReportsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (this.dataGridView1.SelectedCells.Count == 0)
+                return;
+            this.Cursor = Cursors.AppStarting;
+            ADGroupMembersTableRow row = (ADGroupMembersTableRow)((DataRowView)this.dataGridView1.SelectedCells[0].OwningRow.DataBoundItem).Row;
+
+            string distinguishedName = row.DistinguishedName;
+            string lastName = row.LastName;
+            string firstName = row.FirstName;
+            string userId = row.AccountId;
+
+            ADGroupMembersTable memberTable = ADHelper.GetAllReports(row);
+            UserManagers frmReports = new UserManagers(memberTable);
+            frmReports.Text = firstName + " " + lastName + " (" + userId + ") :: All Reports";
+            this.Cursor = Cursors.Default;
+            frmReports.ShowDialog();
         }
 
     }

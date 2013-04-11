@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using ActiveDirectoryHelper.Collections;
 namespace ActiveDirectoryHelper.Properties
 {
-    public sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase
+    public partial class Settings : global::System.Configuration.ApplicationSettingsBase
     {
         static Settings()
         {

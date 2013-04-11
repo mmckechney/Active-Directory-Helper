@@ -11,293 +11,296 @@ using System.CodeDom;
 using System.CodeDom.Compiler;
 using Microsoft.CSharp;
 using System.Reflection;
+using System.Threading.Tasks;
+using System.Linq;
+
 namespace ActiveDirectoryHelper
 {
-	/// <summary>
-	/// Summary description for ADHelper.
-	/// </summary>
-	public class ADHelper
-	{
+    /// <summary>
+    /// Summary description for ADHelper.
+    /// </summary>
+    public class ADHelper
+    {
         public static List<string> AvailableLdapProps = new List<string>();
         private static List<string> globalCatalogURL = new List<string>();
 
         public static List<string> GlobalCatalogURL
         {
             get { return globalCatalogURL; }
-            set
+            set { globalCatalogURL = value; }
+        }
+
+        private static Hashtable _countryNames;
+
+        internal static Hashtable CountryNames
+        {
+            get
             {
-                globalCatalogURL = value;
+                if (_countryNames == null)
+                {
+
+                }
+                return _countryNames;
             }
         }
 
-		private static Hashtable _countryNames;
-		internal static Hashtable CountryNames
-		{
-			get
-			{
-				if(_countryNames == null)
-				{
+        static ADHelper()
+        {
+            Hashtable ht = new Hashtable();
+            ht.Add("AD", "ANDORRA");
+            ht.Add("AE", "UNITED ARAB EMIRATES");
+            ht.Add("AF", "AFGHANISTAN");
+            ht.Add("AG", "ANTIGUA AND BARBUDA");
+            ht.Add("AI", "ANGUILLA");
+            ht.Add("AL", "ALBANIA");
+            ht.Add("AM", "ARMENIA");
+            ht.Add("AN", "NETHERLANDS ANTILLES");
+            ht.Add("AO", "ANGOLA");
+            ht.Add("AQ", "ANTARCTICA");
+            ht.Add("AR", "ARGENTINA");
+            ht.Add("AS", "AMERICAN SAMOA");
+            ht.Add("AT", "AUSTRIA");
+            ht.Add("AU", "AUSTRALIA");
+            ht.Add("AW", "ARUBA");
+            ht.Add("AX", "ÅLAND ISLANDS");
+            ht.Add("AZ", "AZERBAIJAN");
+            ht.Add("BA", "BOSNIA AND HERZEGOVINA");
+            ht.Add("BB", "BARBADOS");
+            ht.Add("BD", "BANGLADESH");
+            ht.Add("BE", "BELGIUM");
+            ht.Add("BF", "BURKINA FASO");
+            ht.Add("BG", "BULGARIA");
+            ht.Add("BH", "BAHRAIN");
+            ht.Add("BI", "BURUNDI");
+            ht.Add("BJ", "BENIN");
+            ht.Add("BM", "BERMUDA");
+            ht.Add("BN", "BRUNEI DARUSSALAM");
+            ht.Add("BO", "BOLIVIA");
+            ht.Add("BR", "BRAZIL");
+            ht.Add("BS", "BAHAMAS");
+            ht.Add("BT", "BHUTAN");
+            ht.Add("BV", "BOUVET ISLAND");
+            ht.Add("BW", "BOTSWANA");
+            ht.Add("BY", "BELARUS");
+            ht.Add("BZ", "BELIZE");
+            ht.Add("CA", "CANADA");
+            ht.Add("CC", "COCOS (KEELING) ISLANDS");
+            ht.Add("CD", "CONGO  THE DEMOCRATIC REPUBLIC OF THE");
+            ht.Add("CF", "CENTRAL AFRICAN REPUBLIC");
+            ht.Add("CG", "CONGO");
+            ht.Add("CH", "SWITZERLAND");
+            ht.Add("CI", "COTE D'IVOIRE");
+            ht.Add("CK", "COOK ISLANDS");
+            ht.Add("CL", "CHILE");
+            ht.Add("CM", "CAMEROON");
+            ht.Add("CN", "CHINA");
+            ht.Add("CO", "COLOMBIA");
+            ht.Add("CR", "COSTA RICA");
+            ht.Add("CS", "SERBIA AND MONTENEGRO");
+            ht.Add("CU", "CUBA");
+            ht.Add("CV", "CAPE VERDE");
+            ht.Add("CX", "CHRISTMAS ISLAND");
+            ht.Add("CY", "CYPRUS");
+            ht.Add("CZ", "CZECH REPUBLIC");
+            ht.Add("DE", "GERMANY");
+            ht.Add("DJ", "DJIBOUTI");
+            ht.Add("DK", "DENMARK");
+            ht.Add("DM", "DOMINICA");
+            ht.Add("DO", "DOMINICAN REPUBLIC");
+            ht.Add("DZ", "ALGERIA");
+            ht.Add("EC", "ECUADOR");
+            ht.Add("EE", "ESTONIA");
+            ht.Add("EG", "EGYPT");
+            ht.Add("EH", "WESTERN SAHARA");
+            ht.Add("ER", "ERITREA");
+            ht.Add("ES", "SPAIN");
+            ht.Add("ET", "ETHIOPIA");
+            ht.Add("FI", "FINLAND");
+            ht.Add("FJ", "FIJI");
+            ht.Add("FK", "FALKLAND ISLANDS (MALVINAS)");
+            ht.Add("FM", "MICRONESIA  FEDERATED STATES OF");
+            ht.Add("FO", "FAROE ISLANDS");
+            ht.Add("FR", "FRANCE");
+            ht.Add("GA", "GABON");
+            ht.Add("GB", "UNITED KINGDOM");
+            ht.Add("GD", "GRENADA");
+            ht.Add("GE", "GEORGIA");
+            ht.Add("GF", "FRENCH GUIANA");
+            ht.Add("GH", "GHANA");
+            ht.Add("GI", "GIBRALTAR");
+            ht.Add("GL", "GREENLAND");
+            ht.Add("GM", "GAMBIA");
+            ht.Add("GN", "GUINEA");
+            ht.Add("GP", "GUADELOUPE");
+            ht.Add("GQ", "EQUATORIAL GUINEA");
+            ht.Add("GR", "GREECE");
+            ht.Add("GS", "SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS");
+            ht.Add("GT", "GUATEMALA");
+            ht.Add("GU", "GUAM");
+            ht.Add("GW", "GUINEA-BISSAU");
+            ht.Add("GY", "GUYANA");
+            ht.Add("HK", "HONG KONG");
+            ht.Add("HM", "HEARD ISLAND AND MCDONALD ISLANDS");
+            ht.Add("HN", "HONDURAS");
+            ht.Add("HR", "CROATIA");
+            ht.Add("HT", "HAITI");
+            ht.Add("HU", "HUNGARY");
+            ht.Add("ID", "INDONESIA");
+            ht.Add("IE", "IRELAND");
+            ht.Add("IL", "ISRAEL");
+            ht.Add("IN", "INDIA");
+            ht.Add("IO", "BRITISH INDIAN OCEAN TERRITORY");
+            ht.Add("IQ", "IRAQ");
+            ht.Add("IR", "IRAN  ISLAMIC REPUBLIC OF");
+            ht.Add("IS", "ICELAND");
+            ht.Add("IT", "ITALY");
+            ht.Add("JM", "JAMAICA");
+            ht.Add("JO", "JORDAN");
+            ht.Add("JP", "JAPAN");
+            ht.Add("KE", "KENYA");
+            ht.Add("KG", "KYRGYZSTAN");
+            ht.Add("KH", "CAMBODIA");
+            ht.Add("KI", "KIRIBATI");
+            ht.Add("KM", "COMOROS");
+            ht.Add("KN", "SAINT KITTS AND NEVIS");
+            ht.Add("KP", "KOREA  DEMOCRATIC PEOPLE'S REPUBLIC OF");
+            ht.Add("KR", "KOREA  REPUBLIC OF");
+            ht.Add("KW", "KUWAIT");
+            ht.Add("KY", "CAYMAN ISLANDS");
+            ht.Add("KZ", "KAZAKHSTAN");
+            ht.Add("LA", "LAO PEOPLE'S DEMOCRATIC REPUBLIC");
+            ht.Add("LB", "LEBANON");
+            ht.Add("LC", "SAINT LUCIA");
+            ht.Add("LI", "LIECHTENSTEIN");
+            ht.Add("LK", "SRI LANKA");
+            ht.Add("LR", "LIBERIA");
+            ht.Add("LS", "LESOTHO");
+            ht.Add("LT", "LITHUANIA");
+            ht.Add("LU", "LUXEMBOURG");
+            ht.Add("LV", "LATVIA");
+            ht.Add("LY", "LIBYAN ARAB JAMAHIRIYA");
+            ht.Add("MA", "MOROCCO");
+            ht.Add("MC", "MONACO");
+            ht.Add("MD", "MOLDOVA  REPUBLIC OF");
+            ht.Add("MG", "MADAGASCAR");
+            ht.Add("MH", "MARSHALL ISLANDS");
+            ht.Add("MK", "MACEDONIA  THE FORMER YUGOSLAV REPUBLIC OF");
+            ht.Add("ML", "MALI");
+            ht.Add("MM", "MYANMAR");
+            ht.Add("MN", "MONGOLIA");
+            ht.Add("MO", "MACAO");
+            ht.Add("MP", "NORTHERN MARIANA ISLANDS");
+            ht.Add("MQ", "MARTINIQUE");
+            ht.Add("MR", "MAURITANIA");
+            ht.Add("MS", "MONTSERRAT");
+            ht.Add("MT", "MALTA");
+            ht.Add("MU", "MAURITIUS");
+            ht.Add("MV", "MALDIVES");
+            ht.Add("MW", "MALAWI");
+            ht.Add("MX", "MEXICO");
+            ht.Add("MY", "MALAYSIA");
+            ht.Add("MZ", "MOZAMBIQUE");
+            ht.Add("NA", "NAMIBIA");
+            ht.Add("NC", "NEW CALEDONIA");
+            ht.Add("NE", "NIGER");
+            ht.Add("NF", "NORFOLK ISLAND");
+            ht.Add("NG", "NIGERIA");
+            ht.Add("NI", "NICARAGUA");
+            ht.Add("NL", "NETHERLANDS");
+            ht.Add("NO", "NORWAY");
+            ht.Add("NP", "NEPAL");
+            ht.Add("NR", "NAURU");
+            ht.Add("NU", "NIUE");
+            ht.Add("NZ", "NEW ZEALAND");
+            ht.Add("OM", "OMAN");
+            ht.Add("PA", "PANAMA");
+            ht.Add("PE", "PERU");
+            ht.Add("PF", "FRENCH POLYNESIA");
+            ht.Add("PG", "PAPUA NEW GUINEA");
+            ht.Add("PH", "PHILIPPINES");
+            ht.Add("PK", "PAKISTAN");
+            ht.Add("PL", "POLAND");
+            ht.Add("PM", "SAINT PIERRE AND MIQUELON");
+            ht.Add("PN", "PITCAIRN");
+            ht.Add("PR", "PUERTO RICO");
+            ht.Add("PS", "PALESTINIAN TERRITORY  OCCUPIED");
+            ht.Add("PT", "PORTUGAL");
+            ht.Add("PW", "PALAU");
+            ht.Add("PY", "PARAGUAY");
+            ht.Add("QA", "QATAR");
+            ht.Add("RE", "REUNION");
+            ht.Add("RO", "ROMANIA");
+            ht.Add("RU", "RUSSIAN FEDERATION");
+            ht.Add("RW", "RWANDA");
+            ht.Add("SA", "SAUDI ARABIA");
+            ht.Add("SB", "SOLOMON ISLANDS");
+            ht.Add("SC", "SEYCHELLES");
+            ht.Add("SD", "SUDAN");
+            ht.Add("SE", "SWEDEN");
+            ht.Add("SG", "SINGAPORE");
+            ht.Add("SH", "SAINT HELENA");
+            ht.Add("SI", "SLOVENIA");
+            ht.Add("SJ", "SVALBARD AND JAN MAYEN");
+            ht.Add("SK", "SLOVAKIA");
+            ht.Add("SL", "SIERRA LEONE");
+            ht.Add("SM", "SAN MARINO");
+            ht.Add("SN", "SENEGAL");
+            ht.Add("SO", "SOMALIA");
+            ht.Add("SR", "SURINAME");
+            ht.Add("ST", "SAO TOME AND PRINCIPE");
+            ht.Add("SV", "EL SALVADOR");
+            ht.Add("SY", "SYRIAN ARAB REPUBLIC");
+            ht.Add("SZ", "SWAZILAND");
+            ht.Add("TC", "TURKS AND CAICOS ISLANDS");
+            ht.Add("TD", "CHAD");
+            ht.Add("TF", "FRENCH SOUTHERN TERRITORIES");
+            ht.Add("TG", "TOGO");
+            ht.Add("TH", "THAILAND");
+            ht.Add("TJ", "TAJIKISTAN");
+            ht.Add("TK", "TOKELAU");
+            ht.Add("TL", "TIMOR-LESTE");
+            ht.Add("TM", "TURKMENISTAN");
+            ht.Add("TN", "TUNISIA");
+            ht.Add("TO", "TONGA");
+            ht.Add("TR", "TURKEY");
+            ht.Add("TT", "TRINIDAD AND TOBAGO");
+            ht.Add("TV", "TUVALU");
+            ht.Add("TW", "TAIWAN  PROVINCE OF CHINA");
+            ht.Add("TZ", "TANZANIA  UNITED REPUBLIC OF");
+            ht.Add("UA", "UKRAINE");
+            ht.Add("UG", "UGANDA");
+            ht.Add("UM", "UNITED STATES MINOR OUTLYING ISLANDS");
+            ht.Add("US", "UNITED STATES");
+            ht.Add("UY", "URUGUAY");
+            ht.Add("UZ", "UZBEKISTAN");
+            ht.Add("VA", "HOLY SEE (VATICAN CITY STATE)");
+            ht.Add("VC", "SAINT VINCENT AND THE GRENADINES");
+            ht.Add("VE", "VENEZUELA");
+            ht.Add("VG", "VIRGIN ISLANDS  BRITISH");
+            ht.Add("VI", "VIRGIN ISLANDS  U.S.");
+            ht.Add("VN", "VIET NAM");
+            ht.Add("VU", "VANUATU");
+            ht.Add("WF", "WALLIS AND FUTUNA");
+            ht.Add("WS", "SAMOA");
+            ht.Add("YE", "YEMEN");
+            ht.Add("YT", "MAYOTTE");
+            ht.Add("ZA", "SOUTH AFRICA");
+            ht.Add("ZM", "ZAMBIA");
+            ht.Add("ZW", "ZIMBABWE");
+            ht.Add("ZZ", "N/A");
 
-				}
-				return _countryNames;
-			}
-		}
-		static ADHelper()
-		{
-			Hashtable ht = new Hashtable();
-			ht.Add("AD","ANDORRA");
-			ht.Add("AE","UNITED ARAB EMIRATES");
-			ht.Add("AF","AFGHANISTAN");
-			ht.Add("AG","ANTIGUA AND BARBUDA");
-			ht.Add("AI","ANGUILLA");
-			ht.Add("AL","ALBANIA");
-			ht.Add("AM","ARMENIA");
-			ht.Add("AN","NETHERLANDS ANTILLES");
-			ht.Add("AO","ANGOLA");
-			ht.Add("AQ","ANTARCTICA");
-			ht.Add("AR","ARGENTINA");
-			ht.Add("AS","AMERICAN SAMOA");
-			ht.Add("AT","AUSTRIA");
-			ht.Add("AU","AUSTRALIA");
-			ht.Add("AW","ARUBA");
-			ht.Add("AX","ÅLAND ISLANDS");
-			ht.Add("AZ","AZERBAIJAN");
-			ht.Add("BA","BOSNIA AND HERZEGOVINA");
-			ht.Add("BB","BARBADOS");
-			ht.Add("BD","BANGLADESH");
-			ht.Add("BE","BELGIUM");
-			ht.Add("BF","BURKINA FASO");
-			ht.Add("BG","BULGARIA");
-			ht.Add("BH","BAHRAIN");
-			ht.Add("BI","BURUNDI");
-			ht.Add("BJ","BENIN");
-			ht.Add("BM","BERMUDA");
-			ht.Add("BN","BRUNEI DARUSSALAM");
-			ht.Add("BO","BOLIVIA");
-			ht.Add("BR","BRAZIL");
-			ht.Add("BS","BAHAMAS");
-			ht.Add("BT","BHUTAN");
-			ht.Add("BV","BOUVET ISLAND");
-			ht.Add("BW","BOTSWANA");
-			ht.Add("BY","BELARUS");
-			ht.Add("BZ","BELIZE");
-			ht.Add("CA","CANADA");
-			ht.Add("CC","COCOS (KEELING) ISLANDS");
-			ht.Add("CD","CONGO  THE DEMOCRATIC REPUBLIC OF THE");
-			ht.Add("CF","CENTRAL AFRICAN REPUBLIC");
-			ht.Add("CG","CONGO");
-			ht.Add("CH","SWITZERLAND");
-			ht.Add("CI","COTE D'IVOIRE");
-			ht.Add("CK","COOK ISLANDS");
-			ht.Add("CL","CHILE");
-			ht.Add("CM","CAMEROON");
-			ht.Add("CN","CHINA");
-			ht.Add("CO","COLOMBIA");
-			ht.Add("CR","COSTA RICA");
-			ht.Add("CS","SERBIA AND MONTENEGRO");
-			ht.Add("CU","CUBA");
-			ht.Add("CV","CAPE VERDE");
-			ht.Add("CX","CHRISTMAS ISLAND");
-			ht.Add("CY","CYPRUS");
-			ht.Add("CZ","CZECH REPUBLIC");
-			ht.Add("DE","GERMANY");
-			ht.Add("DJ","DJIBOUTI");
-			ht.Add("DK","DENMARK");
-			ht.Add("DM","DOMINICA");
-			ht.Add("DO","DOMINICAN REPUBLIC");
-			ht.Add("DZ","ALGERIA");
-			ht.Add("EC","ECUADOR");
-			ht.Add("EE","ESTONIA");
-			ht.Add("EG","EGYPT");
-			ht.Add("EH","WESTERN SAHARA");
-			ht.Add("ER","ERITREA");
-			ht.Add("ES","SPAIN");
-			ht.Add("ET","ETHIOPIA");
-			ht.Add("FI","FINLAND");
-			ht.Add("FJ","FIJI");
-			ht.Add("FK","FALKLAND ISLANDS (MALVINAS)");
-			ht.Add("FM","MICRONESIA  FEDERATED STATES OF");
-			ht.Add("FO","FAROE ISLANDS");
-			ht.Add("FR","FRANCE");
-			ht.Add("GA","GABON");
-			ht.Add("GB","UNITED KINGDOM");
-			ht.Add("GD","GRENADA");
-			ht.Add("GE","GEORGIA");
-			ht.Add("GF","FRENCH GUIANA");
-			ht.Add("GH","GHANA");
-			ht.Add("GI","GIBRALTAR");
-			ht.Add("GL","GREENLAND");
-			ht.Add("GM","GAMBIA");
-			ht.Add("GN","GUINEA");
-			ht.Add("GP","GUADELOUPE");
-			ht.Add("GQ","EQUATORIAL GUINEA");
-			ht.Add("GR","GREECE");
-			ht.Add("GS","SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS");
-			ht.Add("GT","GUATEMALA");
-			ht.Add("GU","GUAM");
-			ht.Add("GW","GUINEA-BISSAU");
-			ht.Add("GY","GUYANA");
-			ht.Add("HK","HONG KONG");
-			ht.Add("HM","HEARD ISLAND AND MCDONALD ISLANDS");
-			ht.Add("HN","HONDURAS");
-			ht.Add("HR","CROATIA");
-			ht.Add("HT","HAITI");
-			ht.Add("HU","HUNGARY");
-			ht.Add("ID","INDONESIA");
-			ht.Add("IE","IRELAND");
-			ht.Add("IL","ISRAEL");
-			ht.Add("IN","INDIA");
-			ht.Add("IO","BRITISH INDIAN OCEAN TERRITORY");
-			ht.Add("IQ","IRAQ");
-			ht.Add("IR","IRAN  ISLAMIC REPUBLIC OF");
-			ht.Add("IS","ICELAND");
-			ht.Add("IT","ITALY");
-			ht.Add("JM","JAMAICA");
-			ht.Add("JO","JORDAN");
-			ht.Add("JP","JAPAN");
-			ht.Add("KE","KENYA");
-			ht.Add("KG","KYRGYZSTAN");
-			ht.Add("KH","CAMBODIA");
-			ht.Add("KI","KIRIBATI");
-			ht.Add("KM","COMOROS");
-			ht.Add("KN","SAINT KITTS AND NEVIS");
-			ht.Add("KP","KOREA  DEMOCRATIC PEOPLE'S REPUBLIC OF");
-			ht.Add("KR","KOREA  REPUBLIC OF");
-			ht.Add("KW","KUWAIT");
-			ht.Add("KY","CAYMAN ISLANDS");
-			ht.Add("KZ","KAZAKHSTAN");
-			ht.Add("LA","LAO PEOPLE'S DEMOCRATIC REPUBLIC");
-			ht.Add("LB","LEBANON");
-			ht.Add("LC","SAINT LUCIA");
-			ht.Add("LI","LIECHTENSTEIN");
-			ht.Add("LK","SRI LANKA");
-			ht.Add("LR","LIBERIA");
-			ht.Add("LS","LESOTHO");
-			ht.Add("LT","LITHUANIA");
-			ht.Add("LU","LUXEMBOURG");
-			ht.Add("LV","LATVIA");
-			ht.Add("LY","LIBYAN ARAB JAMAHIRIYA");
-			ht.Add("MA","MOROCCO");
-			ht.Add("MC","MONACO");
-			ht.Add("MD","MOLDOVA  REPUBLIC OF");
-			ht.Add("MG","MADAGASCAR");
-			ht.Add("MH","MARSHALL ISLANDS");
-			ht.Add("MK","MACEDONIA  THE FORMER YUGOSLAV REPUBLIC OF");
-			ht.Add("ML","MALI");
-			ht.Add("MM","MYANMAR");
-			ht.Add("MN","MONGOLIA");
-			ht.Add("MO","MACAO");
-			ht.Add("MP","NORTHERN MARIANA ISLANDS");
-			ht.Add("MQ","MARTINIQUE");
-			ht.Add("MR","MAURITANIA");
-			ht.Add("MS","MONTSERRAT");
-			ht.Add("MT","MALTA");
-			ht.Add("MU","MAURITIUS");
-			ht.Add("MV","MALDIVES");
-			ht.Add("MW","MALAWI");
-			ht.Add("MX","MEXICO");
-			ht.Add("MY","MALAYSIA");
-			ht.Add("MZ","MOZAMBIQUE");
-			ht.Add("NA","NAMIBIA");
-			ht.Add("NC","NEW CALEDONIA");
-			ht.Add("NE","NIGER");
-			ht.Add("NF","NORFOLK ISLAND");
-			ht.Add("NG","NIGERIA");
-			ht.Add("NI","NICARAGUA");
-			ht.Add("NL","NETHERLANDS");
-			ht.Add("NO","NORWAY");
-			ht.Add("NP","NEPAL");
-			ht.Add("NR","NAURU");
-			ht.Add("NU","NIUE");
-			ht.Add("NZ","NEW ZEALAND");
-			ht.Add("OM","OMAN");
-			ht.Add("PA","PANAMA");
-			ht.Add("PE","PERU");
-			ht.Add("PF","FRENCH POLYNESIA");
-			ht.Add("PG","PAPUA NEW GUINEA");
-			ht.Add("PH","PHILIPPINES");
-			ht.Add("PK","PAKISTAN");
-			ht.Add("PL","POLAND");
-			ht.Add("PM","SAINT PIERRE AND MIQUELON");
-			ht.Add("PN","PITCAIRN");
-			ht.Add("PR","PUERTO RICO");
-			ht.Add("PS","PALESTINIAN TERRITORY  OCCUPIED");
-			ht.Add("PT","PORTUGAL");
-			ht.Add("PW","PALAU");
-			ht.Add("PY","PARAGUAY");
-			ht.Add("QA","QATAR");
-			ht.Add("RE","REUNION");
-			ht.Add("RO","ROMANIA");
-			ht.Add("RU","RUSSIAN FEDERATION");
-			ht.Add("RW","RWANDA");
-			ht.Add("SA","SAUDI ARABIA");
-			ht.Add("SB","SOLOMON ISLANDS");
-			ht.Add("SC","SEYCHELLES");
-			ht.Add("SD","SUDAN");
-			ht.Add("SE","SWEDEN");
-			ht.Add("SG","SINGAPORE");
-			ht.Add("SH","SAINT HELENA");
-			ht.Add("SI","SLOVENIA");
-			ht.Add("SJ","SVALBARD AND JAN MAYEN");
-			ht.Add("SK","SLOVAKIA");
-			ht.Add("SL","SIERRA LEONE");
-			ht.Add("SM","SAN MARINO");
-			ht.Add("SN","SENEGAL");
-			ht.Add("SO","SOMALIA");
-			ht.Add("SR","SURINAME");
-			ht.Add("ST","SAO TOME AND PRINCIPE");
-			ht.Add("SV","EL SALVADOR");
-			ht.Add("SY","SYRIAN ARAB REPUBLIC");
-			ht.Add("SZ","SWAZILAND");
-			ht.Add("TC","TURKS AND CAICOS ISLANDS");
-			ht.Add("TD","CHAD");
-			ht.Add("TF","FRENCH SOUTHERN TERRITORIES");
-			ht.Add("TG","TOGO");
-			ht.Add("TH","THAILAND");
-			ht.Add("TJ","TAJIKISTAN");
-			ht.Add("TK","TOKELAU");
-			ht.Add("TL","TIMOR-LESTE");
-			ht.Add("TM","TURKMENISTAN");
-			ht.Add("TN","TUNISIA");
-			ht.Add("TO","TONGA");
-			ht.Add("TR","TURKEY");
-			ht.Add("TT","TRINIDAD AND TOBAGO");
-			ht.Add("TV","TUVALU");
-			ht.Add("TW","TAIWAN  PROVINCE OF CHINA");
-			ht.Add("TZ","TANZANIA  UNITED REPUBLIC OF");
-			ht.Add("UA","UKRAINE");
-			ht.Add("UG","UGANDA");
-			ht.Add("UM","UNITED STATES MINOR OUTLYING ISLANDS");
-			ht.Add("US","UNITED STATES");
-			ht.Add("UY","URUGUAY");
-			ht.Add("UZ","UZBEKISTAN");
-			ht.Add("VA","HOLY SEE (VATICAN CITY STATE)");
-			ht.Add("VC","SAINT VINCENT AND THE GRENADINES");
-			ht.Add("VE","VENEZUELA");
-			ht.Add("VG","VIRGIN ISLANDS  BRITISH");
-			ht.Add("VI","VIRGIN ISLANDS  U.S.");
-			ht.Add("VN","VIET NAM");
-			ht.Add("VU","VANUATU");
-			ht.Add("WF","WALLIS AND FUTUNA");
-			ht.Add("WS","SAMOA");
-			ht.Add("YE","YEMEN");
-			ht.Add("YT","MAYOTTE");
-			ht.Add("ZA","SOUTH AFRICA");
-			ht.Add("ZM","ZAMBIA");
-			ht.Add("ZW","ZIMBABWE");
-			ht.Add("ZZ","N/A");
+            _countryNames = ht;
 
-			_countryNames = ht;
+        }
 
-		}
-		public ADHelper()
-		{
-			
-		}
+        public ADHelper()
+        {
 
-		internal GroupLoadedEventArgs GetGroupsList()
-		{
-			SortedList fullGroupList = new SortedList();
+        }
+
+        internal GroupLoadedEventArgs GetGroupsList()
+        {
+            SortedList fullGroupList = new SortedList();
             for (int idx = 0; idx < globalCatalogURL.Count; idx++)
             {
                 DirectoryEntry entry1 = GetDirectoryEntry(globalCatalogURL[idx]);
@@ -313,114 +316,133 @@ namespace ActiveDirectoryHelper
                 {
                     collAllGroups = searcher1.FindAll();
                 }
-                catch { continue; }
+                catch
+                {
+                    continue;
+                }
                 string[] allGroups = new string[collAllGroups.Count];
                 for (int i = 0; i < collAllGroups.Count; i++)
                 {
                     if (collAllGroups[i].Properties["name"] != null && collAllGroups[i].Properties["name"][0] != null)
                     {
                         if (fullGroupList.ContainsKey(collAllGroups[i].Properties["name"][0]) == false)
-                            fullGroupList.Add(collAllGroups[i].Properties["name"][0], collAllGroups[i].Properties["distinguishedname"][0]);
+                            fullGroupList.Add(collAllGroups[i].Properties["name"][0],
+                                              collAllGroups[i].Properties["distinguishedname"][0]);
 
                     }
                 }
             }
-			
-            return new GroupLoadedEventArgs(fullGroupList);
-		}
 
-		private static ADGroupMembersTableRow GetUsersManagers(string distinguishedName)
-		{
+            return new GroupLoadedEventArgs(fullGroupList);
+        }
+
+        private static ADGroupMembersTableRow GetUsersManagers(string distinguishedName)
+        {
             ADGroupMembersTableRow firstUser = GetAccountByDN(distinguishedName);
-			return GetUsersManagers(firstUser);
-		}
+            return GetUsersManagers(firstUser);
+        }
+
         internal static ADGroupMembersTableRow GetUsersManagers(ADGroupMembersTableRow memberRow)
         {
             return GetUsersManagers(memberRow, "");
         }
-		/// <summary>
+
+        /// <summary>
         /// Retrieves a user's manager by building a nested hierarchy of ADGroupMembersTableRows via the ManagerRow property
-		/// </summary>
+        /// </summary>
         /// <param name="memberRow">Group Members Table row for the current user to be searched</param>
-		/// <param name="lastQuery">The LDAP query used in the last recursive call -- used to halt endless loops, especially when the custom C# code is used.</param>
-		/// <returns></returns>
-        internal static ADGroupMembersTableRow GetUsersManagers( ADGroupMembersTableRow memberRow, string lastQuery)
-		{
-           if(Properties.Settings.Default.CustomManagerSearch != null && Properties.Settings.Default.CustomManagerSearch.Length > 0)
-           {
-               bool searchByquery = false;
-               SearchType search = (SearchType)Enum.Parse(typeof(SearchType), Properties.Settings.Default.CustomManagerSearchType);
-               string query = string.Empty; ; 
-               switch(search)
-               {
-                   case SearchType.CustomCode:
-                       query = ADHelper.PerformTokenReplacement(Properties.Settings.Default.CustomManagerSearch, memberRow);
-                       if (query.Length > 0)
-                           query = Eval(query);
-                       else
-                           return memberRow;
-                        
-                       searchByquery = true;
-                       break;
-                   case SearchType.StandardLdap:
-                       query = ADHelper.PerformTokenReplacement(Properties.Settings.Default.CustomManagerSearch, memberRow);
-                       searchByquery = true;
-                       break;
-                   case SearchType.GenericText:
-                       query = ADHelper.PerformTokenReplacement(Properties.Settings.Default.CustomManagerSearch, memberRow);
-                       searchByquery = false;
-                       break;
+        /// <param name="lastQuery">The LDAP query used in the last recursive call -- used to halt endless loops, especially when the custom C# code is used.</param>
+        /// <returns></returns>
+        internal static ADGroupMembersTableRow GetUsersManagers(ADGroupMembersTableRow memberRow, string lastQuery)
+        {
+            if (!string.IsNullOrEmpty(Properties.Settings.Default.CustomManagerSearch))
+            {
+                bool searchByquery = false;
+                SearchType search =
+                    (SearchType) Enum.Parse(typeof (SearchType), Properties.Settings.Default.CustomManagerSearchType);
+                string query = string.Empty;
+                ;
+                switch (search)
+                {
+                    case SearchType.CustomCode:
+                        query = ADHelper.PerformTokenReplacement(Properties.Settings.Default.CustomManagerSearch,
+                                                                 memberRow);
+                        if (query.Length > 0)
+                            query = Eval(query);
+                        else
+                            return memberRow;
 
-               }
-               if (query == lastQuery)
-                   return memberRow;
+                        searchByquery = true;
+                        break;
+                    case SearchType.StandardLdap:
+                        query = ADHelper.PerformTokenReplacement(Properties.Settings.Default.CustomManagerSearch,
+                                                                 memberRow);
+                        searchByquery = true;
+                        break;
+                    case SearchType.GenericText:
+                        query = ADHelper.PerformTokenReplacement(Properties.Settings.Default.CustomManagerSearch,
+                                                                 memberRow);
+                        searchByquery = false;
+                        break;
 
-               ADGroupMembersTable tmp;
-               if (!searchByquery)
-                   tmp = GetAccountFromString(query);
-               else
-                   tmp = GetAccountByQuery(query);
+                }
+                if (query == lastQuery)
+                    return memberRow;
 
-               if (tmp != null && tmp.Rows.Count > 0)
-               {
-                   memberRow.ManagerRow = GetUsersManagers(tmp[0], query);
-               }
+                ADGroupMembersTable tmp;
+                if (!searchByquery)
+                    tmp = GetAccountFromString(query);
+                else
+                    tmp = GetAccountByQuery(query);
 
-               return memberRow;
-           }
-           else
-           {
+                if (tmp != null && tmp.Rows.Count > 0)
+                {
+                    memberRow.ManagerRow = GetUsersManagers(tmp[0], query);
+                }
+
+                return memberRow;
+            }
+            else
+            {
                 if (memberRow.ManagerDN.Length == 0)
                     return memberRow;
 
                 memberRow.ManagerRow = GetUsersManagers(GetAccountByDN(memberRow.ManagerDN));
                 return memberRow;
             }
-		}
+        }
+
         internal static ADGroupMembersTable GetDirectReports(ADGroupMembersTableRow row)
         {
             ADGroupMembersTable memTable = new ADGroupMembersTable();
             try
             {
                 StringBuilder sb = new StringBuilder("(&(objectCategory=person)(objectClass=user)");
-                if (Properties.Settings.Default.CustomDirectReportSearch == null && Properties.Settings.Default.CustomDirectReportSearch.Length == 0)
+                if (string.IsNullOrEmpty(Properties.Settings.Default.CustomDirectReportSearch))
                 {
                     sb.Append("(manager=" + row.DistinguishedName + ")");
                 }
                 else
                 {
-                    SearchType search = (SearchType)Enum.Parse(typeof(SearchType), Properties.Settings.Default.CustomDirectReportSearchType);
+                    SearchType search =
+                        (SearchType)
+                        Enum.Parse(typeof (SearchType), Properties.Settings.Default.CustomDirectReportSearchType);
                     switch (search)
                     {
                         case SearchType.GenericText:
-                            return GetAccountFromString(PerformTokenReplacement(Properties.Settings.Default.CustomDirectReportSearch, row));
+                            return
+                                GetAccountFromString(
+                                    PerformTokenReplacement(Properties.Settings.Default.CustomDirectReportSearch, row));
                         case SearchType.CustomCode:
-                            string query = PerformTokenReplacement(Properties.Settings.Default.CustomDirectReportSearch, row);
+                            string query = PerformTokenReplacement(
+                                Properties.Settings.Default.CustomDirectReportSearch, row);
                             query = Eval(query);
                             sb.Append(ADHelper.PerformTokenReplacement(query, row));
                             break;
                         case SearchType.StandardLdap:
-                            sb.Append("(" + PerformTokenReplacement(Properties.Settings.Default.CustomDirectReportSearch, row) + ")");
+                            sb.Append("(" +
+                                      PerformTokenReplacement(Properties.Settings.Default.CustomDirectReportSearch, row) +
+                                      ")");
                             break;
                     }
                 }
@@ -437,7 +459,10 @@ namespace ActiveDirectoryHelper
                     {
                         collection2 = searcher1.FindAll();
                     }
-                    catch { continue; }
+                    catch
+                    {
+                        continue;
+                    }
                     int num1 = collection2.Count;
                     for (int num2 = 0; num2 < num1; num2++)
                     {
@@ -466,7 +491,45 @@ namespace ActiveDirectoryHelper
             return ConvertToCountryName(tbl);
         }
 
-		internal static System.Collections.Generic.List<ADGroup> GetGroups(string distinguishedName,string sid, string searchDomain)
+        internal static ADGroupMembersTable GetAllReports(ADGroupMembersTableRow row)
+        {
+            ADGroupMembersTable masterTable = new ADGroupMembersTable();
+
+            ADGroupMembersTable firstLine = GetDirectReports(row);
+
+            if (firstLine.Rows.Count > 0)
+            {
+                DataRow[] tmp = new DataRow[firstLine.Rows.Count];
+                firstLine.Rows.CopyTo(tmp, 0);
+                masterTable.ImportRows(tmp);
+            }
+
+            Parallel.ForEach<DataRow>(firstLine.AsEnumerable(), dRow =>
+                {
+                    ADGroupMembersTable sub = GetAllReports((ADGroupMembersTableRow)dRow);
+                    if (sub.Rows.Count > 0)
+                    {
+
+                        DataRow[] tmpSub = new DataRow[sub.Rows.Count];
+                        sub.Rows.CopyTo(tmpSub, 0);
+                        masterTable.ImportRows(tmpSub);
+                    }
+                });
+            //foreach (ADGroupMembersTableRow dRow in firstLine.Rows)
+            //{
+            //    ADGroupMembersTable sub = GetAllReports(dRow);
+            //    if (sub.Rows.Count == 0) 
+            //        continue;
+                
+            //    DataRow[] tmpSub = new DataRow[sub.Rows.Count];
+            //    sub.Rows.CopyTo(tmpSub,0);
+            //    masterTable.ImportRows(tmpSub);
+            //}
+
+            return masterTable;
+        }
+
+        internal static System.Collections.Generic.List<ADGroup> GetGroups(string distinguishedName,string sid, string searchDomain)
 		{
             System.Collections.Generic.List<ADGroup> grps = new System.Collections.Generic.List<ADGroup>();
 			//Make a Connection with the Global Catalog Server
