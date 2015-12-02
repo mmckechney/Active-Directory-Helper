@@ -150,7 +150,7 @@ namespace ActiveDirectoryHelper
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.ddMixType = new System.Windows.Forms.ComboBox();
             this.cmbGroupList1 = new System.Windows.Forms.ComboBox();
@@ -354,16 +354,16 @@ namespace ActiveDirectoryHelper
             this.dgGroups1.Location = new System.Drawing.Point(16, 40);
             this.dgGroups1.Name = "dgGroups1";
             this.dgGroups1.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Sunken;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.Format = "#";
-            dataGridViewCellStyle1.NullValue = null;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgGroups1.RowHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.Format = "#";
+            dataGridViewCellStyle2.NullValue = null;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgGroups1.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dgGroups1.RowHeadersWidth = 10;
             this.dgGroups1.Size = new System.Drawing.Size(280, 94);
             this.dgGroups1.TabIndex = 13;
@@ -1016,7 +1016,9 @@ namespace ActiveDirectoryHelper
             // 
             // bgGeneric
             // 
+            this.bgGeneric.WorkerReportsProgress = true;
             this.bgGeneric.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgGeneric_DoWork);
+            this.bgGeneric.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.Searchers_ProgressChanged);
             this.bgGeneric.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgGeneric_RunWorkerCompleted);
             // 
             // MainForm
@@ -1823,6 +1825,7 @@ namespace ActiveDirectoryHelper
                 this.btnGroupComparison.Enabled = true;
                 this.lnkMultipleAccounts.Enabled = true;
                 this.btnRefreshGroupList.Enabled = true;
+                this.lnkGenericQuery.Enabled = true; 
 
 
                 this.Cursor = Cursors.Default;
@@ -1837,6 +1840,7 @@ namespace ActiveDirectoryHelper
             this.btnGetGroup.Enabled = false;
             this.btnGroupComparison.Enabled = false;
             this.lnkMultipleAccounts.Enabled = false;
+            this.lnkGenericQuery.Enabled = false;
         }
         
         #region Background handlers for Finding an individual account
@@ -2293,6 +2297,7 @@ namespace ActiveDirectoryHelper
             GenericUserQueryForm frmGeneric = new GenericUserQueryForm();
             if (DialogResult.OK == frmGeneric.ShowDialog())
             {
+                this.searchStartTime = DateTime.Now;
                 string ldapQuery= frmGeneric.Query;
                 bgGeneric.RunWorkerAsync(ldapQuery);
                 frmGeneric.Dispose();
@@ -2301,13 +2306,17 @@ namespace ActiveDirectoryHelper
 
         private void bgGeneric_DoWork(object sender, DoWorkEventArgs e)
         {
-           var results =  ADHelper.GetAccountByQuery(e.Argument.ToString());
+            if (sender is BackgroundWorker)
+                ((BackgroundWorker)sender).ReportProgress(0);
+
+            var results =  ADHelper.GetAccountByQuery(e.Argument.ToString());
             e.Result = results;
         }
 
         private void bgGeneric_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             bgFindMultiple_RunWorkerCompleted(sender, e);
+
         }
     }
 }

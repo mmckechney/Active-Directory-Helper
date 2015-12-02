@@ -1141,7 +1141,27 @@ namespace ActiveDirectoryHelper
             string status = "";
             string accountFlagsComputed = string.Empty;
             string accountFlags = string.Empty;
-            if (result.Properties.Contains("msDS-User-Account-Control-Computed"))
+
+            //If we found a status in the computed property, skip this one
+            if (keepLooking && result.Properties.Contains("userAccountControl"))
+            {
+                flagVal = (int)result.Properties["userAccountControl"][0];
+
+                if (Convert.ToBoolean(flagVal & (int)AdsUserFlags.AccountLockedOut))
+                    status = "Locked";
+
+                if (Convert.ToBoolean(flagVal & (int)AdsUserFlags.PasswordExpired))
+                    status = "PW Exp";
+
+                if (Convert.ToBoolean(flagVal & (int)AdsUserFlags.AccountDisabled))
+                    status = "Disabled";
+
+                //If there a status here, don't look any farther.
+                if (status != "") keepLooking = false;
+
+            }
+
+            if (keepLooking && result.Properties.Contains("msDS-User-Account-Control-Computed"))
             {
                 //Method from:http://www.awprofessional.com/articles/article.asp?p=474649&seqNum=3&rl=1
                 flagVal = (int)result.Properties["msDS-User-Account-Control-Computed"][0];
@@ -1164,24 +1184,7 @@ namespace ActiveDirectoryHelper
                 flagVal = (int)result.Properties["userAccountControl"][0];
                 accountFlags = AdsUserFlagsListed.GetTextList(flagVal);
             }
-            //If we found a status in the computed property, skip this one
-            if (keepLooking && result.Properties.Contains("userAccountControl"))
-            {
-                flagVal = (int)result.Properties["userAccountControl"][0];
-
-                if (Convert.ToBoolean(flagVal & (int)AdsUserFlags.AccountLockedOut))
-                    status = "Locked";
-
-                if (Convert.ToBoolean(flagVal & (int)AdsUserFlags.PasswordExpired))
-                    status = "PW Exp";
-
-                if (Convert.ToBoolean(flagVal & (int)AdsUserFlags.AccountDisabled))
-                    status = "Disabled";
-
-                //If there a status here, don't look any farther.
-                if (status != "") keepLooking = false;
-
-            }
+            
 
             if (keepLooking && result.Properties.Contains("badPwdCount"))
             {

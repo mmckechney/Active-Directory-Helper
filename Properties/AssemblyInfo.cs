@@ -11,7 +11,7 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Michael McKechney (www.mckechney.com) - Author")]
 [assembly: AssemblyProduct("Active Directory Helper By Michael McKechney")]
-[assembly: AssemblyCopyright("2006-2011")]
+[assembly: AssemblyCopyright("2006-2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]		
 
@@ -26,8 +26,8 @@ using System.Runtime.CompilerServices;
 // You can specify all the values or you can default the Revision and Build Numbers 
 // by using the '*' as shown below:
 
-[assembly: AssemblyVersion("3.4.0.0")]
-[assembly: AssemblyFileVersion("3.4.0.0")]
+[assembly: AssemblyVersion("3.5.0.0")]
+[assembly: AssemblyFileVersion("3.5.0.0")]
 
 //
 // In order to sign your assembly you must specify a key to use. Refer to the 
