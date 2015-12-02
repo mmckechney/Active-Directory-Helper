@@ -106,6 +106,8 @@ namespace ActiveDirectoryHelper
         private ToolStripSeparator toolStripSeparator3;
         private ToolStripMenuItem importExportSettingsToolStripMenuItem;
         private ToolStripSeparator toolStripSeparator4;
+        private LinkLabel lnkGenericQuery;
+        private BackgroundWorker bgGeneric;
         private bool proxyAuthAcknowledged = false;
         public MainForm()
         {
@@ -167,6 +169,7 @@ namespace ActiveDirectoryHelper
             this.btnGetGroup = new System.Windows.Forms.Button();
             this.lnkClearAllItems = new System.Windows.Forms.LinkLabel();
             this.grpAccounts = new System.Windows.Forms.GroupBox();
+            this.lnkGenericQuery = new System.Windows.Forms.LinkLabel();
             this.chkDisplayDisabled = new System.Windows.Forms.CheckBox();
             this.lnkMultipleAccounts = new System.Windows.Forms.LinkLabel();
             this.btnFindAccount = new System.Windows.Forms.Button();
@@ -227,6 +230,7 @@ namespace ActiveDirectoryHelper
             this.bgFindGroupMembers = new System.ComponentModel.BackgroundWorker();
             this.bgFindGroupComparison = new System.ComponentModel.BackgroundWorker();
             this.bgFindMultiple = new System.ComponentModel.BackgroundWorker();
+            this.bgGeneric = new System.ComponentModel.BackgroundWorker();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgGroup2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupListTable2)).BeginInit();
@@ -283,8 +287,8 @@ namespace ActiveDirectoryHelper
             // 
             // groupBox1
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.dgGroup2);
             this.groupBox1.Controls.Add(this.dgGroups1);
@@ -299,7 +303,7 @@ namespace ActiveDirectoryHelper
             this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.groupBox1.Location = new System.Drawing.Point(3, 67);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(845, 193);
+            this.groupBox1.Size = new System.Drawing.Size(744, 193);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Groups (hit <enter> to add to list)";
@@ -436,8 +440,9 @@ namespace ActiveDirectoryHelper
             // 
             // grpAccounts
             // 
-            this.grpAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.grpAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.grpAccounts.Controls.Add(this.lnkGenericQuery);
             this.grpAccounts.Controls.Add(this.chkDisplayDisabled);
             this.grpAccounts.Controls.Add(this.lnkMultipleAccounts);
             this.grpAccounts.Controls.Add(this.btnFindAccount);
@@ -458,12 +463,24 @@ namespace ActiveDirectoryHelper
             this.toolTip1.SetToolTip(this.grpAccounts, "Use this section to get information about a single user");
             this.grpAccounts.Enter += new System.EventHandler(this.grpAccounts_Enter);
             // 
+            // lnkGenericQuery
+            // 
+            this.lnkGenericQuery.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lnkGenericQuery.AutoSize = true;
+            this.lnkGenericQuery.Location = new System.Drawing.Point(683, 33);
+            this.lnkGenericQuery.Name = "lnkGenericQuery";
+            this.lnkGenericQuery.Size = new System.Drawing.Size(124, 13);
+            this.lnkGenericQuery.TabIndex = 12;
+            this.lnkGenericQuery.TabStop = true;
+            this.lnkGenericQuery.Text = "Generic LDAP Query";
+            this.lnkGenericQuery.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkGenericQuery_LinkClicked);
+            // 
             // chkDisplayDisabled
             // 
             this.chkDisplayDisabled.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.chkDisplayDisabled.Location = new System.Drawing.Point(821, 33);
+            this.chkDisplayDisabled.Location = new System.Drawing.Point(821, 28);
             this.chkDisplayDisabled.Name = "chkDisplayDisabled";
-            this.chkDisplayDisabled.Size = new System.Drawing.Size(246, 16);
+            this.chkDisplayDisabled.Size = new System.Drawing.Size(246, 24);
             this.chkDisplayDisabled.TabIndex = 11;
             this.chkDisplayDisabled.Text = "Display Disabled Accounts";
             this.chkDisplayDisabled.CheckedChanged += new System.EventHandler(this.chkDisplayDisabled_CheckedChanged);
@@ -472,7 +489,7 @@ namespace ActiveDirectoryHelper
             // 
             this.lnkMultipleAccounts.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lnkMultipleAccounts.AutoSize = true;
-            this.lnkMultipleAccounts.Location = new System.Drawing.Point(682, 36);
+            this.lnkMultipleAccounts.Location = new System.Drawing.Point(682, 12);
             this.lnkMultipleAccounts.Name = "lnkMultipleAccounts";
             this.lnkMultipleAccounts.Size = new System.Drawing.Size(132, 13);
             this.lnkMultipleAccounts.TabIndex = 10;
@@ -573,19 +590,19 @@ namespace ActiveDirectoryHelper
             this.mnuOpen,
             this.mnuExit});
             this.contextMenu1.Name = "contextMenu1";
-            this.contextMenu1.Size = new System.Drawing.Size(112, 48);
+            this.contextMenu1.Size = new System.Drawing.Size(104, 48);
             // 
             // mnuOpen
             // 
             this.mnuOpen.Name = "mnuOpen";
-            this.mnuOpen.Size = new System.Drawing.Size(111, 22);
+            this.mnuOpen.Size = new System.Drawing.Size(103, 22);
             this.mnuOpen.Text = "Open";
             this.mnuOpen.Click += new System.EventHandler(this.mnuOpen_Click);
             // 
             // mnuExit
             // 
             this.mnuExit.Name = "mnuExit";
-            this.mnuExit.Size = new System.Drawing.Size(111, 22);
+            this.mnuExit.Size = new System.Drawing.Size(103, 22);
             this.mnuExit.Text = "Exit";
             this.mnuExit.Click += new System.EventHandler(this.mnuExit_Click);
             // 
@@ -657,9 +674,9 @@ namespace ActiveDirectoryHelper
             // lstDomains
             // 
             this.lstDomains.Activation = System.Windows.Forms.ItemActivation.OneClick;
-            this.lstDomains.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.lstDomains.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lstDomains.BackColor = System.Drawing.Color.Ivory;
             this.lstDomains.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lstDomains.CheckBoxes = true;
@@ -726,9 +743,9 @@ namespace ActiveDirectoryHelper
             this.statRecordCount,
             this.statExecuteTime,
             this.toolStripDropDownButton1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 263);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 261);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1082, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1082, 24);
             this.statusStrip1.TabIndex = 17;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -738,7 +755,7 @@ namespace ActiveDirectoryHelper
             this.statGeneral.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
             this.statGeneral.Name = "statGeneral";
             this.statGeneral.Padding = new System.Windows.Forms.Padding(0, 0, 40, 0);
-            this.statGeneral.Size = new System.Drawing.Size(623, 17);
+            this.statGeneral.Size = new System.Drawing.Size(665, 19);
             this.statGeneral.Spring = true;
             this.statGeneral.Text = "Ready.";
             this.statGeneral.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -748,14 +765,14 @@ namespace ActiveDirectoryHelper
             this.statGroupProgress.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.statGroupProgress.Name = "statGroupProgress";
             this.statGroupProgress.Padding = new System.Windows.Forms.Padding(0, 0, 20, 0);
-            this.statGroupProgress.Size = new System.Drawing.Size(120, 16);
+            this.statGroupProgress.Size = new System.Drawing.Size(120, 18);
             // 
             // statRecordCount
             // 
             this.statRecordCount.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
             this.statRecordCount.Name = "statRecordCount";
             this.statRecordCount.Padding = new System.Windows.Forms.Padding(0, 0, 50, 0);
-            this.statRecordCount.Size = new System.Drawing.Size(140, 17);
+            this.statRecordCount.Size = new System.Drawing.Size(146, 19);
             this.statRecordCount.Text = "Record Count: 0";
             this.statRecordCount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -763,7 +780,7 @@ namespace ActiveDirectoryHelper
             // 
             this.statExecuteTime.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
             this.statExecuteTime.Name = "statExecuteTime";
-            this.statExecuteTime.Size = new System.Drawing.Size(123, 17);
+            this.statExecuteTime.Size = new System.Drawing.Size(134, 19);
             this.statExecuteTime.Text = "Execution Time (ms) : 0";
             this.statExecuteTime.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -788,13 +805,13 @@ namespace ActiveDirectoryHelper
             this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
             this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
-            this.toolStripDropDownButton1.Size = new System.Drawing.Size(59, 20);
+            this.toolStripDropDownButton1.Size = new System.Drawing.Size(59, 17);
             this.toolStripDropDownButton1.Text = "Settings";
             // 
             // importExportSettingsToolStripMenuItem
             // 
             this.importExportSettingsToolStripMenuItem.Name = "importExportSettingsToolStripMenuItem";
-            this.importExportSettingsToolStripMenuItem.Size = new System.Drawing.Size(256, 22);
+            this.importExportSettingsToolStripMenuItem.Size = new System.Drawing.Size(245, 22);
             this.importExportSettingsToolStripMenuItem.Text = "Import/Export Settings";
             this.importExportSettingsToolStripMenuItem.Visible = false;
             this.importExportSettingsToolStripMenuItem.Click += new System.EventHandler(this.importExportSettingsToolStripMenuItem_Click);
@@ -802,26 +819,26 @@ namespace ActiveDirectoryHelper
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(253, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(242, 6);
             // 
             // monitorUserPropertiesToolStripMenuItem
             // 
             this.monitorUserPropertiesToolStripMenuItem.Name = "monitorUserPropertiesToolStripMenuItem";
-            this.monitorUserPropertiesToolStripMenuItem.Size = new System.Drawing.Size(256, 22);
+            this.monitorUserPropertiesToolStripMenuItem.Size = new System.Drawing.Size(245, 22);
             this.monitorUserPropertiesToolStripMenuItem.Text = "Monitor User Properties";
             this.monitorUserPropertiesToolStripMenuItem.Click += new System.EventHandler(this.monitorUserPropertiesToolStripMenuItem_Click);
             // 
             // configureOrganizationalUnitHighlightingToolStripMenuItem
             // 
             this.configureOrganizationalUnitHighlightingToolStripMenuItem.Name = "configureOrganizationalUnitHighlightingToolStripMenuItem";
-            this.configureOrganizationalUnitHighlightingToolStripMenuItem.Size = new System.Drawing.Size(256, 22);
+            this.configureOrganizationalUnitHighlightingToolStripMenuItem.Size = new System.Drawing.Size(245, 22);
             this.configureOrganizationalUnitHighlightingToolStripMenuItem.Text = "Organizational Unit Highlighting";
             this.configureOrganizationalUnitHighlightingToolStripMenuItem.Click += new System.EventHandler(this.configureOrganizationalUnitHighlightingToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(253, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(242, 6);
             // 
             // customSearchFormatsToolStripMenuItem
             // 
@@ -829,58 +846,58 @@ namespace ActiveDirectoryHelper
             this.managerHierarchySearchToolStripMenuItem,
             this.directReportSearchToolStripMenuItem});
             this.customSearchFormatsToolStripMenuItem.Name = "customSearchFormatsToolStripMenuItem";
-            this.customSearchFormatsToolStripMenuItem.Size = new System.Drawing.Size(256, 22);
+            this.customSearchFormatsToolStripMenuItem.Size = new System.Drawing.Size(245, 22);
             this.customSearchFormatsToolStripMenuItem.Text = "Custom Search Formats";
             // 
             // managerHierarchySearchToolStripMenuItem
             // 
             this.managerHierarchySearchToolStripMenuItem.Name = "managerHierarchySearchToolStripMenuItem";
-            this.managerHierarchySearchToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
+            this.managerHierarchySearchToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.managerHierarchySearchToolStripMenuItem.Text = "Manager Hierarchy Search";
             this.managerHierarchySearchToolStripMenuItem.Click += new System.EventHandler(this.managerHierarchySearchToolStripMenuItem_Click);
             // 
             // directReportSearchToolStripMenuItem
             // 
             this.directReportSearchToolStripMenuItem.Name = "directReportSearchToolStripMenuItem";
-            this.directReportSearchToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
+            this.directReportSearchToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.directReportSearchToolStripMenuItem.Text = "Direct Report Search";
             this.directReportSearchToolStripMenuItem.Click += new System.EventHandler(this.directReportSearchToolStripMenuItem_Click);
             // 
             // configureOnLineDirectoryLinkFormatToolStripMenuItem
             // 
             this.configureOnLineDirectoryLinkFormatToolStripMenuItem.Name = "configureOnLineDirectoryLinkFormatToolStripMenuItem";
-            this.configureOnLineDirectoryLinkFormatToolStripMenuItem.Size = new System.Drawing.Size(256, 22);
+            this.configureOnLineDirectoryLinkFormatToolStripMenuItem.Size = new System.Drawing.Size(245, 22);
             this.configureOnLineDirectoryLinkFormatToolStripMenuItem.Text = "On-Line Directory Link Format";
             this.configureOnLineDirectoryLinkFormatToolStripMenuItem.Click += new System.EventHandler(this.configureOnLineDirectoryLinkFormatToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(253, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(242, 6);
             // 
             // proxyCredentialsToolStripMenuItem
             // 
             this.proxyCredentialsToolStripMenuItem.Name = "proxyCredentialsToolStripMenuItem";
-            this.proxyCredentialsToolStripMenuItem.Size = new System.Drawing.Size(256, 22);
+            this.proxyCredentialsToolStripMenuItem.Size = new System.Drawing.Size(245, 22);
             this.proxyCredentialsToolStripMenuItem.Text = "Proxy Credentials";
             this.proxyCredentialsToolStripMenuItem.Click += new System.EventHandler(this.proxyCredentialsToolStripMenuItem_Click);
             // 
             // activeDirectoryBindingCredentialsToolStripMenuItem
             // 
             this.activeDirectoryBindingCredentialsToolStripMenuItem.Name = "activeDirectoryBindingCredentialsToolStripMenuItem";
-            this.activeDirectoryBindingCredentialsToolStripMenuItem.Size = new System.Drawing.Size(256, 22);
+            this.activeDirectoryBindingCredentialsToolStripMenuItem.Size = new System.Drawing.Size(245, 22);
             this.activeDirectoryBindingCredentialsToolStripMenuItem.Text = "Active Directory Binding Credentials";
             this.activeDirectoryBindingCredentialsToolStripMenuItem.Click += new System.EventHandler(this.activeDirectoryBindingCredentialsToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(253, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(242, 6);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(256, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(245, 22);
             this.aboutToolStripMenuItem.Text = "About...";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -897,9 +914,9 @@ namespace ActiveDirectoryHelper
             // 
             // userList
             // 
-            this.userList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.userList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.userList.Location = new System.Drawing.Point(3, 3);
             this.userList.Name = "userList";
             this.userList.Padding = new System.Windows.Forms.Padding(3, 3, 3, 0);
@@ -950,9 +967,9 @@ namespace ActiveDirectoryHelper
             // 
             // userPropertiesCtrl1
             // 
-            this.userPropertiesCtrl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.userPropertiesCtrl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.userPropertiesCtrl1.Location = new System.Drawing.Point(331, 24);
             this.userPropertiesCtrl1.Name = "userPropertiesCtrl1";
             this.userPropertiesCtrl1.Size = new System.Drawing.Size(748, 300);
@@ -969,8 +986,8 @@ namespace ActiveDirectoryHelper
             // 
             // userGroupsCtrl1
             // 
-            this.userGroupsCtrl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)));
+            this.userGroupsCtrl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.userGroupsCtrl1.Location = new System.Drawing.Point(3, 24);
             this.userGroupsCtrl1.Name = "userGroupsCtrl1";
             this.userGroupsCtrl1.Size = new System.Drawing.Size(328, 303);
@@ -996,6 +1013,11 @@ namespace ActiveDirectoryHelper
             this.bgFindMultiple.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgFindMultiple_DoWork);
             this.bgFindMultiple.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.Searchers_ProgressChanged);
             this.bgFindMultiple.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgFindMultiple_RunWorkerCompleted);
+            // 
+            // bgGeneric
+            // 
+            this.bgGeneric.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgGeneric_DoWork);
+            this.bgGeneric.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgGeneric_RunWorkerCompleted);
             // 
             // MainForm
             // 
@@ -2266,5 +2288,26 @@ namespace ActiveDirectoryHelper
             }
         }
 
+        private void lnkGenericQuery_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            GenericUserQueryForm frmGeneric = new GenericUserQueryForm();
+            if (DialogResult.OK == frmGeneric.ShowDialog())
+            {
+                string ldapQuery= frmGeneric.Query;
+                bgGeneric.RunWorkerAsync(ldapQuery);
+                frmGeneric.Dispose();
+            }
+        }
+
+        private void bgGeneric_DoWork(object sender, DoWorkEventArgs e)
+        {
+           var results =  ADHelper.GetAccountByQuery(e.Argument.ToString());
+            e.Result = results;
+        }
+
+        private void bgGeneric_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            bgFindMultiple_RunWorkerCompleted(sender, e);
+        }
     }
 }

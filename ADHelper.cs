@@ -412,6 +412,7 @@ namespace ActiveDirectoryHelper
             }
         }
 
+       
         internal static ADGroupMembersTable GetDirectReports(ADGroupMembersTableRow row)
         {
             ADGroupMembersTable memTable = new ADGroupMembersTable();
@@ -469,7 +470,7 @@ namespace ActiveDirectoryHelper
                         if (collection2[num2] != null)
                         {
                             SearchResult result = collection2[num2];
-                            AddMemberTableRow(ref memTable, ref result, globalCatalogURL[j]);
+                            AddMemberTableRow(ref memTable, result, globalCatalogURL[j]);
                         }
                     }
                 }
@@ -715,7 +716,7 @@ namespace ActiveDirectoryHelper
                         if (userCollection[num2] != null)
                         {
                             SearchResult result = userCollection[num2];
-                            AddMemberTableRow(ref memTable, ref result, globalCatalogURL[j]);
+                            AddMemberTableRow(ref memTable, result, globalCatalogURL[j]);
                         }
                     }
                     groupCollection.Dispose();
@@ -846,7 +847,7 @@ namespace ActiveDirectoryHelper
                         continue;
 
                     SearchResult result = collection[0];
-                    AddMemberTableRow(ref memTable, ref result, globalCatalogURL[j]);
+                    AddMemberTableRow(ref memTable, result, globalCatalogURL[j]);
                 }
 
             memTable = ConvertToCountryName(memTable);
@@ -879,7 +880,7 @@ namespace ActiveDirectoryHelper
                     continue;
 
                 SearchResult result = collection[0];
-                AddMemberTableRow(ref memTable, ref result, globalCatalogURL[j]);
+                AddMemberTableRow(ref memTable, result, globalCatalogURL[j]);
 
 
 
@@ -928,7 +929,7 @@ namespace ActiveDirectoryHelper
                     if (collection2[num2] != null)
                     {
                         SearchResult result = collection2[num2];
-                        AddMemberTableRow(ref memTable, ref result, globalCatalogURL[j]);
+                        AddMemberTableRow(ref memTable,  result, globalCatalogURL[j]);
                     }
                 }
 
@@ -1029,12 +1030,11 @@ namespace ActiveDirectoryHelper
                     if (collection.Count == 0)
                         continue;
 
-                    SearchResult result = collection[0];
-                    AddMemberTableRow(ref memTable, ref result, globalCatalogURL[j]);
-
-
-
-                }
+                    foreach(var item in collection)
+                    {
+                        AddMemberTableRow(ref memTable, item as SearchResult, globalCatalogURL[j]);
+                    }
+                 }
                 memTable = ConvertToCountryName(memTable);
                 if (memTable.Count > 0)
                     return memTable;
@@ -1050,6 +1050,7 @@ namespace ActiveDirectoryHelper
             return null;
 
         }
+     
         #endregion
 
         public static bool DomainIsReachable(string domainName)
@@ -1128,8 +1129,13 @@ namespace ActiveDirectoryHelper
                 }
             }
         }
-        private static void AddMemberTableRow(ref ADGroupMembersTable memTable, ref SearchResult result, string owningDomain)
+        private static void AddMemberTableRow(ref ADGroupMembersTable memTable, SearchResult result, string owningDomain)
         {
+
+            if(result.Properties["objectClass"].Contains("computer"))
+            {
+                return;
+            }
             bool keepLooking = true;
             int flagVal = -1;
             string status = "";
@@ -1140,14 +1146,14 @@ namespace ActiveDirectoryHelper
                 //Method from:http://www.awprofessional.com/articles/article.asp?p=474649&seqNum=3&rl=1
                 flagVal = (int)result.Properties["msDS-User-Account-Control-Computed"][0];
 
-                if (Convert.ToBoolean(flagVal & (int)AdsUserFlags.AccountDisabled))
-                    status = "Disabled";
-
                 if (Convert.ToBoolean(flagVal & (int)AdsUserFlags.AccountLockedOut))
                     status = "Locked";
 
                 if (Convert.ToBoolean(flagVal & (int)AdsUserFlags.PasswordExpired))
                     status = "PW Exp";
+
+                if (Convert.ToBoolean(flagVal & (int)AdsUserFlags.AccountDisabled))
+                    status = "Disabled";
 
                 if (status != "") keepLooking = false;
                 accountFlagsComputed = AdsUserFlagsListed.GetTextList(flagVal);
@@ -1163,14 +1169,14 @@ namespace ActiveDirectoryHelper
             {
                 flagVal = (int)result.Properties["userAccountControl"][0];
 
-                if (Convert.ToBoolean(flagVal & (int)AdsUserFlags.AccountDisabled))
-                    status = "Disabled";
-
                 if (Convert.ToBoolean(flagVal & (int)AdsUserFlags.AccountLockedOut))
                     status = "Locked";
 
                 if (Convert.ToBoolean(flagVal & (int)AdsUserFlags.PasswordExpired))
                     status = "PW Exp";
+
+                if (Convert.ToBoolean(flagVal & (int)AdsUserFlags.AccountDisabled))
+                    status = "Disabled";
 
                 //If there a status here, don't look any farther.
                 if (status != "") keepLooking = false;
